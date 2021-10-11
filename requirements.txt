@@ -1,0 +1,12 @@
+
+# ==== TEST APIs ====
+
+# https://github.com/openskynetwork/opensky-api
+pandas
+requests
+Django
+eventlet
+gevent_socketio
+python-socketio
+datetime
+
