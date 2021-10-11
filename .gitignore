@@ -1,0 +1,13 @@
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Compiled Python
+__pycache__/
+*.pyc
+
+# Django
+migrations/
+
+
+playground.ipynb
+TODO
