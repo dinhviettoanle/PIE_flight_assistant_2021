@@ -123,6 +123,7 @@ function check_visible_planes() {
     for (const [icao24, airplane] of Object.entries(dict_airplanes)) {
         if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat)) {
             airplane.free_map(mymap);
+            delete dict_airplanes[icao24];
         }
     }
 }
@@ -136,8 +137,14 @@ function update_map(list_flights) {
         }
         else {
             let airplane = new Airplane(f);
-            airplane.draw_map(mymap);
-            dict_airplanes[f.icao24] = airplane;
+            if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat)) {
+                airplane.free_map(mymap);
+                delete dict_airplanes[f.icao24];
+            }
+            else {
+                dict_airplanes[f.icao24] = airplane;
+                airplane.draw_map(mymap);
+            }
         }
     });
 }
