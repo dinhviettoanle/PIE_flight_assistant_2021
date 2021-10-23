@@ -58,8 +58,6 @@ class FlightRadar24Handler:
             'number_flights' : number_flights,
             'list_flights' : list_flights
             }
-
-        fprint(f"Flights in the area : {number_flights}")
         
         return dict_message
 
