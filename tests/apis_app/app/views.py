@@ -17,12 +17,13 @@ import socketio
 from random import random
 from .flight_data_handler import FlightRadar24Handler, OpenSkyNetworkHandler
 
-import eventlet
-eventlet.monkey_patch()
+# import eventlet
+# eventlet.monkey_patch()
 
-async_mode = 'eventlet' # None ??
+async_mode = None # None ??
 sio = socketio.Server(async_mode=async_mode)
 airspace_worker = None
+thread = Thread()
 
 def fprint(*args, **kwargs):
     print(args, flush=True)
@@ -46,7 +47,7 @@ class AirspaceBackgroundWorker:
             dict_message = self.flight_data_process.get_current_airspace(self.box)
             self.sio.emit('airspace', dict_message, namespace=namespace)
             fprint("Flights in the area : ", dict_message['number_flights'])
-            eventlet.sleep(1)
+            self.sio.sleep(1)
     
     def update_box(self, box):
         box_format = (box[1], box[3], box[0], box[2])
@@ -68,13 +69,15 @@ def redirect_app(request):
 
 # @sio.on('start', namespace='/test')
 def start_work(sid):
-    global airspace_worker
+    global thread, airspace_worker
     box = (-0.04,42.78,2.86,44.62)
-    if airspace_worker is not None:
-        airspace_worker.update_box(box)
-    else:
-        airspace_worker = AirspaceBackgroundWorker(sio, box)
-        sio.start_background_task(airspace_worker.do_work)
+    if not thread.isAlive():
+        if airspace_worker is not None:
+            airspace_worker.update_box(box)
+        else:
+            airspace_worker = AirspaceBackgroundWorker(sio, box)
+            sio.start_background_task(airspace_worker.do_work)
+        
 
 
 
