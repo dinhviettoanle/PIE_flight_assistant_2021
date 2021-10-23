@@ -3,6 +3,7 @@
  * vesion 0.0.1
  * @author Thomas Zou
  * @date 10/1/2018
+ * Adapted 10/2021
  */
 
 /* Angle ICON */
@@ -62,14 +63,12 @@ L.AngleIcon = L.Icon.extend({
     drwaImage : function(ctx , img, course, w, h){
         // console.log(img.src)
         img.onload = function(){
-            //平移坐标原点
+            ctx.save();
             ctx.translate(40,30);
-            //旋转画布
             ctx.rotate(course);
             ctx.translate(-40,-30);
-            //画图
-            ctx.drawImage(img,w,h);
-            // console.log(img.src)
+            ctx.drawImage(img, w, h);
+            ctx.restore();
         }
     },
 
@@ -132,13 +131,30 @@ L.AngleIcon = L.Icon.extend({
         if(!heading){
             heading = this.options.angle;
         }
+        var pre = this.options.course;
         this.options.course = (heading % 360);
         var s = this.options.iconSize;
 
-        //我们不需要在这里显示的调用draw()方法，因为map.addLayer(layer)会调用这个方法
-        //We do not need to call draw() as shown here
-        //because map.addLayer (layer) will call this method
-        //this.draw(this.ctx, s.x, s.y);
+
+        // Updates the heading on marker angle
+        if (this.ctx != undefined) {
+            
+            this.ctx.clearRect(0, 0, s.x, s.y);
+            this.ctx.save();
+            this.ctx.translate(s.x/2, s.y/2);
+            this.ctx.rotate(this.options.course);
+            this.ctx.translate(-s.x/2, -s.y/2);
+            this.ctx.drawImage(this.options.img, 35, 20);
+            this.ctx.restore();
+
+            this.ctx.font="10px Courier New";
+            this.ctx.fillStyle = this.options.textColor;
+            if(this.options.ciFlag){
+                var text = this.options.label;
+                this.ctx.fillText(text, 0, 20);
+            }
+        }
+        
     }
 });
 
