@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from django.db import models
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import os
+from datetime import datetime
 from time import sleep
 from threading import Thread, Event
 import socketio
@@ -36,7 +37,7 @@ class AirspaceBackgroundWorker:
     def __init__(self, sio, box):
         self.sio = sio
         self.switch = True
-        self.box = (box[1], box[3], box[0], box[2]) # south, north, west, east
+        self.box = box
         self.flight_data_process = FlightRadar24Handler()
         fprint("----- Background airspace worker initialized -----")
 
@@ -46,12 +47,11 @@ class AirspaceBackgroundWorker:
         while self.switch:
             dict_message = self.flight_data_process.get_current_airspace(self.box)
             self.sio.emit('airspace', dict_message, namespace=namespace)
-            fprint("Flights in the area : ", dict_message['number_flights'])
+            fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), "Flights in the area : ", dict_message['number_flights'])
             self.sio.sleep(1)
     
     def update_box(self, box):
-        box_format = (box[1], box[3], box[0], box[2])
-        self.box = box_format
+        self.box = box
 
     def stop(self):
         self.switch = False
@@ -70,7 +70,11 @@ def redirect_app(request):
 # @sio.on('start', namespace='/test')
 def start_work(sid):
     global thread, airspace_worker
-    box = (-0.04,42.78,2.86,44.62)
+    toulouse_lat, toulouse_long = 43.59972466458162, 1.4492797572165728
+    min_lat, max_lat = toulouse_lat - 1, toulouse_lat + 1
+    min_long, max_long = toulouse_long - 2, toulouse_long + 2
+    box = (min_lat, max_lat, min_long, max_long)
+
     if not thread.isAlive():
         if airspace_worker is not None:
             airspace_worker.update_box(box)
@@ -85,7 +89,7 @@ def start_work(sid):
 def get_change_focus(sid, data):
     min_lat, max_lat = data['latitude'] - 1, data['latitude'] + 1
     min_long, max_long = data['longitude'] - 2, data['longitude'] + 2
-    box = (min_long, min_lat, max_long, max_lat)
+    box = (min_lat, max_lat, min_long, max_long)
     airspace_worker.update_box(box)
 
     

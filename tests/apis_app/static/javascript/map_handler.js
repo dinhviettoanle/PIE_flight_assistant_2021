@@ -1,9 +1,9 @@
-var box = [-0.04,42.78,2.86,44.62];
+var box = [42.59972466458162, 44.59972466458162, -0.5507202427834272, 3.4492797572165728];
 
-var minLong = box[0];
-var maxLong = box[2];
-var minLat = box[1];
-var maxLat = box[3];
+var minLat = box[0];
+var maxLat = box[1];
+var minLong = box[2];
+var maxLong = box[3];
 
 var mymap = null;
 var bounds = null;
