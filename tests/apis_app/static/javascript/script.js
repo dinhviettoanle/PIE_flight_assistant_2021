@@ -7,10 +7,10 @@ $(document).ready(function(){
     socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
 
     console.log("Ready !");
-
+    
     //receive details from server
     socket.on('airspace', function(msg) {
-        // console.log(msg);
+        console.log(msg);
 
         var list_flights_string = '';
         msg.list_flights.forEach(f => {

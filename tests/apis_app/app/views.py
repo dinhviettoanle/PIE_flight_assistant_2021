@@ -17,9 +17,12 @@ import socketio
 from random import random
 from .flight_data_handler import FlightRadar24Handler, OpenSkyNetworkHandler
 
+# import eventlet
+# eventlet.monkey_patch()
 
-async_mode = None
+async_mode = None # None ??
 sio = socketio.Server(async_mode=async_mode)
+airspace_worker = None
 thread = Thread()
 
 def fprint(*args, **kwargs):
@@ -27,12 +30,36 @@ def fprint(*args, **kwargs):
 
 
 
+class AirspaceBackgroundWorker:
+    switch = False
+
+    def __init__(self, sio, box):
+        self.sio = sio
+        self.switch = True
+        self.box = (box[1], box[3], box[0], box[2]) # south, north, west, east
+        self.flight_data_process = FlightRadar24Handler()
+        fprint("----- Background airspace worker initialized -----")
+
+    def do_work(self):
+        namespace = '/test'
+        fprint("----- Begin trafic worker -----")
+        while self.switch:
+            dict_message = self.flight_data_process.get_current_airspace(self.box)
+            self.sio.emit('airspace', dict_message, namespace=namespace)
+            fprint("Flights in the area : ", dict_message['number_flights'])
+            self.sio.sleep(1)
+    
+    def update_box(self, box):
+        box_format = (box[1], box[3], box[0], box[2])
+        self.box = box_format
+
+    def stop(self):
+        self.switch = False
+
 
 def app(request):
-    global thread
     print("Client connected")
-    if not thread.isAlive():
-        thread = sio.start_background_task(get_proxim_flights_open_sky)
+    start_work("start")
     return render(request, 'index.html', locals())
 
 
@@ -40,25 +67,28 @@ def redirect_app(request):
     return redirect('app')
 
 
+# @sio.on('start', namespace='/test')
+def start_work(sid):
+    global thread, airspace_worker
+    box = (-0.04,42.78,2.86,44.62)
+    if not thread.isAlive():
+        if airspace_worker is not None:
+            airspace_worker.update_box(box)
+        else:
+            airspace_worker = AirspaceBackgroundWorker(sio, box)
+            sio.start_background_task(airspace_worker.do_work)
+        
 
-
-def get_proxim_flights_open_sky():
-    namespace = '/test'
-    # flight_data_process = OpenSkyNetworkHandler()
-    flight_data_process = FlightRadar24Handler()
-    while True:
-        box = (-0.04,42.78,2.86,44.62)
-        box = (box[1], box[3], box[0], box[2]) # south, north, west, east
-        dict_message = flight_data_process.get_current_airspace(box)
-        sio.emit('airspace', dict_message, namespace=namespace)
-        sio.sleep(1)
 
 
 @sio.on('change_focus', namespace='/test')
 def get_change_focus(sid, data):
-    new_latitude = data['latitude']
-    new_longitude = data['longitude']
-    fprint(new_latitude, new_longitude)
+    min_lat, max_lat = data['latitude'] - 1, data['latitude'] + 1
+    min_long, max_long = data['longitude'] - 2, data['longitude'] + 2
+    box = (min_long, min_lat, max_long, max_lat)
+    airspace_worker.update_box(box)
+
+    
 
 
 @sio.event

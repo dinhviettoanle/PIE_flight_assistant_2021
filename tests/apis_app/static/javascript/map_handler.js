@@ -119,9 +119,9 @@ function update_bounds() {
 }
 
 
-function check_visible_planes() {
+function check_visible_planes(icao_list) {
     for (const [icao24, airplane] of Object.entries(dict_airplanes)) {
-        if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat)) {
+        if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat) || !icao_list.includes(icao24)) {
             airplane.free_map(mymap);
             delete dict_airplanes[icao24];
         }
@@ -130,7 +130,8 @@ function check_visible_planes() {
 
 
 function update_map(list_flights) {
-    check_visible_planes();
+    var icao_list = list_flights.map(({icao24}) => icao24);
+    check_visible_planes(icao_list);
     list_flights.forEach(f => {
         if (f.icao24 in dict_airplanes) {
             dict_airplanes[f.icao24].update_position(f);
