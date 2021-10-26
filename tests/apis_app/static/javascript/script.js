@@ -10,7 +10,7 @@ $(document).ready(function(){
     
     //receive details from server
     socket.on('airspace', function(msg) {
-        console.log(msg);
+        // console.log(msg);
 
         var list_flights_string = '';
         msg.list_flights.forEach(f => {

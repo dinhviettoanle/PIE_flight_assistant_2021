@@ -25,6 +25,8 @@ async_mode = None # None ??
 sio = socketio.Server(async_mode=async_mode)
 airspace_worker = None
 thread = Thread()
+USE_RADAR = True
+
 
 def fprint(*args, **kwargs):
     print(args, flush=True)
@@ -34,10 +36,11 @@ def fprint(*args, **kwargs):
 class AirspaceBackgroundWorker:
     switch = False
 
-    def __init__(self, sio, box):
+    def __init__(self, sio, box=None, center=None):
         self.sio = sio
         self.switch = True
         self.box = box
+        self.center = center
         self.flight_data_process = FlightRadar24Handler()
         fprint("----- Background airspace worker initialized -----")
 
@@ -45,13 +48,20 @@ class AirspaceBackgroundWorker:
         namespace = '/test'
         fprint("----- Begin trafic worker -----")
         while self.switch:
-            dict_message = self.flight_data_process.get_current_airspace(self.box)
+            if USE_RADAR:
+                dict_message = self.flight_data_process.get_current_airspace(center=self.center)
+            else:
+                dict_message = self.flight_data_process.get_current_airspace(box=self.box)
+            
             self.sio.emit('airspace', dict_message, namespace=namespace)
             fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), "Flights in the area : ", dict_message['number_flights'])
             self.sio.sleep(1)
     
     def update_box(self, box):
         self.box = box
+    
+    def update_center(self, center):
+        self.center = center
 
     def stop(self):
         self.switch = False
@@ -74,12 +84,14 @@ def start_work(sid):
     min_lat, max_lat = toulouse_lat - 1, toulouse_lat + 1
     min_long, max_long = toulouse_long - 2, toulouse_long + 2
     box = (min_lat, max_lat, min_long, max_long)
+    center = (toulouse_lat, toulouse_long)
 
     if not thread.isAlive():
         if airspace_worker is not None:
-            airspace_worker.update_box(box)
+            if USE_RADAR: airspace_worker.update_center(center)
+            else: airspace_worker.update_box(box)
         else:
-            airspace_worker = AirspaceBackgroundWorker(sio, box)
+            airspace_worker = AirspaceBackgroundWorker(sio, box=box, center=center)
             sio.start_background_task(airspace_worker.do_work)
         
 
@@ -87,10 +99,14 @@ def start_work(sid):
 
 @sio.on('change_focus', namespace='/test')
 def get_change_focus(sid, data):
-    min_lat, max_lat = data['latitude'] - 1, data['latitude'] + 1
-    min_long, max_long = data['longitude'] - 2, data['longitude'] + 2
-    box = (min_lat, max_lat, min_long, max_long)
-    airspace_worker.update_box(box)
+    if USE_RADAR:
+        center = (data['latitude'], data['longitude'])
+        airspace_worker.update_center(center)
+    else:
+        min_lat, max_lat = data['latitude'] - 1, data['latitude'] + 1
+        min_long, max_long = data['longitude'] - 2, data['longitude'] + 2
+        box = (min_lat, max_lat, min_long, max_long)
+        airspace_worker.update_box(box)
 
     
 
