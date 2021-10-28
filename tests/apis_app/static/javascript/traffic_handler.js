@@ -9,8 +9,6 @@ var maxLong = box[3];
 var center = [43.59972466458162, 1.4492797572165728];
 var radius = 100;
 
-
-var mymap = null;
 var bounds = null;
 var rect = null;
 var circle = null;
@@ -84,7 +82,7 @@ class Airplane {
         map.removeLayer(this.marker);
     }
 
-    is_outside_map(minLong, maxLong, minLat, maxLat) {
+    is_outside_map(minLong, maxLong, minLat, maxLat, center) {
         if (USE_RADAR) {
             return calcCrow(center[0], center[1], this.latitude, this.longitude) > radius;
         }
@@ -170,7 +168,7 @@ function update_radar() {
 
 function check_visible_planes(icao_list) {
     for (const [icao24, airplane] of Object.entries(dict_airplanes)) {
-        if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat) || !icao_list.includes(icao24)) {
+        if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat, center) || !icao_list.includes(icao24)) {
             airplane.free_map(mymap);
             delete dict_airplanes[icao24];
         }
@@ -178,7 +176,7 @@ function check_visible_planes(icao_list) {
 }
 
 
-function update_map(list_flights) {
+function update_traffic(list_flights) {
     var icao_list = list_flights.map(({icao24}) => icao24);
     check_visible_planes(icao_list);
     list_flights.forEach(f => {
@@ -187,7 +185,7 @@ function update_map(list_flights) {
         }
         else {
             let airplane = new Airplane(f);
-            if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat)) {
+            if (airplane.is_outside_map(minLong, maxLong, minLat, maxLat, center)) {
                 airplane.free_map(mymap);
                 delete dict_airplanes[f.icao24];
             }

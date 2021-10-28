@@ -32,6 +32,14 @@ def dist_flight_center(center_lat, center_lng, flight_lat, flight_lng):
     distance = R * c
     return distance
 
+def get_box_from_center(center, RADIUS):
+    lat, lng = center
+    km_to_deg_lat = 110.574
+    km_to_deg_lng = 111.320 * cos(lat)
+    s, n = lat - RADIUS/km_to_deg_lat, lat + RADIUS/km_to_deg_lat
+    w, e = lng - RADIUS/km_to_deg_lng, lng + RADIUS/km_to_deg_lng
+    return s, n, w, e
+
 
 
 class FlightRadar24Handler:
@@ -47,10 +55,7 @@ class FlightRadar24Handler:
 
         if center and not(box):
             lat, lng = center
-            km_to_deg_lat = 110.574
-            km_to_deg_lng = 111.320 * cos(lat)
-            s, n = lat - RADIUS/km_to_deg_lat, lat + RADIUS/km_to_deg_lat
-            w, e = lng - RADIUS/km_to_deg_lng, lng + RADIUS/km_to_deg_lng
+            s, n, w, e = get_box_from_center(center, RADIUS)
         elif box and not(center):
             s, n, w, e = box
         else:

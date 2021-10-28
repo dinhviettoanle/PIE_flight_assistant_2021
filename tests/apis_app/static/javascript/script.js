@@ -1,5 +1,6 @@
 
 var socket = null;
+var mymap = null;
 
 $(document).ready(function(){
     //connect to the socket server.
@@ -20,7 +21,8 @@ $(document).ready(function(){
         $('#DOM-lastUpdate').html(msg.time_update_str);
         $('#DOM-numberFlights').html(msg.number_flights);
         $('#DOM-listFlights').html(list_flights_string);
-        update_map(msg.list_flights);
+        update_traffic(msg.list_flights);
+        update_airports(msg.list_airports);
     });
 
 });

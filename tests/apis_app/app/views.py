@@ -9,14 +9,17 @@ from django.http import JsonResponse
 from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 from django.db import models
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
 import os
 from datetime import datetime
 from time import sleep
+import json
 from threading import Thread, Event
 import socketio
 from random import random
-from .flight_data_handler import FlightRadar24Handler, OpenSkyNetworkHandler
+from .flight_data_handler import FlightRadar24Handler, OpenSkyNetworkHandler, get_box_from_center
+from .models import Airport
 
 # import eventlet
 # eventlet.monkey_patch()
@@ -27,9 +30,24 @@ airspace_worker = None
 thread = Thread()
 USE_RADAR = True
 
+class LazyEncoder(DjangoJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, YourCustomType):
+            return str(obj)
+        return super().default(obj)
+
 
 def fprint(*args, **kwargs):
     print(args, flush=True)
+
+def get_near_airports(dict_message, center, RADIUS=100):
+    s, n, w, e = get_box_from_center(center, RADIUS)
+    near_airports = Airport.objects.filter(
+        Q(longitude__gte = w) & Q(longitude__lte = e) &
+        Q(latitude__gte = s) & Q(latitude__lte = n)
+    ).values('name', 'iata', 'icao', 'latitude', 'longitude', 'altitude', 'country', 'desc')
+    dict_message['list_airports'] = list(near_airports)
+
 
 
 
@@ -48,13 +66,18 @@ class AirspaceBackgroundWorker:
         namespace = '/test'
         fprint("----- Begin trafic worker -----")
         while self.switch:
+            # Handle traffic
             if USE_RADAR:
                 dict_message = self.flight_data_process.get_current_airspace(center=self.center)
             else:
                 dict_message = self.flight_data_process.get_current_airspace(box=self.box)
+
+
+            # Handle airports
+            get_near_airports(dict_message, self.center)
             
             self.sio.emit('airspace', dict_message, namespace=namespace)
-            fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), "Flights in the area : ", dict_message['number_flights'])
+            fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), f"# Flights : {dict_message['number_flights']}", f"# Airports : {len(dict_message['list_airports'])}")
             self.sio.sleep(1)
     
     def update_box(self, box):

@@ -23,7 +23,7 @@ from app.models import Airport
 
 class AirportLoader:
 
-    def __init__(self, source='ourairports'):
+    def __init__(self, source='fr24'):
         if source == 'fr24':
             self.data = self.download_fr24()
         elif source == 'ourairports':
@@ -104,6 +104,7 @@ def main():
             icao = airport['icao'],
             latitude = airport['latitude'],
             longitude = airport['longitude'],
+            altitude = airport['altitude'],
             country = airport['country'],
             desc = airport['desc'],
             municipality = airport['municipality'],
