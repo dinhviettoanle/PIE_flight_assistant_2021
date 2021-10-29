@@ -66,19 +66,23 @@ class AirspaceBackgroundWorker:
         namespace = '/test'
         fprint("----- Begin trafic worker -----")
         while self.switch:
-            # Handle traffic
-            if USE_RADAR:
-                dict_message = self.flight_data_process.get_current_airspace(center=self.center)
-            else:
-                dict_message = self.flight_data_process.get_current_airspace(box=self.box)
-
-
-            # Handle airports
-            get_near_airports(dict_message, self.center)
+            try:
+                # Handle traffic
+                if USE_RADAR:
+                    dict_message = self.flight_data_process.get_current_airspace(center=self.center)
+                else:
+                    dict_message = self.flight_data_process.get_current_airspace(box=self.box)
             
-            self.sio.emit('airspace', dict_message, namespace=namespace)
-            fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), f"# Flights : {dict_message['number_flights']}", f"# Airports : {len(dict_message['list_airports'])}")
-            self.sio.sleep(1)
+                # Handle airports
+                get_near_airports(dict_message, self.center)
+                
+                self.sio.emit('airspace', dict_message, namespace=namespace)
+                fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), f"# Flights : {dict_message['number_flights']}", f"# Airports : {len(dict_message['list_airports'])}")
+                self.sio.sleep(1)
+
+            except:
+                fprint("Error")
+    
     
     def update_box(self, box):
         self.box = box
