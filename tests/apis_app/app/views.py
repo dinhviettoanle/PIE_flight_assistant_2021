@@ -80,8 +80,8 @@ class AirspaceBackgroundWorker:
                 fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), f"# Flights : {dict_message['number_flights']}", f"# Airports : {len(dict_message['list_airports'])}")
                 self.sio.sleep(1)
 
-            except:
-                fprint("Error")
+            except Exception as e:
+                fprint(f"Error : {str(e)}")
     
     
     def update_box(self, box):
@@ -126,6 +126,7 @@ def start_work(sid):
 
 @sio.on('change_focus', namespace='/test')
 def get_change_focus(sid, data):
+    fprint(f"Change focus : {data}")
     if USE_RADAR:
         center = (data['latitude'], data['longitude'])
         airspace_worker.update_center(center)

@@ -130,12 +130,16 @@ class FlightRadar24Handler:
                 list_flights.append(this_flight)
                 list_update_times.append(f['last_contact'])
 
-        ancien_update_time = datetime.utcfromtimestamp(min(list_update_times)).strftime('%H:%M:%S')
-        recent_update_time = datetime.utcfromtimestamp(max(list_update_times)).strftime('%H:%M:%S')
-        date_update_time = datetime.utcfromtimestamp(min(list_update_times)).strftime('%Y-%m-%d')
-        time_update_str = f"{date_update_time} [{ancien_update_time} >> {recent_update_time}]"
-
+         
         number_flights = len(list_flights)
+        
+        if number_flights > 0:
+            ancien_update_time = datetime.utcfromtimestamp(min(list_update_times)).strftime('%H:%M:%S')
+            recent_update_time = datetime.utcfromtimestamp(max(list_update_times)).strftime('%H:%M:%S')
+            date_update_time = datetime.utcfromtimestamp(min(list_update_times)).strftime('%Y-%m-%d')
+            time_update_str = f"{date_update_time} [{ancien_update_time} >> {recent_update_time}]"
+        else:
+            time_update_str = "No flight"
 
         dict_message = {
             'time_update_str': time_update_str,
