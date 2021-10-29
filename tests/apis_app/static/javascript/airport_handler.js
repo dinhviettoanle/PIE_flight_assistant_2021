@@ -1,12 +1,12 @@
 var dict_airports = {}
 
-class Airport {
+class Airport extends Location{
     constructor(airport) {
+        super(airport);
+        
         this.name = airport.name;
         this.iata = airport.iata;
         this.icao = airport.icao;
-        this.latitude = airport.latitude;
-        this.longitude = airport.longitude;
         this.altitude = airport.altitude;
         this.country = airport.country;
         this.desc = airport.desc;
@@ -22,27 +22,6 @@ class Airport {
         this.marker = new L.marker([this.latitude, this.longitude], {icon : airport_icon});
         this.marker.bindPopup(`${this.name} - ${this.icao} <br> 
                                 Altitude : ${this.altitude}`);
-    }
-
-    draw_map(map) {
-        this.marker.addTo(map);
-    }
-
-    free_map(map) {
-        map.removeLayer(this.marker);
-    }
-
-    is_outside_map(minLong, maxLong, minLat, maxLat, center) {
-        if (USE_RADAR) {
-            return calcCrow(center[0], center[1], this.latitude, this.longitude) > radius;
-        }
-        else {
-            const margin = 0;
-            return (Math.abs(this.longitude - minLong) < margin) || 
-                (Math.abs(this.longitude - maxLong) < margin) ||
-                (Math.abs(this.latitude - minLat) < margin) ||
-                (Math.abs(this.latitude - maxLat) < margin);
-        }
     }
 }
 
