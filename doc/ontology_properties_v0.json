@@ -1,0 +1,130 @@
+{
+    "AircraftDataProp" : {
+        "AircraftCharacteristics" : {
+            "AircraftDimensions" : {
+                "AircraftLength" : "",
+                "AircratSpan" : ""
+            },
+            "AircraftMasses" : {
+                "AircraftFuelCapacity" : "",
+                "AircraftMLW" : ""
+            },
+            "AircraftRequirements" : {
+                "AircraftACN" : "",
+                "AircraftARFF" : ""
+            }
+        },
+        "AircrafFlightParameters" : {
+            "LiveParameters" : {
+                "LiveAltitude" : "",
+                "LiveCurrentWeight" : "",
+                "LiveMAR" : "",
+                "LiveSpeeds" : {
+                    "LiveIAS" : "",
+                    "LiveVz" : ""
+                },
+                "LiveSR" : ""
+            },
+            "ReferenceParameters" : {
+                "ReferenceClimb" : {
+                    "ReferenceVclimb" : ""
+                },
+                "ReferenceCruise" : {
+                    "ReferenceCruiseAltitudes" : {
+                        "ReferenceCruiseFL" : "",
+                        "ReferenceMORA" : "",
+                        "ReferenceZpOpt" : ""
+                    }
+                },
+                "ReferenceDescent" : {
+                    "ReferenceDescentFL" : "",
+                    "ReferenceVdescent" : ""
+                },
+                "ReferenceLanding" : {
+                    "ReferenceMLD" : ""
+                }
+            }
+        },
+        "AircraftFlightPhase" : "",
+        "AircraftNavigation" : {
+            "AircraftGPSLatitude" : "",
+            "AircraftGPSLongitude" : "",
+            "AircraftNextWaypointETA" : "",
+            "Heading" : ""
+        },
+        "AircraftSystems" : {
+            "AircraftAntiIcing" : {
+                "AircraftAntiIcingState" : "",
+                "AircrafticingProbe" : ""
+            },
+            "AircraftFlightSurface" : {
+                "AircraftFlapsPosition": "",
+                "AircraftSlatsPosition" : "",
+                "AircraftSpoilersPosition" : ""
+            },
+            "AircraftFuel" : "",
+            "AircraftLandingGear" : {
+                "AircraftLandingGearAuxilary" : "",
+                "AircraftLandingGearPrincipal" : ""
+            }
+        }
+    },
+
+    "AirportDataProp" : {
+        "AirportARFFIndex" : "",
+        "AirportEstimatedDepartureTime" : "",
+        "AirportEstimatedTimeOfArrival" : "",
+        "AirportGPSLatitude" : "",
+        "AirportGPSLongitude" : "",
+        "AirportICAOCode" : "",
+        "AirportIsArrival" : "",
+        "AirportIsDeparture" : "",
+        "AirportName" : "",
+        "AirportOpeningHours" : "",
+        "AirportParkingSpot" : "",
+        "AirportRadioFrequencies" : {
+            "AirportCTRGround" : "",
+            "AirportCTRLanding" : "",
+            "AirportCTRTakeOff" : ""
+        },
+        "CTRActiveHours" : "",
+        "Fuel" : "",
+        "Handling" : "",
+        "WidthTaxiway" : ""
+    },
+
+    "ChecklistDataProp" : {
+        "CheckListApproach" : "",
+        "CheckListLanding" : "",
+        "CheckListStart" : ""
+    },
+
+    "RunwayDataProp" : {
+        "RunwayLength" : "",
+        "RunwayPCN" : "",
+        "RunwayWidth" : ""
+    },
+
+    "WaypointDataProp" : {
+        "WaypointGPSLatitude" : "",
+        "WaypointGPSLongitude" : "",
+        "WaypointName" : "",
+        "WaypointPlannedAltitude" : ""
+    },
+
+    "WeatherDataProp" : {
+        "WeatherClouds" : {
+            "WeatherCeiling" : "",
+            "WeatherCloudsType" : ""
+        },
+        "WeatherHail" : "",
+        "WeatherQNH" : "",
+        "WeatherRain" : "",
+        "WeatherSnow" : "",
+        "WeatherTemperature" : "",
+        "WeatherWind" : {
+            "WeatherOrientation" : "",
+            "WeatherSpeed" : ""
+        }
+    }
+}
