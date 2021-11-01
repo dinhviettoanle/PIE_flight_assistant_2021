@@ -126,6 +126,10 @@ class FlightRadar24Handler:
                     'longitude' : f['lon'],
                     'heading' : f['track'],
                     'altitude' : f['alt'],
+                    'speed' : f['speed'],
+                    'vertical_speed' : f['vertical_speed'],
+                    'origin' : f['origin'],
+                    'destination' : f['destination'],
                 }        
                 list_flights.append(this_flight)
                 list_update_times.append(f['last_contact'])

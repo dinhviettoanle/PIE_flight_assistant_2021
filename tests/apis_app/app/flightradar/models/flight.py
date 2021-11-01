@@ -140,9 +140,10 @@ def flights_to_json(flights: List[BriefFlight]):
         data[flight.id] = {'id': flight.id, 'icao' : flight.icao, 'registration' : flight.registration,
                            'mode_s' : flight.mode_s,
                            'lat': flight.lat, 'lon': flight.lon,
-                           'track': flight.track, 'speed': flight.speed,
+                           'track': flight.track, 'speed': flight.speed, 'vertical_speed' : flight.vertical_speed,
                            'alt' : flight.alt,
                            'last_contact' : flight.last_contact,
+                           'origin' : flight.origin, 'destination' : flight.destination
                            }
     return json.dumps(data)
 

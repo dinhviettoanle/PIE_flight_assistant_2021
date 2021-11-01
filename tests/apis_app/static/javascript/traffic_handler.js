@@ -8,6 +8,10 @@ class Airplane extends Location {
         this.callsign = flight.callsign;
         this.heading = flight.heading;
         this.altitude = flight.altitude;
+        this.speed = flight.speed;
+        this.vertical_speed = flight.vertical_speed;
+        this.origin = flight.origin;
+        this.destination = flight.destination
 
         var img = new Image();
         img.src = arrow_url;
@@ -20,10 +24,16 @@ class Airplane extends Location {
 
         this.marker = L.angleMarker([this.latitude, this.longitude], options);
         this.marker.setHeading(this.heading / 180 * Math.PI);
+        this.set_marker_popup();
+    }
+
+    set_marker_popup() {
         this.marker.bindPopup(`${this.icao24} - ${this.callsign} <br> \
                                 (${this.latitude}, ${this.longitude}) <br>  \
+                                ${this.origin} >> ${this.destination} <br>  \
                                 Heading : ${this.heading} <br>\
-                                Altitude : ${this.altitude}`);
+                                Altitude : ${this.altitude} <br>\
+                                V : ${this.speed} ; Vz : ${this.vertical_speed}`);
     }
 
     update_position(flight) {
@@ -34,10 +44,7 @@ class Airplane extends Location {
         this.altitude = flight.altitude;
 
         this.marker.setHeading(flight.heading / 180 * Math.PI);
-        this.marker.bindPopup(`${this.icao24} - ${this.callsign} <br> \
-            (${this.latitude}, ${this.longitude}) <br>  \
-            Heading : ${this.heading} <br>\
-            Altitude : ${this.altitude}`);
+        this.set_marker_popup();
     }
 }
 
