@@ -131,7 +131,7 @@ function update_radar() {
     mymap.removeLayer(circle);
     circle = L.circle(center, {radius: radius * 1000, color: "#ff7800", weight : 1});
     circle.addTo(mymap);
-    mymap.fitBounds(circle.getBounds());
+    // mymap.fitBounds(circle.getBounds());
 }
 
 
