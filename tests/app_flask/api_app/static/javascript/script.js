@@ -12,7 +12,7 @@ $(document).ready(function(){
     
     //receive details from server
     socket.on('airspace', function(msg) {
-        // console.log(msg);
+        // console.log(msg.list_airports);
 
         var list_flights_string = '';
         msg.list_flights.forEach(f => {
@@ -23,7 +23,7 @@ $(document).ready(function(){
         $('#DOM-numberFlights').html(msg.number_flights);
         $('#DOM-listFlights').html(list_flights_string);
         update_traffic(msg.list_flights);
-        // update_airports(msg.list_airports);
+        update_airports(msg.list_airports);
     });
 
 });

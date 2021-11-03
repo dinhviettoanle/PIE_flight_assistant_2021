@@ -3,9 +3,10 @@ from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context, request
 from random import random
 from time import sleep
+import os
 from threading import Thread, Event
 
-from flight_data_handler import *
+from .flight_data_handler import *
 
 import logging
 
@@ -14,6 +15,9 @@ import logging
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
+app.config.from_object('config')
+
+
 log = logging.getLogger('werkzeug')
 log.disabled = True
 sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
@@ -25,8 +29,25 @@ airspace_worker = None
 thread = Thread()
 USE_RADAR = True
 
+from .models import db, Airport
 
 # ============ BACKGROUND TASKS =================
+
+def get_near_airports(dict_message, center, RADIUS=100):
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        near_airports = Airport.query.filter( \
+                (Airport.longitude >= w) & (Airport.longitude <= e) & \
+                (Airport.latitude >= s) & (Airport.latitude <= n)) \
+                    .with_entities(Airport.name, Airport.iata, Airport.icao, Airport.latitude, Airport.longitude, Airport.altitude, Airport.country, Airport.desc)\
+                    .all()
+
+        dict_message['list_airports'] = [r._asdict() for r in near_airports]
+    except:
+        dict_message['list_airports'] = []
+
+
+
 class AirspaceBackgroundWorker:
     switch = False
 
@@ -50,8 +71,7 @@ class AirspaceBackgroundWorker:
                     dict_message = self.flight_data_process.get_current_airspace(box=self.box)
             
                 # Handle airports
-                # get_near_airports(dict_message, self.center)
-                dict_message['list_airports'] = []
+                get_near_airports(dict_message, self.center)
                 
                 self.sio.emit('airspace', dict_message)
                 fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), f"# Flights : {dict_message['number_flights']}", f"# Airports : {len(dict_message['list_airports'])}")

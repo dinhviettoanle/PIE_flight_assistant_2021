@@ -7,13 +7,8 @@ import pandas as pd
 from datetime import datetime
 from math import sin, cos, sqrt, atan2, radians, asin
 import math
-from flightradar.api import API
-from flightradar.coordinates import *
-try:
-    from opensky_api import OpenSkyApi
-except ModuleNotFoundError:
-    print("OpenSkyAPI package not installed !")
-
+from .flightradar.api import API
+from .flightradar.coordinates import *
 
 def fprint(*args, **kwargs):
     print(args, flush=True)
@@ -162,68 +157,3 @@ class FlightRadar24Handler:
 
 
 
-class OpenSkyNetworkHandler:
-    username = "" # TO FILL
-    password = "" # TO FILL
-
-
-    def get_current_airspace(self, box):
-        api = OpenSkyApi(username=self.username, password=self.password)
-        states_box = api.get_states(bbox=box)
-        
-        time_update_str = datetime.utcfromtimestamp(states_box.time).strftime('%Y-%m-%d %H:%M:%S')
-        number_flights = len(states_box.states)
-        list_flights = []
-
-        for i, s in enumerate(states_box.states):
-            this_flight = {
-                'icao24' : s.icao24,
-                'callsign' : s.callsign.strip(),
-                'latitude' : s.latitude,
-                'longitude' : s.longitude,
-                'heading' : s.heading,
-                'altitude' : s.geo_altitude,
-            }
-            list_flights.append(this_flight)
-
-        dict_message = {
-            'time_update_str': time_update_str,
-            'number_flights' : number_flights,
-            'list_flights' : list_flights
-            }
-
-        return dict_message
-
-
-    def get_airplane_state(icao24, current_time=None):
-        current_time = int(time.time()) if current_time is None else current_time
-        session = requests.Session()
-        c = session.get(
-            f"https://opensky-network.org/api/states/all?time={current_time}&icao24={icao24}"
-        )
-        c.raise_for_status()
-        json_response = c.json()
-
-        df = pd.DataFrame.from_records(
-        json_response["states"],
-        columns=[
-            "icao24",
-            "callsign",
-            "origin_country",
-            "time_position",
-            "last_contact",
-            "longitude",
-            "latitude",
-            "baro_altitude",
-            "on_ground",
-            "velocity",
-            "true_track",
-            "vertical_rate",
-            "sensors",
-            "geo_altitude",
-            "squawk",
-            "spi",
-            "position_source",
-        ])
-
-        return df
