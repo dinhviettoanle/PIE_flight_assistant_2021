@@ -8,6 +8,10 @@ __pycache__/
 # Django
 migrations/
 
+# Scripts
+*.sh
+*.ps1
+
 
 playground.ipynb
 TODO
