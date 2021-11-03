@@ -21,6 +21,9 @@ app.config.from_object('config')
 log = logging.getLogger('werkzeug')
 log.disabled = True
 sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
+# ====================================
+
+from .models import db, Airport
 
 thread = Thread()
 thread_stop_event = Event()
@@ -29,7 +32,6 @@ airspace_worker = None
 thread = Thread()
 USE_RADAR = True
 
-from .models import db, Airport
 
 # ============ BACKGROUND TASKS =================
 
