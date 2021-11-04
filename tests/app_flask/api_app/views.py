@@ -23,7 +23,7 @@ log.disabled = True
 sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
 # ====================================
 
-from .models import db, Airport
+from .models import db, Airport, Runway
 
 thread = Thread()
 thread_stop_event = Event()
@@ -45,10 +45,26 @@ def get_near_airports(dict_message, center, RADIUS=100):
                     .all()
 
         dict_message['list_airports'] = [r._asdict() for r in near_airports]
-    except:
+    except Exception as e:
+        fprint("Error querying airports", e)
         dict_message['list_airports'] = []
 
 
+def get_near_runways(dict_message, center, RADIUS=100):
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        near_runways = Runway.query.filter( \
+                (Runway.le_longitude >= w) & (Runway.le_longitude <= e) & \
+                (Runway.le_latitude >= s) & (Runway.le_latitude <= n)) \
+                    .with_entities(Runway.airport, Runway.length, Runway.width, Runway.surface, 
+                                    Runway.le_ident, Runway.le_heading, Runway.le_latitude, Runway.le_longitude,
+                                    Runway.he_ident, Runway.he_heading, Runway.he_latitude, Runway.he_longitude)\
+                    .all()
+
+        dict_message['list_runways'] = [r._asdict() for r in near_runways]
+    except Exception as e:
+        fprint("Error querying runways", e)
+        dict_message['list_runways'] = []
 
 class AirspaceBackgroundWorker:
     switch = False
@@ -74,9 +90,16 @@ class AirspaceBackgroundWorker:
             
                 # Handle airports
                 get_near_airports(dict_message, self.center)
+
+                # Handle runways
+                get_near_runways(dict_message, self.center)
                 
                 self.sio.emit('airspace', dict_message)
-                fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), f"# Flights : {dict_message['number_flights']}", f"# Airports : {len(dict_message['list_airports'])}")
+                fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
+                    f"# Flights : {dict_message['number_flights']}", 
+                    f"# Airports : {len(dict_message['list_airports'])}",
+                    f"# Runways : {len(dict_message['list_runways'])}",
+                    )
                 self.sio.sleep(1)
 
             except Exception as e:

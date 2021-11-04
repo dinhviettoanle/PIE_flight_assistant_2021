@@ -20,8 +20,9 @@ class Airport extends Location{
         });
 
         this.marker = new L.marker([this.latitude, this.longitude], {icon : airport_icon});
-        this.marker.bindPopup(`${this.name} - ${this.icao} <br> 
-                                Altitude : ${this.altitude}`);
+        this.marker.bindTooltip(`${this.name} - ${this.icao} <br> 
+                                Altitude : ${this.altitude}`, 
+                                {className: "airportToolTip"});
     }
 }
 

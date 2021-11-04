@@ -24,17 +24,22 @@ class Airplane extends Location {
 
         this.marker = L.angleMarker([this.latitude, this.longitude], options);
         this.marker.setHeading(this.heading / 180 * Math.PI);
-        this.set_marker_popup();
+        this.set_marker_popup("set");
     }
 
-    set_marker_popup() {
-        this.marker.bindPopup(`${this.icao24} - ${this.callsign} <br> \
-                                (${this.latitude}, ${this.longitude}) <br>  \
-                                ${this.origin} >> ${this.destination} <br>  \
-                                Heading : ${this.heading} <br>\
-                                Altitude : ${this.altitude} <br>\
-                                V : ${this.speed} ; Vz : ${this.vertical_speed}`,
-                        {maxWidth : 560});
+    set_marker_popup(fun) {
+        var str_update = `${this.icao24} - ${this.callsign} <br> \
+                    (${this.latitude}, ${this.longitude}) <br>  \
+                    ${this.origin} >> ${this.destination} <br>  \
+                    Heading : ${this.heading} <br>\
+                    Altitude : ${this.altitude} <br>\
+                    V : ${this.speed} ; Vz : ${this.vertical_speed}`;
+        if (fun=="set"){
+            this.marker.bindTooltip(str_update, {maxWidth : 560});
+        }
+        else {
+            this.marker.setTooltipContent(str_update);
+        }
     }
 
     update_position(flight) {
@@ -45,7 +50,7 @@ class Airplane extends Location {
         this.altitude = flight.altitude;
 
         this.marker.setHeading(flight.heading / 180 * Math.PI);
-        this.set_marker_popup();
+        this.set_marker_popup("update");
     }
 }
 
