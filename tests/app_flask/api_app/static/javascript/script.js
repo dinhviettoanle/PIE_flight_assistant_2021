@@ -21,7 +21,7 @@ $(document).ready(function(){
 
         var list_airport_string = '';
         msg.list_airports.forEach(a => {
-            list_airport_string = list_airport_string + `${a.icao} (${a.iata})<br>`;
+            list_airport_string = list_airport_string + `${a.icao} (${a.iata}) - ${a.name}<br>`;
         });
 
         var list_runway_string = '';

@@ -27,14 +27,16 @@
     }
     
     .contListStuff{
-      margin-left: 2em;
+      margin-left: 1em;
       overflow-y: scroll; 
+      overflow-x: scroll;
       height:200px;
+      white-space: nowrap;
     }
     #mapid { 
       height: 500px; 
     }
-    ::-webkit-scrollbar {width: 4px;}
+    ::-webkit-scrollbar {width: 4px; height: 4px}
     ::-webkit-scrollbar-track {background: #f1f1f1; }
     ::-webkit-scrollbar-thumb {background: #888;}
     ::-webkit-scrollbar-thumb:hover {background: #555;}
@@ -74,28 +76,28 @@
       <br>
 
       <div class="row">
-        <div class="col" >
+        <div class="col-3" >
           <b>Flights : </b><br>
           <div class="contListStuff">
             <span id="DOM-listFlights"></span>
           </div>
         </div>
         
-        <div class="col">
+        <div class="col-3">
           <b>Airports : </b><br>
           <div class="contListStuff">
             <span id="DOM-listAirports"></span>
           </div>
         </div>
 
-        <div class="col">
+        <div class="col-3">
           <b>Runways : </b><br>
           <div class="contListStuff">
             <span id="DOM-listRunways"></span>
           </div>
         </div>
 
-        <div class="col">
+        <div class="col-3">
           <b>Navaids : </b><br>
           <div class="contListStuff">
             <span id="DOM-listNavaids"></span>
