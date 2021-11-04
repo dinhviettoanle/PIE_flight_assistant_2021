@@ -24,9 +24,10 @@ class Runway extends Location{
         ];
         
         this.line = new L.polyline(latlngs, 
-            {color: 'red',
+            {color: 'black',
             lineCap : 'square',
-            weight : 0});
+            weight : 0,
+            opacity : 0.3});
         
         this.line.bindTooltip(`${this.le_ident}/${this.he_ident} - ${this.airport} <br>
             Dim : ${this.length} x ${this.width} <br>
@@ -87,6 +88,7 @@ function setWeightsPolylines(weight) {
         runway.line.setStyle({weight : weight});
     }
 }
+
 
 mymap.on('zoomend', function () {
     currentZoom = mymap.getZoom();
