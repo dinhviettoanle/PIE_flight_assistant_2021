@@ -6,7 +6,8 @@
   <script src="static/javascript/script.js"></script>
 
 
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
@@ -24,8 +25,8 @@
       margin-top: 1em;
       margin-bottom: 3em;
     }
-
-    #contListFlights{
+    
+    .contListStuff{
       margin-left: 2em;
       overflow-y: scroll; 
       height:200px;
@@ -33,6 +34,10 @@
     #mapid { 
       height: 500px; 
     }
+    ::-webkit-scrollbar {width: 4px;}
+    ::-webkit-scrollbar-track {background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb {background: #888;}
+    ::-webkit-scrollbar-thumb:hover {background: #555;}
   </style>
 
 </head>
@@ -46,7 +51,6 @@
 
 
   <div class="container">
-    <!-- <input type="button" name="start" value="start" /> -->
     <h3>Fonctionnement</h3>
     - Sélectionner un marqueur (vol ou aéroport) pour ouvrir la popup <br>
     - Cliquer en dehors de la zone orange pour choisir une autre zone où chercher les vols
@@ -62,8 +66,36 @@
       <b>Number of flights : </b><span id="DOM-numberFlights"></span>
       <br>
 
-      <b>Flights : </b><br>
-      <div id="contListFlights"><span id="DOM-listFlights"></span></div>
+      <div class="row">
+        <div class="col" >
+          <b>Flights : </b><br>
+          <div class="contListStuff">
+            <span id="DOM-listFlights"></span>
+          </div>
+        </div>
+        
+        <div class="col">
+          <b>Airports : </b><br>
+          <div class="contListStuff">
+            <span id="DOM-listAirports"></span>
+          </div>
+        </div>
+
+        <div class="col">
+          <b>Runways : </b><br>
+          <div class="contListStuff">
+            <span id="DOM-listRunways"></span>
+          </div>
+        </div>
+
+        <div class="col">
+          <b>Navaids : </b><br>
+          <div class="contListStuff">
+            <span id="DOM-listNavaids"></span>
+          </div>
+        </div>
+
+      </div>
       
       <b>Map : </b><br>
       <div id="mapid"></div>

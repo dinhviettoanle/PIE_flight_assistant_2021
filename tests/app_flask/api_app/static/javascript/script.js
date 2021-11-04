@@ -18,10 +18,19 @@ $(document).ready(function(){
         msg.list_flights.forEach(f => {
             list_flights_string = list_flights_string + `${f.icao24} - ${f.callsign}<br>`;
         });
-        
+
+        var list_airport_string = '';
+        msg.list_airports.forEach(a => {
+            list_airport_string = list_airport_string + `${a.icao} (${a.iata})<br>`;
+        });
+
+
         $('#DOM-lastUpdate').html(msg.time_update_str);
         $('#DOM-numberFlights').html(msg.number_flights);
         $('#DOM-listFlights').html(list_flights_string);
+        $('#DOM-listAirports').html(list_airport_string);
+
+
         update_traffic(msg.list_flights);
         update_airports(msg.list_airports);
     });
