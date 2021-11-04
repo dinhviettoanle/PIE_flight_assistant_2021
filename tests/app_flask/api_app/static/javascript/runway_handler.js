@@ -23,15 +23,17 @@ class Runway extends Location{
             [this.he_latitude, this.he_longitude],
         ];
         
-        this.line = L.polyline(latlngs, 
+        this.line = new L.polyline(latlngs, 
             {color: 'red',
             lineCap : 'square',
             weight : 0});
         
         this.line.bindTooltip(`${this.le_ident}/${this.he_ident} - ${this.airport} <br>
-                                Dim : ${this.length} x ${this.width} <br>
-                                Surf : ${this.surface}`, 
-                            {className : "runwayToolTip"})
+            Dim : ${this.length} x ${this.width} <br>
+            Surf : ${this.surface}`, 
+            {className : "runwayToolTip", sticky : true});
+        
+
     }
 
     draw_map(map) {

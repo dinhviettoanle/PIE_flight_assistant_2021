@@ -108,12 +108,14 @@ function init_box() {
     bounds = [[minLat, minLong], [maxLat, maxLong]];
     rect = L.rectangle(bounds, {color: "#ff7800", weight: 1});
     rect.addTo(mymap);
+    rect.bringToBack();
     mymap.fitBounds(bounds);
 }
 
 function init_radar() {
     circle = L.circle(center, {radius: radius * 1000, color: "#ff7800", weight : 1});
     circle.addTo(mymap);
+    circle.bringToBack();
     mymap.fitBounds(circle.getBounds());
 }
 
@@ -123,6 +125,7 @@ function update_box() {
     bounds = [[minLat, minLong], [maxLat, maxLong]];
     rect = L.rectangle(bounds, {color: "#ff7800", weight: 1});
     rect.addTo(mymap);
+    rect.bringToBack();
     mymap.fitBounds(bounds);
 }
 
@@ -131,6 +134,7 @@ function update_radar() {
     mymap.removeLayer(circle);
     circle = L.circle(center, {radius: radius * 1000, color: "#ff7800", weight : 1});
     circle.addTo(mymap);
+    circle.bringToBack();
     // mymap.fitBounds(circle.getBounds());
 }
 
