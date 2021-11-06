@@ -23,7 +23,7 @@ log.disabled = True
 sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
 # ====================================
 
-from .models import db, Airport, Runway
+from .models import db, Airport, Runway, Frequency, Navaid
 
 thread = Thread()
 thread_stop_event = Event()
@@ -66,6 +66,17 @@ def get_near_runways(dict_message, center, RADIUS=100):
         fprint("Error querying runways", e)
         dict_message['list_runways'] = []
 
+
+def get_near_frequencies(dict_message):
+    for airport in dict_message['list_airports']:
+        current_icao = airport['icao']
+        associated_frequencies = Frequency.query.filter(Frequency.airport == current_icao)\
+                                    .with_entities(Frequency.frq_type, Frequency.desc, Frequency.frq_mhz)\
+                                    .all()                              
+        airport['list_frequencies'] = [r._asdict() for r in associated_frequencies]
+
+
+
 class AirspaceBackgroundWorker:
     switch = False
 
@@ -94,6 +105,9 @@ class AirspaceBackgroundWorker:
                 # Handle runways
                 get_near_runways(dict_message, self.center)
                 
+                # Handle frequencies
+                get_near_frequencies(dict_message)
+
                 self.sio.emit('airspace', dict_message)
                 fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
                     f"# Flights : {dict_message['number_flights']}", 

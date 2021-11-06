@@ -10,6 +10,7 @@ class Airport extends Location{
         this.altitude = airport.altitude;
         this.country = airport.country;
         this.desc = airport.desc;
+        this.list_frequencies = airport.list_frequencies;
 
 
         var airport_icon = L.icon({
@@ -19,9 +20,16 @@ class Airport extends Location{
             popupAnchor:  [0, -40]
         });
 
+        var list_frequencies_str = '';
+        this.list_frequencies.forEach(f => {
+            list_frequencies_str = list_frequencies_str + `<b>${f.desc}</b> : ${f.frq_mhz} MHz<br>`;
+        });
+
         this.marker = new L.marker([this.latitude, this.longitude], {icon : airport_icon});
         this.marker.bindTooltip(`${this.name} - ${this.icao} <br> 
-                                Altitude : ${this.altitude}`, 
+                                Altitude : ${this.altitude} <br>
+                                ----- <br>
+                                ${list_frequencies_str}`, 
                                 {className: "airportToolTip"});
     }
 }
