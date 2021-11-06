@@ -76,6 +76,19 @@ def get_near_frequencies(dict_message):
         airport['list_frequencies'] = [r._asdict() for r in associated_frequencies]
 
 
+def get_near_navaids(dict_message, center, RADIUS=100):
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        near_navaids = Navaid.query.filter( \
+                (Navaid.longitude >= w) & (Navaid.longitude <= e) & \
+                (Navaid.latitude >= s) & (Navaid.latitude <= n)) \
+                    .with_entities(Navaid.ident, Navaid.name, Navaid.nav_type, Navaid.frequency, Navaid.latitude, Navaid.longitude, Navaid.altitude)\
+                    .all()
+
+        dict_message['list_navaids'] = [r._asdict() for r in near_navaids]
+    except Exception as e:
+        fprint("Error querying navaids", e)
+        dict_message['list_navaids'] = []
 
 class AirspaceBackgroundWorker:
     switch = False
@@ -102,11 +115,15 @@ class AirspaceBackgroundWorker:
                 # Handle airports
                 get_near_airports(dict_message, self.center)
 
+                # Handle frequencies
+                get_near_frequencies(dict_message)
+
                 # Handle runways
                 get_near_runways(dict_message, self.center)
                 
-                # Handle frequencies
-                get_near_frequencies(dict_message)
+
+                # Handle navaids
+                get_near_navaids(dict_message, self.center)
 
                 self.sio.emit('airspace', dict_message)
                 fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 

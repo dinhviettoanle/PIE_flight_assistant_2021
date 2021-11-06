@@ -12,12 +12,16 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
   <script src="static/javascript/marker-direction.js"></script>
   <title>Test FlightData APIs</title>
 
   <script>
     var arrow_url = "static/images/arrow.png";
     var airport_url = "static/images/red.png";
+    var vor_url = "static/images/vor.png";
+    var ndb_url = "static/images/ndb.png";
   </script>
 
   <style>
@@ -46,6 +50,9 @@
     }
     .runwayToolTip {
       background-color: #a5a5a5;
+    }
+    .navaidToolTip {
+      background-color: #fff457;
     }
   </style>
 
@@ -118,5 +125,6 @@
 <script src="static/javascript/traffic_handler.js"></script>
 <script src="static/javascript/airport_handler.js"></script>
 <script src="static/javascript/runway_handler.js"></script>
+<script src="static/javascript/navaid_handler.js"></script>
 
 </html>

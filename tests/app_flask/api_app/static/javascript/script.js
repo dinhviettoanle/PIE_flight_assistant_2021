@@ -29,17 +29,24 @@ $(document).ready(function(){
             list_runway_string = list_runway_string + `${r.le_ident}/${r.he_ident} (${r.airport})<br>`;
         });
 
+        var list_navaid_string = '';
+        msg.list_navaids.forEach(r => {
+            list_navaid_string = list_navaid_string + `(${r.nav_type}) ${r.ident} ${r.name}<br>`;
+        });
+
 
         $('#DOM-lastUpdate').html(msg.time_update_str);
         $('#DOM-numberFlights').html(msg.number_flights);
         $('#DOM-listFlights').html(list_flights_string);
         $('#DOM-listAirports').html(list_airport_string);
         $('#DOM-listRunways').html(list_runway_string);
+        $('#DOM-listNavaids').html(list_navaid_string);
 
 
         update_traffic(msg.list_flights);
         update_airports(msg.list_airports);
         update_runways(msg.list_runways);
+        update_navaids(msg.list_navaids);
     });
 
 });

@@ -1,0 +1,121 @@
+<svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs></defs>
+  <circle style="fill: rgb(255, 255, 255);" cx="24.042" cy="24.543" r="23.882"></circle>
+  <g id="layer1" transform="matrix(1, 0, 0, 1, -0.737356, -0.714667)">
+    <g id="g2842" transform="matrix(0.9655323,-0.2602834,0.2602834,0.9655323,-98.55675,-17.522102)"></g>
+    <g id="g4183" transform="translate(6.3118628,-54.869792)">
+      <g transform="translate(-56.311844,-45.130208)" id="g3816">
+        <path style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path3586" d="M 80 125 A 5 5 0 1 1  70,125 A 5 5 0 1 1  80 125 z"></path>
+        <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3588" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,98.125)"></path>
+        <g id="g3652">
+          <path transform="matrix(0.25,0,0,0.25,63.125,88.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3648" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,108.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3650" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3656" transform="matrix(0.8660254,-0.5,0.5,0.8660254,-52.451905,54.246825)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3658" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,88.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3660" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,108.125)"></path>
+        </g>
+        <g transform="matrix(0.5,-0.8660254,0.8660254,0.5,-70.753175,127.45191)" id="g3662">
+          <path transform="matrix(0.25,0,0,0.25,63.125,88.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3664" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,108.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3666" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3668" transform="matrix(0,-1,1,0,-50,200)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3670" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,88.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3672" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,108.125)"></path>
+        </g>
+        <g transform="matrix(-0.5,-0.8660254,0.8660254,-0.5,4.2468245,252.45191)" id="g3674">
+          <path transform="matrix(0.25,0,0,0.25,63.125,88.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3676" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,108.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3678" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3680" transform="matrix(-0.8660254,-0.5,0.5,-0.8660254,77.451905,270.75318)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3682" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,88.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3684" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,108.125)"></path>
+        </g>
+        <g id="g3690" transform="matrix(0.9063078,-0.4226182,0.4226182,0.9063078,-45.800367,43.407896)">
+          <path transform="matrix(0.25,0,0,0.25,63.125,83.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3686" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,113.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3688" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g transform="matrix(0.7071067,-0.7071068,0.7071068,0.7071067,-66.421357,89.644658)" id="g3694">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3696" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,83.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3698" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,113.125)"></path>
+        </g>
+        <g id="g3700" transform="matrix(0.4226183,-0.9063078,0.9063078,0.4226183,-69.984843,140.1458)">
+          <path transform="matrix(0.25,0,0,0.25,63.125,83.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3702" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,113.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3704" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g transform="matrix(8.715577e-2,-0.9961946,0.9961946,8.715577e-2,-56.061019,188.82012)" id="g3706">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3708" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,83.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3710" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,113.125)"></path>
+        </g>
+        <g id="g3712" transform="matrix(-0.258819,-0.9659258,0.9659258,-0.258819,-26.329304,229.7968)">
+          <path transform="matrix(0.25,0,0,0.25,63.125,83.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3714" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,113.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3716" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g transform="matrix(-0.5735763,-0.819152,0.819152,-0.5735763,15.624218,258.13344)" id="g3718">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3720" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,83.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3722" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,113.125)"></path>
+        </g>
+        <g id="g3724" transform="matrix(-0.8191519,-0.5735764,0.5735764,-0.8191519,64.739336,270.41222)">
+          <path transform="matrix(0.25,0,0,0.25,63.125,83.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3726" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,113.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3728" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g transform="matrix(-0.9659257,-0.2588191,0.2588191,-0.9659257,115.09204,265.15215)" id="g3730">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3732" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,83.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3734" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,113.125)"></path>
+        </g>
+        <g id="g3736" transform="matrix(-0.9961946,8.715564e-2,-8.715564e-2,-0.9961946,160.60905,242.98766)">
+          <path transform="matrix(0.25,0,0,0.25,63.125,83.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3738" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,113.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3740" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3746">
+          <path transform="matrix(0.25,0,0,0.25,63.125,118.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3742" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,78.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3744" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3750" transform="matrix(0.9659258,-0.258819,0.258819,0.9659258,-29.796818,23.6707)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3752" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,118.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3754" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,78.125)"></path>
+        </g>
+        <g transform="matrix(0.8660254,-0.4999999,0.4999999,0.8660254,-52.451906,54.246822)" id="g3756">
+          <path transform="matrix(0.25,0,0,0.25,63.125,118.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3758" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,78.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3760" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3762" transform="matrix(0.7071068,-0.7071067,0.7071067,0.7071068,-66.421359,89.644655)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3764" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,118.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3766" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,78.125)"></path>
+        </g>
+        <g transform="matrix(0.5,-0.8660253,0.8660253,0.5,-70.753181,127.4519)" id="g3768">
+          <path transform="matrix(0.25,0,0,0.25,63.125,118.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3770" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,78.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3772" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3774" transform="matrix(0.2588191,-0.9659257,0.9659257,0.2588191,-65.152165,165.09205)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3776" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,118.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3778" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,78.125)"></path>
+        </g>
+        <g transform="matrix(8.5712909e-8,-0.9999999,0.9999999,8.5712909e-8,-50.000013,199.99999)" id="g3780">
+          <path transform="matrix(0.25,0,0,0.25,63.125,118.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3782" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,78.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3784" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3786" transform="matrix(-0.2588189,-0.9659258,0.9659258,-0.2588189,-26.329318,229.79681)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3788" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,118.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3790" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,78.125)"></path>
+        </g>
+        <g transform="matrix(-0.4999999,-0.8660254,0.8660254,-0.4999999,4.2468015,252.4519)" id="g3792">
+          <path transform="matrix(0.25,0,0,0.25,63.125,118.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3794" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,78.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3796" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3798" transform="matrix(-0.7071067,-0.7071068,0.7071068,-0.7071067,39.644635,266.42135)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3800" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,118.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3802" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,78.125)"></path>
+        </g>
+        <g transform="matrix(-0.8660253,-0.5,0.5,-0.8660253,77.451877,270.75317)" id="g3804">
+          <path transform="matrix(0.25,0,0,0.25,63.125,118.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3806" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+          <path transform="matrix(0.25,0,0,0.25,63.125,78.125)" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" id="path3808" style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;"></path>
+        </g>
+        <g id="g3810" transform="matrix(-0.9659257,-0.2588191,0.2588191,-0.9659257,115.09202,265.15215)">
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3812" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,118.125)"></path>
+          <path style="opacity: 1; fill-opacity: 1; stroke: rgb(0, 0, 0); stroke-width: 8; stroke-linecap: square; stroke-miterlimit: 4; stroke-dasharray: none; stroke-dashoffset: 0; stroke-opacity: 1;" id="path3814" d="M 50 107.5 A 2.5 2.5 0 1 1  45,107.5 A 2.5 2.5 0 1 1  50 107.5 z" transform="matrix(0.25,0,0,0.25,63.125,78.125)"></path>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
