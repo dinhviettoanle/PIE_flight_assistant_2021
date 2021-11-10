@@ -13,5 +13,5 @@ migrations/
 *.ps1
 
 
-playground.ipynb
+*playground*.ipynb
 TODO
