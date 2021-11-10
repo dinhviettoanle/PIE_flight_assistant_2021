@@ -1,0 +1,1238 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#"
+     xml:base="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsTo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsTo">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsToAirport -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsToAirport">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsTo"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsToWaypoint -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsToWaypoint">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#BelongsTo"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Has -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Has">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#HasFrequency -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#HasFrequency">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Has"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#HasRunway -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#HasRunway">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Has"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#HasWeather -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#HasWeather">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Has"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Is -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Is">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#IsArrival -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#IsArrival">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Is"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#IsDeparture -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#IsDeparture">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Is"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftACN -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftACN">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftRequirements"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftARFF -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftARFF">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftRequirements"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftAntiIcing -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftAntiIcing">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSystems"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftAntiIcingState -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftAntiIcingState">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftAntiIcing"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftCharacteristics -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftCharacteristics">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDimensions -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDimensions">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftCharacteristics"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlapsPosition -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlapsPosition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightSurface"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightParameters -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightParameters">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightPhase -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightPhase">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightSurface -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightSurface">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSystems"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFuel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFuel">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSystems"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFuelCapacity -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFuelCapacity">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftMasses"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftGPSLatitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftGPSLatitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftGPSLongitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftGPSLongitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftIcingProbe -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftIcingProbe">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftAntiIcing"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGear -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGear">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSystems"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGearAuxilary -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGearAuxilary">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGear"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGearPrincipal -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGearPrincipal">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLandingGear"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLength -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLength">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDimensions"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveAltitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveAltitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveParameters"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveCurrentWeight -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveCurrentWeight">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveParameters"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveIAS -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveIAS">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveSpeeds"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveMAR -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveMAR">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveParameters"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveParameters -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveParameters">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightParameters"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveSR -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveSR">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveParameters"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveSpeeds -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveSpeeds">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveParameters"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveVz -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveVz">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftLiveSpeeds"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftMLW -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftMLW">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftMasses"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftMasses -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftMasses">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftCharacteristics"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNextWaypointETA -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNextWaypointETA">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceClimb -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceClimb">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceParameters"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruise -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruise">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceParameters"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruiseAltitudes -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruiseAltitudes">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruise"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruiseFL -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruiseFL">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruiseAltitudes"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceDescent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceDescent">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceParameters"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceDescentFL -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceDescentFL">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceDescent"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceLanding -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceLanding">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceParameters"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceMLD -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceMLD">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceLanding"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceMORA -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceMORA">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruiseAltitudes"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceParameters -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceParameters">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightParameters"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceVclimb -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceVclimb">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceClimb"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceVcruise -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceVcruise">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruise"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceVdescent -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceVdescent">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceDescent"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceZpOpt -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceZpOpt">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftReferenceCruiseAltitudes"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftRequirements -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftRequirements">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftCharacteristics"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSlatsPosition -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSlatsPosition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightSurface"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSpan -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSpan">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDimensions"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSpoilersPosition -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSpoilersPosition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftFlightSurface"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSystems -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftSystems">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportARFFIndex -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportARFFIndex">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportAltitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportAltitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportCTRActiveHours -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportCTRActiveHours">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportCountry -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportCountry">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportEstimatedDepartureTime -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportEstimatedDepartureTime">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportEstimatedTimeOfArrival -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportEstimatedTimeOfArrival">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportFuel -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportFuel">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportGPSLatitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportGPSLatitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportGPSLongitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportGPSLongitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportHandling -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportHandling">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportIATA -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportIATA">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportICAOCode -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportICAOCode">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportName">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportOpeningHours -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportOpeningHours">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportParkingSpot -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportParkingSpot">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportWidthTaxiway -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportWidthTaxiway">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistApproach -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistApproach">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistLanding -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistLanding">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistStart -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistStart">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDescription">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyMHz -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyMHz">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyType">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Heading -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Heading">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayAltitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayAltitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayBeginGPSLatitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayBeginGPSLatitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayBeginGPSLongitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayBeginGPSLongitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayIdentifier -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayIdentifier">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayLength -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayLength">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayOrientation">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayPCN -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayPCN">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwaySurface -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwaySurface">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayThresholdLength -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayThresholdLength">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayWidth -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayWidth">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointGPSLatitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointGPSLatitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointGPSLongitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointGPSLongitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointName">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointPlannedAltitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointPlannedAltitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherCeiling -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherCeiling">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherClouds"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherClouds -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherClouds">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherCloudsType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherCloudsType">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherClouds"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherHail -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherHail">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherOrientation -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherOrientation">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherWind"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherQNH -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherQNH">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherRain -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherRain">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherSnow -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherSnow">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherSpeed -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherSpeed">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherWind"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherTemperature -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherTemperature">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherWind -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherWind">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointProperties"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftDataProp"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistDataProp"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
