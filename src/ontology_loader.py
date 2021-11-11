@@ -3,8 +3,8 @@ import pandas as pd
 from tqdm.autonotebook import tqdm
 from api_app.db_loader import AirportLoader, RunwayLoader, NavaidLoader, FrequencyLoader
 
-filename_onto = "../ontology/final-archi.owl"
-filename_onto_individuals = "../ontology/final-archi-individuals.owl"
+filename_onto = "./ontology/final-archi.owl"
+filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 onto = owl.get_ontology(filename_onto).load()
 
 # ===================================================================================
