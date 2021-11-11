@@ -270,6 +270,16 @@
     
 
 
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftHeading -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftHeading">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftIcingProbe -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftIcingProbe">
@@ -846,16 +856,6 @@
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Heading -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Heading">
-        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AircraftNavigation"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Aircraft"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
     </owl:DatatypeProperty>
     
 
