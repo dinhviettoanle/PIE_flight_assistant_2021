@@ -860,6 +860,79 @@
     
 
 
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidAltitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidAltitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Navaid"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidFrequencyKHz -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidFrequencyKHz">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidGPSLatitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidGPSLatitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidGPSLongitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidGPSLongitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidName">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidPower -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidPower">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidType -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidType">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidUsage -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidUsage">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayAltitude -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayAltitude">
@@ -915,6 +988,14 @@
         <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
         <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayLights -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayLights">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
     </owl:DatatypeProperty>
     
 
@@ -1174,6 +1255,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Navaid -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Navaid">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway">
@@ -1213,6 +1302,7 @@
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Airport"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Checklist"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Frequency"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Navaid"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Waypoint"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Weather"/>
@@ -1225,6 +1315,7 @@
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#AirportDataProp"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#ChecklistDataProp"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#FrequencyDataProp"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WaypointDataProp"/>
             <rdf:Description rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#WeatherDataProp"/>

@@ -117,7 +117,8 @@ class RunwayLoader:
 
         df_all = (df_airportsfr24
             .merge(df_runways, left_on='icao', right_on='airport_ident', how='left')
-            .drop(columns=['id', 'airport_ident', 'airport_ref', 'le_displaced_threshold_ft', 'he_displaced_threshold_ft'])
+            .drop(columns=['id', 'airport_ident', 'airport_ref'])
+            .fillna({'le_displaced_threshold_ft' : 0,'he_displaced_threshold_ft' : 0})
             .dropna(axis=0)
             .reset_index()
             )

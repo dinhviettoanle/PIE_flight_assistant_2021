@@ -14,8 +14,9 @@ onto = owl.get_ontology(filename_onto).load()
 def create_airport(row):
     return
 
-def create_airport_entities():
+def create_airport_individuals():
     airport_data = AirportLoader().get_airport_data()
+    dict_airports = {}
     pbar = tqdm(total=len(airport_data), desc="Airports")
     for i, row in airport_data.iterrows():
         new_airport = onto.Airport(row['icao'])
@@ -35,14 +36,61 @@ def create_airport_entities():
         new_airport.AirportOpeningHours.append("NA")
         new_airport.AirportParkingSpot.append("NA")
         new_airport.AirportWidthTaxiway.append(-1)
+        dict_airports[row['icao']] = new_airport
+        pbar.update(1)
+    pbar.close()
+
+    return dict_airports
+
+
+def create_runway_individuals(dict_airports):
+    runway_data = RunwayLoader().get_runway_data()
+    pbar = tqdm(total=len(runway_data), desc="Runways")
+    for i, row in runway_data.iterrows():
+        this_airport = row['icao']
+        # Lowest orientation
+        ## Individual
+        new_runway_low = onto.Runway(f"{this_airport}-{row['le_ident']}")
+        new_runway_low.RunwayAltitude.append(row['le_elevation_ft'])
+        new_runway_low.RunwayBeginGPSLatitude.append(row['le_latitude_deg'])
+        new_runway_low.RunwayBeginGPSLongitude.append(row['le_longitude_deg'])
+        new_runway_low.RunwayIdentifier.append(row['le_ident'])
+        new_runway_low.RunwayLights.append(row['lighted'])
+        new_runway_low.RunwayLength.append(row['length_ft'])
+        new_runway_low.RunwayOrientation.append(row['le_heading_degT'])
+        new_runway_low.RunwayPCN.append("NA")
+        new_runway_low.RunwaySurface.append(row['surface'])
+        new_runway_low.RunwayThresholdLength.append(row['le_displaced_threshold_ft'])
+        new_runway_low.RunwayWidth.append(row['width_ft'])
+        ## ObjectProperty
+        new_runway_low.BelongsToAirport.append(dict_airports[this_airport])
+        dict_airports[this_airport].HasRunway.append(new_runway_low)
+        
+        # Highest orientation
+        new_runway_high = onto.Runway(f"{this_airport}-{row['he_ident']}")
+        new_runway_high.RunwayAltitude.append(row['he_elevation_ft'])
+        new_runway_high.RunwayBeginGPSLatitude.append(row['he_latitude_deg'])
+        new_runway_high.RunwayBeginGPSLongitude.append(row['he_longitude_deg'])
+        new_runway_high.RunwayIdentifier.append(row['he_ident'])
+        new_runway_high.RunwayLights.append(row['lighted'])
+        new_runway_high.RunwayLength.append(row['length_ft'])
+        new_runway_high.RunwayOrientation.append(row['he_heading_degT'])
+        new_runway_high.RunwayPCN.append("NA")
+        new_runway_high.RunwaySurface.append(row['surface'])
+        new_runway_high.RunwayThresholdLength.append(row['he_displaced_threshold_ft'])
+        new_runway_high.RunwayWidth.append(row['width_ft'])
+        ## ObjectProperty
+        new_runway_high.BelongsToAirport.append(dict_airports[this_airport])
+        dict_airports[this_airport].HasRunway.append(new_runway_high)
+        
         pbar.update(1)
     pbar.close()
 
 
 
-
 def main():
-    create_airport_entities()
+    dict_airports = create_airport_individuals()
+    create_runway_individuals(dict_airports)
     onto.save(file=filename_onto_individuals, format="rdfxml")
     return
 
