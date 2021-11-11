@@ -9,6 +9,7 @@ from threading import Thread, Event
 from .flight_data_handler import *
 
 import logging
+import owlready2 as owl
 
 
 # ========= FLASK APP INIT ============
@@ -23,7 +24,7 @@ log.disabled = True
 sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
 # ====================================
 
-from .models import db, Airport, Runway, Frequency, Navaid
+# from .models import db, Airport, Runway, Frequency, Navaid
 
 thread = Thread()
 thread_stop_event = Event()
@@ -33,18 +34,33 @@ thread = Thread()
 USE_RADAR = True
 
 
+filename_onto_individuals = "./ontology/final-archi-individuals.owl"
+onto_individuals = owl.get_ontology(filename_onto_individuals).load()
+
 # ============ BACKGROUND TASKS =================
 
 def get_near_airports(dict_message, center, RADIUS=100):
     try:
         s, n, w, e = get_box_from_center(center, RADIUS)
-        near_airports = Airport.query.filter( \
-                (Airport.longitude >= w) & (Airport.longitude <= e) & \
-                (Airport.latitude >= s) & (Airport.latitude <= n)) \
-                    .with_entities(Airport.name, Airport.iata, Airport.icao, Airport.latitude, Airport.longitude, Airport.altitude, Airport.country, Airport.desc)\
-                    .all()
-
-        dict_message['list_airports'] = [r._asdict() for r in near_airports]
+        near_airports = list(owl.default_world.sparql(
+            f"""
+                PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+                SELECT ?name ?iata ?icao ?latitude ?longitude ?altitude ?country
+                WHERE {{
+                    ?Airport pie:AirportName ?name .
+                    ?Airport pie:AirportIATA ?iata .
+                    ?Airport pie:AirportICAOCode ?icao .
+                    ?Airport pie:AirportGPSLatitude ?latitude .
+                    ?Airport pie:AirportGPSLongitude ?longitude .
+                    ?Airport pie:AirportAltitude ?altitude .
+                    ?Airport pie:AirportCountry ?country .
+                    FILTER (?longitude > {w} && ?longitude < {e} 
+                        &&  ?latitude > {s} && ?latitude < {n})
+                    
+                }}
+            """))
+        fields = ['name', 'iata', 'icao', 'latitude', 'longitude', 'altitude', 'country']
+        dict_message['list_airports']  = [dict(zip(fields, airport_tuple)) for airport_tuple in near_airports]
     except Exception as e:
         fprint("Error querying airports", e)
         dict_message['list_airports'] = []
@@ -52,40 +68,50 @@ def get_near_airports(dict_message, center, RADIUS=100):
 
 def get_near_runways(dict_message, center, RADIUS=100):
     try:
+        assert False
         s, n, w, e = get_box_from_center(center, RADIUS)
-        near_runways = Runway.query.filter( \
-                (Runway.le_longitude >= w) & (Runway.le_longitude <= e) & \
-                (Runway.le_latitude >= s) & (Runway.le_latitude <= n)) \
-                    .with_entities(Runway.airport, Runway.length, Runway.width, Runway.surface, 
-                                    Runway.le_ident, Runway.le_heading, Runway.le_latitude, Runway.le_longitude,
-                                    Runway.he_ident, Runway.he_heading, Runway.he_latitude, Runway.he_longitude)\
-                    .all()
-
-        dict_message['list_runways'] = [r._asdict() for r in near_runways]
+        # near_runways = Runway.query.filter( \
+        #         (Runway.le_longitude >= w) & (Runway.le_longitude <= e) & \
+        #         (Runway.le_latitude >= s) & (Runway.le_latitude <= n)) \
+        #             .with_entities(Runway.airport, Runway.length, Runway.width, Runway.surface, 
+        #                             Runway.le_ident, Runway.le_heading, Runway.le_latitude, Runway.le_longitude,
+        #                             Runway.he_ident, Runway.he_heading, Runway.he_latitude, Runway.he_longitude)\
+        #             .all()
+        # dict_message['list_runways'] = [r._asdict() for r in near_runways]
     except Exception as e:
         fprint("Error querying runways", e)
         dict_message['list_runways'] = []
 
 
 def get_near_frequencies(dict_message):
+    event_bug = ""
     for airport in dict_message['list_airports']:
         current_icao = airport['icao']
-        associated_frequencies = Frequency.query.filter(Frequency.airport == current_icao)\
-                                    .with_entities(Frequency.frq_type, Frequency.desc, Frequency.frq_mhz)\
-                                    .all()                              
-        airport['list_frequencies'] = [r._asdict() for r in associated_frequencies]
+        try:
+            assert False
+            # associated_frequencies = Frequency.query.filter(Frequency.airport == current_icao)\
+            #                             .with_entities(Frequency.frq_type, Frequency.desc, Frequency.frq_mhz)\
+            #                             .all()                              
+            # airport['list_frequencies'] = [r._asdict() for r in associated_frequencies]
+        except Exception as e:
+            airport['list_frequencies'] = []
+            event_bug = e
+    
+    if event_bug != "":
+        fprint("Error querying frequencies", event_bug)
 
 
 def get_near_navaids(dict_message, center, RADIUS=100):
     try:
+        assert False
         s, n, w, e = get_box_from_center(center, RADIUS)
-        near_navaids = Navaid.query.filter( \
-                (Navaid.longitude >= w) & (Navaid.longitude <= e) & \
-                (Navaid.latitude >= s) & (Navaid.latitude <= n)) \
-                    .with_entities(Navaid.ident, Navaid.name, Navaid.nav_type, Navaid.frequency, Navaid.latitude, Navaid.longitude, Navaid.altitude)\
-                    .all()
+        # near_navaids = Navaid.query.filter( \
+        #         (Navaid.longitude >= w) & (Navaid.longitude <= e) & \
+        #         (Navaid.latitude >= s) & (Navaid.latitude <= n)) \
+        #             .with_entities(Navaid.ident, Navaid.name, Navaid.nav_type, Navaid.frequency, Navaid.latitude, Navaid.longitude, Navaid.altitude)\
+        #             .all()
+        # dict_message['list_navaids'] = [r._asdict() for r in near_navaids]
 
-        dict_message['list_navaids'] = [r._asdict() for r in near_navaids]
     except Exception as e:
         fprint("Error querying navaids", e)
         dict_message['list_navaids'] = []
