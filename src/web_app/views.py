@@ -88,11 +88,22 @@ def get_near_frequencies(dict_message):
     for airport in dict_message['list_airports']:
         current_icao = airport['icao']
         try:
-            assert False
-            # associated_frequencies = Frequency.query.filter(Frequency.airport == current_icao)\
-            #                             .with_entities(Frequency.frq_type, Frequency.desc, Frequency.frq_mhz)\
-            #                             .all()                              
-            # airport['list_frequencies'] = [r._asdict() for r in associated_frequencies]
+            associated_frequencies = list(owl.default_world.sparql(
+                f"""
+                    PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+                    SELECT ?frq_type ?desc ?frq_mhz 
+                    WHERE {{
+                        ?Airport pie:AirportICAOCode ?ICAO .
+                        ?Airport pie:HasFrequency ?Frequency .
+                        ?Frequency pie:FrequencyDescription ?desc .
+                        ?Frequency pie:FrequencyMHz ?frq_mhz .
+                        ?Frequency pie:FrequencyType ?frq_type .
+                        FILTER regex(?ICAO, "{current_icao}", "i")
+                        
+                    }}
+                """))
+            fields = ['frq_type', 'desc', 'frq_mhz']
+            airport['list_frequencies'] = [dict(zip(fields, frq_tuple)) for frq_tuple in associated_frequencies]
         except Exception as e:
             airport['list_frequencies'] = []
             event_bug = e
@@ -103,18 +114,34 @@ def get_near_frequencies(dict_message):
 
 def get_near_navaids(dict_message, center, RADIUS=100):
     try:
-        assert False
         s, n, w, e = get_box_from_center(center, RADIUS)
-        # near_navaids = Navaid.query.filter( \
-        #         (Navaid.longitude >= w) & (Navaid.longitude <= e) & \
-        #         (Navaid.latitude >= s) & (Navaid.latitude <= n)) \
-        #             .with_entities(Navaid.ident, Navaid.name, Navaid.nav_type, Navaid.frequency, Navaid.latitude, Navaid.longitude, Navaid.altitude)\
-        #             .all()
-        # dict_message['list_navaids'] = [r._asdict() for r in near_navaids]
+        near_navaids = list(owl.default_world.sparql(
+            f"""
+                PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+                SELECT ?ident ?name ?nav_type ?frequency ?latitude ?longitude ?altitude
+                WHERE {{
+                    ?Navaid pie:NavaidIdentifier ?ident .
+                    ?Navaid pie:NavaidName ?name .
+                    ?Navaid pie:NavaidType ?nav_type .
+                    ?Navaid pie:NavaidFrequencyKHz ?frequency .
+                    ?Navaid pie:NavaidGPSLatitude ?latitude .
+                    ?Navaid pie:NavaidGPSLongitude ?longitude .
+                    ?Navaid pie:NavaidAltitude ?altitude .
+                    FILTER (?longitude > {w} && ?longitude < {e} 
+                        &&  ?latitude > {s} && ?latitude < {n})
+                    
+                }}
+            """))
+        fields = ['ident', 'name', 'nav_type', 'frequency', 'latitude', 'longitude', 'altitude']
+        dict_message['list_navaids']  = [dict(zip(fields, navaid_tuple)) for navaid_tuple in near_navaids]
 
     except Exception as e:
         fprint("Error querying navaids", e)
         dict_message['list_navaids'] = []
+
+
+
+
 
 class AirspaceBackgroundWorker:
     switch = False

@@ -901,6 +901,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidIdentifier -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidIdentifier">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidName -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#NavaidName">
@@ -968,6 +976,22 @@
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
         <rdfs:domain rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#Runway"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayEndGPSLatitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayEndGPSLatitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayEndGPSLongitude -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayEndGPSLongitude">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
     </owl:DatatypeProperty>
     
 

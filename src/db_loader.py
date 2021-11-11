@@ -4,7 +4,6 @@ import io
 from tqdm.autonotebook import tqdm
 import logging as lg
 
-from .models import db, Airport, Runway, Navaid, Frequency
 
 
 # =========================================================================================
@@ -171,6 +170,8 @@ class NavaidLoader:
             .reset_index()
                 )
         df_all['ident'].fillna('NA', inplace=True)
+        df_all['power'].fillna('NA', inplace=True)
+        df_all['usageType'].fillna('NA', inplace=True)
         df_all['elevation_ft'].fillna(0, inplace=True)
         df_all = df_all.where(pd.notnull(df_all), None)
 
@@ -214,134 +215,3 @@ class FrequencyLoader:
          )
 
         return df_all
-
-
-# =========================================================================================
-# =========================================================================================
-# IMPORT FUNCTIONS
-# =========================================================================================
-# =========================================================================================
-
-
-def import_airports(db):
-    airport_data = AirportLoader().get_airport_data()
-    pbar = tqdm(total = len(airport_data), desc="Creating Airports")
-    for i, airport in airport_data.iterrows():
-        new_airport = Airport(
-            name = airport['name'],
-            iata = airport['iata'],
-            icao = airport['icao'],
-            latitude = airport['latitude'],
-            longitude = airport['longitude'],
-            altitude = airport['altitude'],
-            country = airport['country'],
-            desc = airport['desc'],
-            municipality = airport['municipality'],
-        )
-        db.session.add(new_airport)
-        db.session.commit()
-        pbar.update(1)
-    pbar.close()
-
-    print("Done !")
-
-
-def import_runways(db):
-    runway_data = RunwayLoader().get_runway_data()
-    pbar = tqdm(total = len(runway_data), desc="Creating Runways")
-    for i, runway in runway_data.iterrows():
-        # this_airport = Airport.query.filter(Airport.icao == runway['icao']).first()
-        # if this_airport == None:
-        #     print(runway['icao'])
-        #     print(runway)
-        #     raise Exception("Error")
-        new_runway = Runway(
-            id = i,
-            airport = runway['icao'],
-            length = runway['length_ft'],
-            width = runway['width_ft'],
-            surface = runway['surface'],
-            le_ident = runway['le_ident'],
-            le_heading = runway['le_heading_degT'],
-            le_latitude = runway['le_latitude_deg'],
-            le_longitude = runway['le_longitude_deg'],
-            le_altitude = runway['le_elevation_ft'],
-            he_ident = runway['he_ident'],
-            he_heading = runway['he_heading_degT'],
-            he_latitude = runway['he_latitude_deg'],
-            he_longitude = runway['he_longitude_deg'],
-            he_altitude = runway['he_elevation_ft'],
-        )
-        db.session.add(new_runway)
-        db.session.commit()
-        pbar.update(1)
-    pbar.close()
-
-    print("Done !")
-
-
-def import_navaids(db):
-    navaid_data = NavaidLoader().get_navaid_data()
-    pbar = tqdm(total = len(navaid_data), desc="Creating Navaids")
-    for i, navaid in navaid_data.iterrows():
-        new_navaid = Navaid(
-            id = i,
-            ident = navaid['ident'],
-            name = navaid['navaid_name'],
-            nav_type = navaid['type'],
-            frequency = navaid['frequency_khz'],
-            latitude = navaid['latitude_deg'],
-            longitude = navaid['longitude_deg'],
-            altitude = navaid['elevation_ft'],
-            usage = navaid['usageType'],
-            power = navaid['power'],
-            airport = navaid['airport_icao'],
-            country = navaid['country'],
-        )
-        db.session.add(new_navaid)
-        db.session.commit()
-        pbar.update(1)
-    pbar.close()
-
-    print("Done !")
-
-
-
-
-def import_frequencies(db):
-    frequency_data = FrequencyLoader().get_frequency_data()
-    pbar = tqdm(total = len(frequency_data), desc="Creating Frequencies")
-    for i, frequency in frequency_data.iterrows():
-        new_frequency = Frequency(
-            id = i,
-            airport = frequency['icao'],
-            frq_type = frequency['type'],
-            desc = frequency['description'],
-            frq_mhz = frequency['frequency_mhz'],
-        )
-        db.session.add(new_frequency)
-        db.session.commit()
-        pbar.update(1)
-    pbar.close()
-
-    print("Done !")
-
-
-
-# =========================================================================================
-# =========================================================================================
-# =========================================================================================
-
-
-def init_db():
-    db.drop_all()
-    db.create_all()
-    import_airports(db)
-    import_runways(db)
-    import_navaids(db)
-    import_frequencies(db)
-    lg.warning('Database initialized!')
-
-
-if __name__ == '__main__':
-    init_db()
