@@ -1,7 +1,7 @@
 import owlready2 as owl
 import pandas as pd
 from tqdm.autonotebook import tqdm
-from db_loader import AirportLoader, RunwayLoader, NavaidLoader, FrequencyLoader
+from data_loader import AirportLoader, RunwayLoader, NavaidLoader, FrequencyLoader
 
 filename_onto = "./ontology/final-archi.owl"
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
