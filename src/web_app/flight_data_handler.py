@@ -1,5 +1,7 @@
-# from flightradar.api import API
-# from flightradar.coordinates import *
+"""
+Real-time traffic data handler
+
+"""
 import time
 import requests
 import json
@@ -14,6 +16,25 @@ def fprint(*args, **kwargs):
     print(args, flush=True)
 
 def dist_flight_center(center_lat, center_lng, flight_lat, flight_lng):
+    """ Computes the distance between a center point and a flight
+        based on their GPS coordinates
+
+    Parameters
+    ----------
+    center_lat : float
+        Latitude of the center
+    center_lng : float
+        Longitude of the center
+    flight_lat : float
+        Latitude of the flight
+    flight_lng : float
+        Longitude of the flight
+
+    Returns
+    -------
+    float
+        Distance between the point and a flight
+    """
     R = 6373.0
 
     lat1, lon1 = radians(center_lat), radians(center_lng)
@@ -27,6 +48,7 @@ def dist_flight_center(center_lat, center_lng, flight_lat, flight_lng):
 
     distance = R * c
     return distance
+
 
 # From https://stackoverflow.com/questions/238260/how-to-calculate-the-bounding-box-for-a-given-lat-lng-location
 # degrees to radians
@@ -71,6 +93,21 @@ def boundingBox(latitudeInDegrees, longitudeInDegrees, halfSideInKm):
 
 
 def get_box_from_center(center, RADIUS):
+    """ Computes a box around a circle with a center and a radius
+
+    Parameters
+    ----------
+    center : (float, float)
+        GPS coordinates of the center
+    RADIUS : float
+        Radius of the cercle in km
+
+    Returns
+    -------
+    (float, float, float, float)
+        South / North latitude
+        West / East longitude
+    """
     lat, lng = center
     s, w, n, e = boundingBox(lat, lng, RADIUS)
     return s, n, w, e
@@ -78,7 +115,10 @@ def get_box_from_center(center, RADIUS):
 
 
 class FlightRadar24Handler:
-
+    """
+    Traffic handler from FlightRadar24 data
+    """
+    
     def __init__(self):
         self.api = API()
     

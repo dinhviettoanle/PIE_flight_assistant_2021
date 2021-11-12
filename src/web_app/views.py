@@ -1,3 +1,7 @@
+"""
+Web app views
+
+"""
 # Start with a basic flask app webpage.
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context, request
@@ -12,7 +16,9 @@ import logging
 import owlready2 as owl
 
 
-# ========= FLASK APP INIT ============
+# =======================================================================
+# ===================== FLASK APP INIT ==================================
+# =======================================================================
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
@@ -23,22 +29,33 @@ log.disabled = True
 sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
 # ====================================
 
-# from .models import db, Airport, Runway, Frequency, Navaid
-
-thread = Thread()
-thread_stop_event = Event()
-
 airspace_worker = None
 thread = Thread()
 USE_RADAR = True
 
-
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
+fprint("Loading ontology...")
 onto_individuals = owl.get_ontology(filename_onto_individuals).load()
+fprint("Ontology loaded !")
 
-# ============ BACKGROUND TASKS =================
+
+
+# =======================================================================
+# ===================== BACKGROUND TASKS ================================
+# =======================================================================
 
 def get_near_airports(dict_message, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with airport data
+
+    Parameters
+    ----------
+    dict_message : dict
+        Dictionary sent to the client
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
     try:
         s, n, w, e = get_box_from_center(center, RADIUS)
         near_airports = list(owl.default_world.sparql(
@@ -66,6 +83,17 @@ def get_near_airports(dict_message, center, RADIUS=100):
 
 
 def get_near_runways(dict_message, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with runway data
+
+    Parameters
+    ----------
+    dict_message : dict
+        Dictionary sent to the client
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
     try:
         s, n, w, e = get_box_from_center(center, RADIUS)
         near_runways = list(owl.default_world.sparql(
@@ -104,6 +132,13 @@ def get_near_runways(dict_message, center, RADIUS=100):
 
 
 def get_near_frequencies(dict_message):
+    """ Updates the dictionary message sent to the client with frequency data
+
+    Parameters
+    ----------
+    dict_message : dict
+        Dictionary sent to the client
+    """    
     event_bug = ""
     for airport in dict_message['list_airports']:
         current_icao = airport['icao']
@@ -133,6 +168,17 @@ def get_near_frequencies(dict_message):
 
 
 def get_near_navaids(dict_message, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with navaid data
+
+    Parameters
+    ----------
+    dict_message : dict
+        Dictionary sent to the client
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
     try:
         s, n, w, e = get_box_from_center(center, RADIUS)
         near_navaids = list(owl.default_world.sparql(
@@ -164,6 +210,9 @@ def get_near_navaids(dict_message, center, RADIUS=100):
 
 
 class AirspaceBackgroundWorker:
+    """
+    Thread handling periodic queries and calls to the traffic data API
+    """
     switch = False
 
     def __init__(self, sio, box=None, center=None):
@@ -175,8 +224,6 @@ class AirspaceBackgroundWorker:
         fprint("----- Background airspace worker initialized -----")
 
     def do_work(self):
-        namespace = '/test'
-        fprint("----- Begin trafic worker -----")
         while self.switch:
             try:
                 # Handle traffic
@@ -194,7 +241,6 @@ class AirspaceBackgroundWorker:
                 # Handle runways
                 get_near_runways(dict_message, self.center)
                 
-
                 # Handle navaids
                 get_near_navaids(dict_message, self.center)
 
@@ -221,13 +267,6 @@ class AirspaceBackgroundWorker:
 
 
 
-@app.route('/')
-def index():
-    print(request)
-    start_work("start")
-    return render_template('index.html')
-
-
 
 def start_work(sid):
     global thread, airspace_worker
@@ -244,7 +283,18 @@ def start_work(sid):
         else:
             airspace_worker = AirspaceBackgroundWorker(sio, box=box, center=center)
             sio.start_background_task(airspace_worker.do_work)
-    
+
+
+# =======================================================================
+# ===================== FLASK APP VIEWS =================================
+# =======================================================================
+
+@app.route('/')
+def index():
+    print(request)
+    start_work("start")
+    return render_template('index.html')
+
 
 
 @sio.on('change_focus')
@@ -264,7 +314,3 @@ def get_change_focus(data):
 @sio.on('disconnect')
 def test_disconnect():
     print('Client disconnected')
-
-
-if __name__ == '__main__':
-    sio.run(app)

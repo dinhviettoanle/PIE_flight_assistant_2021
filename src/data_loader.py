@@ -1,3 +1,6 @@
+"""
+Data downloaders used to import individuals in the ontology
+"""
 import requests
 import pandas as pd
 import io
@@ -5,15 +8,11 @@ from tqdm.autonotebook import tqdm
 import logging as lg
 
 
-
-# =========================================================================================
-# =========================================================================================
-# LOADERS
-# =========================================================================================
-# =========================================================================================
-
-
 class AirportLoader:
+    """
+    Airport data downloader from FlightRadar24 or ourairports
+    """
+
     def __init__(self, source='fr24'):
         if source == 'fr24':
             self.data = self.download_fr24()
@@ -90,6 +89,9 @@ class AirportLoader:
 
 
 class RunwayLoader:
+    """
+    Runway data downloader from ourairports
+    """
     def __init__(self):
         self.data = self.download_ourairports()
 
@@ -129,6 +131,9 @@ class RunwayLoader:
 
 
 class NavaidLoader:
+    """
+    Navaid data downloader from ourairports
+    """
     def __init__(self):
         self.data = self.download_navaids()
 
@@ -183,6 +188,9 @@ class NavaidLoader:
 
 
 class FrequencyLoader:
+    """
+    Frequency data downloader from ourairports
+    """
     def __init__(self):
         self.data = self.download_frequencies()
 

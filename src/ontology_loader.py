@@ -1,3 +1,7 @@
+"""
+Individual loader in the ontology
+
+"""
 import owlready2 as owl
 import pandas as pd
 from tqdm.autonotebook import tqdm
@@ -12,6 +16,14 @@ onto = owl.get_ontology(filename_onto).load()
 # ===================================================================================
 
 def create_airport_individuals():
+    """ Creates Airport individuals
+
+    Returns
+    -------
+    dict
+        Dictionary conataining Airport individuals
+        Keys are ICAO identifiers
+    """
     airport_data = AirportLoader().get_airport_data()
     dict_airports = {}
     pbar = tqdm(total=len(airport_data), desc="Airports")
@@ -44,6 +56,13 @@ def create_airport_individuals():
 # ===================================================================================
 
 def create_runway_individuals(dict_airports):
+    """ Creates Runway individuals in the ontology
+
+    Parameters
+    ----------
+    dict_airports : dict
+        Dictionary conataining Airport individuals
+    """
     runway_data = RunwayLoader().get_runway_data()
     pbar = tqdm(total=len(runway_data), desc="Runways")
     for i, row in runway_data.iterrows():
@@ -97,6 +116,13 @@ def create_runway_individuals(dict_airports):
 # ===================================================================================
 
 def create_frequencies_individuals(dict_airports):
+    """ Creates Frequency individuals in the ontology
+
+    Parameters
+    ----------
+    dict_airports : dict
+        Dictionary conataining Airport individuals
+    """
     frequency_data = FrequencyLoader().get_frequency_data()
     pbar = tqdm(total=len(frequency_data), desc="Frequencies")
     for i, row in frequency_data.iterrows():
@@ -119,6 +145,8 @@ def create_frequencies_individuals(dict_airports):
 # ===================================================================================
 
 def create_navaid_individuals():
+    """ Creates Navaid individuals in the ontology
+    """
     navaid_data = NavaidLoader().get_navaid_data()
     pbar = tqdm(total=len(navaid_data), desc="Navaids")
     for i, row in navaid_data.iterrows():
