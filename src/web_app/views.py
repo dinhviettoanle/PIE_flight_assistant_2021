@@ -68,16 +68,37 @@ def get_near_airports(dict_message, center, RADIUS=100):
 
 def get_near_runways(dict_message, center, RADIUS=100):
     try:
-        assert False
         s, n, w, e = get_box_from_center(center, RADIUS)
-        # near_runways = Runway.query.filter( \
-        #         (Runway.le_longitude >= w) & (Runway.le_longitude <= e) & \
-        #         (Runway.le_latitude >= s) & (Runway.le_latitude <= n)) \
-        #             .with_entities(Runway.airport, Runway.length, Runway.width, Runway.surface, 
-        #                             Runway.le_ident, Runway.le_heading, Runway.le_latitude, Runway.le_longitude,
-        #                             Runway.he_ident, Runway.he_heading, Runway.he_latitude, Runway.he_longitude)\
-        #             .all()
-        # dict_message['list_runways'] = [r._asdict() for r in near_runways]
+        near_runways = list(owl.default_world.sparql(
+            f"""
+                PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+                SELECT ?icao ?couple ?ident ?altitude ?beg_latitude ?beg_longitude ?end_latitude ?end_longitude
+                    ?length ?lights ?orientation ?surface ?threshold ?width
+                WHERE {{
+                    ?Airport pie:AirportICAOCode ?icao .
+                    ?Airport pie:HasRunway ?Runway .
+                    ?Runway pie:RunwayAltitude ?altitude .
+                    ?Runway pie:RunwayCouple ?couple .
+                    ?Runway pie:RunwayBeginGPSLatitude ?beg_latitude .
+                    ?Runway pie:RunwayBeginGPSLongitude ?beg_longitude .
+                    ?Runway pie:RunwayEndGPSLatitude ?end_latitude .
+                    ?Runway pie:RunwayEndGPSLongitude ?end_longitude .
+                    ?Runway pie:RunwayIdentifier ?ident .
+                    ?Runway pie:RunwayLength ?length .
+                    ?Runway pie:RunwayLights ?lights .
+                    ?Runway pie:RunwayIdentifier ?ident .
+                    ?Runway pie:RunwayOrientation ?orientation .
+                    ?Runway pie:RunwaySurface ?surface .
+                    ?Runway pie:RunwayThresholdLength ?threshold .
+                    ?Runway pie:RunwayWidth ?width .
+                    FILTER (?beg_longitude > {w} && ?beg_longitude < {e} 
+                        &&  ?beg_latitude > {s} && ?beg_latitude < {n})
+                    
+                }}
+            """))
+        fields = ['airport', 'couple', 'ident', 'altitude', 'beg_latitude', 'beg_longitude', 'end_latitude', 'end_longitude', 
+                'length', 'lights', 'orientation', 'surface', 'threshold', 'width']
+        dict_message['list_runways'] = [dict(zip(fields, runway_tuple)) for runway_tuple in near_runways]
     except Exception as e:
         fprint("Error querying runways", e)
         dict_message['list_runways'] = []

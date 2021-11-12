@@ -971,6 +971,14 @@
     
 
 
+    <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayCouple -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayCouple">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp"/>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#RunwayDataProp">

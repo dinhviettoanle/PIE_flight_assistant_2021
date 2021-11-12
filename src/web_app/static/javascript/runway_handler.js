@@ -9,18 +9,15 @@ class Runway extends Location{
         this.length = runway.length;
         this.width = runway.width;
         this.surface = runway.surface;
-        this.le_ident = runway.le_ident;
-        this.le_heading = runway.le_heading;
-        this.le_latitude = runway.le_latitude;
-        this.le_longitude = runway.le_longitude;
-        this.he_ident = runway.he_ident;
-        this.he_heading = runway.he_heading;
-        this.he_latitude = runway.he_latitude;
-        this.he_longitude = runway.he_longitude;
+        this.couple = runway.couple;
+        this.beg_latitude = runway.beg_latitude;
+        this.beg_longitude = runway.beg_longitude;
+        this.end_latitude = runway.end_latitude;
+        this.end_longitude = runway.end_longitude;
         
         var latlngs = [
-            [this.le_latitude, this.le_longitude],
-            [this.he_latitude, this.he_longitude],
+            [this.beg_latitude, this.beg_longitude],
+            [this.end_latitude, this.end_longitude],
         ];
         
         this.line = new L.polyline(latlngs, 
@@ -29,7 +26,7 @@ class Runway extends Location{
             weight : 0,
             opacity : 0.3});
         
-        this.line.bindTooltip(`${this.le_ident}/${this.he_ident} - ${this.airport} <br>
+        this.line.bindTooltip(`${this.couple} - ${this.airport} <br>
             Dim : ${this.length} x ${this.width} <br>
             Surf : ${this.surface}`, 
             {className : "runwayToolTip", sticky : true});
@@ -48,8 +45,8 @@ class Runway extends Location{
 }
 
 function set_middle_latlgn(runway_dict) {
-    runway_dict['latitude'] = (runway_dict.le_latitude + runway_dict.he_latitude)/2;
-    runway_dict['longitude'] = (runway_dict.le_longitude + runway_dict.he_longitude)/2;
+    runway_dict['latitude'] = (runway_dict.beg_latitude + runway_dict.end_latitude)/2;
+    runway_dict['longitude'] = (runway_dict.beg_longitude + runway_dict.end_longitude)/2;
     return runway_dict;
 }
 
@@ -64,11 +61,11 @@ function check_visible_runway(key_list) {
 
 
 function update_runways(list_runways) {
-    var key_list = list_runways.map(({airport, le_ident}) => airport + "-" + le_ident);
+    var key_list = list_runways.map(({airport, couple}) => airport + "-" + couple);
     check_visible_runway(key_list);
     
     list_runways.forEach(r => {
-        var key = r.airport + "-" + r.le_ident;
+        var key = r.airport + "-" + r.couple;
         if (!(key in dict_runways)) {
             r = set_middle_latlgn(r);
             let runway = new Runway(r);

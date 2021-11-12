@@ -52,10 +52,11 @@ def create_runway_individuals(dict_airports):
         ## Individual
         new_runway_low = onto.Runway(f"{this_airport}-{row['le_ident']}")
         new_runway_low.RunwayAltitude.append(row['le_elevation_ft'])
+        new_runway_low.RunwayCouple.append(f"{row['le_ident']}/{row['he_ident']}")
         new_runway_low.RunwayBeginGPSLatitude.append(row['le_latitude_deg'])
-        new_runway_low.RunwayEndGPSLongitude.append(row['le_longitude_deg'])
+        new_runway_low.RunwayBeginGPSLongitude.append(row['le_longitude_deg'])
+        new_runway_low.RunwayEndGPSLongitude.append(row['he_longitude_deg'])
         new_runway_low.RunwayEndGPSLatitude.append(row['he_latitude_deg'])
-        new_runway_low.RunwayBeginGPSLongitude.append(row['he_longitude_deg'])
         new_runway_low.RunwayIdentifier.append(row['le_ident'])
         new_runway_low.RunwayLights.append(row['lighted'])
         new_runway_low.RunwayLength.append(row['length_ft'])
@@ -71,6 +72,7 @@ def create_runway_individuals(dict_airports):
         # Highest orientation
         new_runway_high = onto.Runway(f"{this_airport}-{row['he_ident']}")
         new_runway_high.RunwayAltitude.append(row['he_elevation_ft'])
+        new_runway_high.RunwayCouple.append(f"{row['le_ident']}/{row['he_ident']}")
         new_runway_high.RunwayBeginGPSLatitude.append(row['he_latitude_deg'])
         new_runway_high.RunwayBeginGPSLongitude.append(row['he_longitude_deg'])
         new_runway_high.RunwayEndGPSLatitude.append(row['le_latitude_deg'])
