@@ -1,5 +1,19 @@
 import owlready2 as owl
 
+filename_onto_individuals = "./ontology/final-archi-individuals.owl"
+
+
+def fprint(*args, **kwargs):
+    print(args, flush=True)
+
+
+def init_ontology_individuals():
+    fprint("Loading ontology...")
+    onto_individuals = owl.get_ontology(filename_onto_individuals).load()
+    fprint("Ontology loaded !")
+    return onto_individuals
+
+
 def query_map_near_airports(s, n, w, e):
     near_airports = list(owl.default_world.sparql(
         f"""

@@ -13,7 +13,6 @@ from threading import Thread, Event
 from .flight_data_handler import *
 
 import logging
-import owlready2 as owl
 from .query_ontology import *
 
 
@@ -33,12 +32,6 @@ sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
 airspace_worker = None
 thread = Thread()
 USE_RADAR = True
-
-filename_onto_individuals = "./ontology/final-archi-individuals.owl"
-fprint("Loading ontology...")
-onto_individuals = owl.get_ontology(filename_onto_individuals).load()
-fprint("Ontology loaded !")
-
 
 
 # =======================================================================
@@ -140,7 +133,9 @@ class AirspaceBackgroundWorker:
         self.switch = True
         self.box = box
         self.center = center
+        self.dict_message = {}
         self.flight_data_process = FlightRadar24Handler()
+        self.update_static_data()
         fprint("----- Background airspace worker initialized -----")
 
     def do_work(self):
@@ -148,39 +143,56 @@ class AirspaceBackgroundWorker:
             try:
                 # Handle traffic
                 if USE_RADAR:
-                    dict_message = self.flight_data_process.get_current_airspace(center=self.center)
+                    self.flight_data_process.get_current_airspace(self.dict_message, center=self.center)
                 else:
-                    dict_message = self.flight_data_process.get_current_airspace(box=self.box)
-            
-                # Handle airports
-                get_near_airports(dict_message, self.center)
+                    self.flight_data_process.get_current_airspace(self.dict_message, box=self.box)
+        
 
-                # Handle frequencies
-                get_near_frequencies(dict_message)
-
-                # Handle runways
-                get_near_runways(dict_message, self.center)
-                
-                # Handle navaids
-                get_near_navaids(dict_message, self.center)
-
-                self.sio.emit('airspace', dict_message)
+                self.sio.emit('airspace', self.dict_message)
                 fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
-                    f"# Flights : {dict_message['number_flights']}", 
-                    f"# Airports : {len(dict_message['list_airports'])}",
-                    f"# Runways : {len(dict_message['list_runways'])}",
+                    f"# Flights : {self.dict_message['number_flights']}", 
+                    f"# Airports : {len(self.dict_message['list_airports'])}",
+                    f"# Runways : {len(self.dict_message['list_runways'])}",
                     )
-                self.sio.sleep(1)
+                self.sio.sleep(.5)
 
             except Exception as e:
                 fprint(f"Error : {str(e)}")
     
-    
+
+
+    def update_static_data(self):
+        try:
+            self.dict_message['center'] = self.center
+            self.dict_message['box'] = self.box
+
+            # Handle airports
+            self.dict_message['list_airports'] = []
+            get_near_airports(self.dict_message, self.center)
+
+            # # Handle frequencies
+            get_near_frequencies(self.dict_message)
+
+            # # Handle runways
+            self.dict_message['list_runways'] = []
+            get_near_runways(self.dict_message, self.center)
+            
+            # # Handle navaids
+            self.dict_message['list_navaids'] = []
+            get_near_navaids(self.dict_message, self.center)
+        
+        except Exception as e:
+                fprint(f"Error : {str(e)}")
+
+
     def update_box(self, box):
         self.box = box
+        self.update_static_data()
+
     
     def update_center(self, center):
         self.center = center
+        self.update_static_data()
 
     def stop(self):
         self.switch = False
@@ -212,6 +224,7 @@ def start_work(sid):
 @app.route('/')
 def index():
     print(request)
+    init_ontology_individuals()
     start_work("start")
     return render_template('index.html')
 

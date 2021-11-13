@@ -122,7 +122,7 @@ class FlightRadar24Handler:
     def __init__(self):
         self.api = API()
     
-    def get_current_airspace(self, center=None, box=None, RADIUS=100, VERBOSE=False):
+    def get_current_airspace(self, dict_message, center=None, box=None, RADIUS=100, VERBOSE=False):
         # box : (south, north, west, east)
         # area(southwest, northeast)
         # point(lat, lon)
@@ -180,17 +180,10 @@ class FlightRadar24Handler:
         else:
             time_update_str = "No flight"
 
-        dict_message = {
-            'time_update_str': time_update_str,
-            'number_flights' : number_flights,
-            'list_flights' : list_flights,
-            'center' : center,
-            'radius' : RADIUS,
-            'box' : box,
-            }
-        
-        return dict_message
-
+        dict_message['radius'] = RADIUS
+        dict_message['time_update_str'] = time_update_str
+        dict_message['number_flights'] = number_flights
+        dict_message['list_flights'] = list_flights
 
 
 
