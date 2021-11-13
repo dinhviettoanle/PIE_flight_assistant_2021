@@ -9,6 +9,8 @@ $(document).ready(function(){
     // socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
     socket = io();
 
+    socket.emit('init_worker');
+    
     console.log("Ready !");
     
     //receive details from server
@@ -18,6 +20,7 @@ $(document).ready(function(){
         if (!isInitialized) {
             init_graphics(msg.center, msg.radius);
             isInitialized = true;
+            myModal.toggle();
         }
 
         var list_flights_string = '';

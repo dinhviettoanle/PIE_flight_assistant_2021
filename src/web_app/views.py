@@ -224,10 +224,12 @@ def start_work(sid):
 @app.route('/')
 def index():
     print(request)
-    init_ontology_individuals()
-    start_work("start")
     return render_template('index.html')
 
+@sio.on('init_worker')
+def init_worker():
+    init_ontology_individuals()
+    start_work("start")
 
 
 @sio.on('change_focus')

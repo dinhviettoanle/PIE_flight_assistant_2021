@@ -68,16 +68,24 @@
 
 
 <body>
-  <div class="container">
-    <h1>Test FlightData APIs</h1>
+
+  <div class="modal" id="modalWaitingOntolgy">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ontology</h5>
+            </div>
+            <div class="modal-body">
+                <p>Loading ontology and individuals...</p>
+            </div>
+        </div>
+    </div>
   </div>
 
 
+
   <div class="container">
-    <h3>Fonctionnement</h3>
-    - Sélectionner un marqueur (vol ou aéroport) pour ouvrir la popup <br>
-    - Cliquer en dehors de la zone orange pour choisir une autre zone où chercher les vols <br>
-    - Les pistes sont visibles à partir d'un certain zoom
+    <h1>Test FlightData APIs</h1>
   </div>
 
   <hr>
@@ -176,6 +184,11 @@
 
 
 </body>
+
+<script>
+  var myModal = new bootstrap.Modal(document.getElementById('modalWaitingOntolgy'), {backdrop: 'static', keyboard: false});
+  myModal.toggle();
+</script>
 
 <script src="static/javascript/map_handler.js"></script>
 <script src="static/javascript/traffic_handler.js"></script>
