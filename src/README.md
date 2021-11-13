@@ -10,7 +10,6 @@
 - `ontology/`
   - `final-archi.owl` :
   - `final-archi-individuals.owl` :
-  
 - `web_app/`
   - `flightradar/` : FlightRadar24 API adapted on this [repo](https://github.com/alexbagirov/py-flightradar24)
   - `static/` : Static files (scripts and images)
