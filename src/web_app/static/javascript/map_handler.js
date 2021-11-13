@@ -1,13 +1,13 @@
 const USE_RADAR = true;
 
-var box = [42.59972466458162, 44.59972466458162, -0.5507202427834272, 3.4492797572165728];
-var minLat = box[0];
-var maxLat = box[1];
-var minLong = box[2];
-var maxLong = box[3];
+var box = null;
+var minLat = null;
+var maxLat = null;
+var minLong = null;
+var maxLong = null;
 
-var center = [43.59972466458162, 1.4492797572165728];
-var radius = 100;
+var center = null;
+var radius = null;
 
 var bounds = null;
 var rect = null;
@@ -69,7 +69,7 @@ function toRad(Value) {
 
 
 function init_map() {
-    mymap = L.map('mapid').setView([maxLat, minLong], 13);
+    mymap = L.map('mapid');
     // Set tiles
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -140,7 +140,21 @@ function update_radar() {
 
 
 
-init_map();
+function init_graphics(first_center, first_radius) {
 
-if (USE_RADAR) { init_radar(); }
-else { init_box(); }
+    minLat = first_center[0] - 1;
+    maxLat = first_center[0] + 1;
+    minLong = first_center[1] - 2;
+    maxLong = first_center[1] + 2;
+    box = [minLat, maxLat, minLong, maxLong];
+
+    center = [first_center[0], first_center[1]];
+    radius = first_radius;
+    
+    mymap.setView([maxLat, minLong], 13)
+    
+    if (USE_RADAR) { init_radar(); }
+    else { init_box(); }
+}
+
+init_map();

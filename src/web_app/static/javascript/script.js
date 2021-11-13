@@ -1,6 +1,7 @@
 
 var socket = null;
 var mymap = null;
+var isInitialized = false;
 
 $(document).ready(function(){
     //connect to the socket server.
@@ -13,6 +14,11 @@ $(document).ready(function(){
     //receive details from server
     socket.on('airspace', function(msg) {
         // console.log(msg.list_airports);
+
+        if (!isInitialized) {
+            init_graphics(msg.center, msg.radius);
+            isInitialized = true;
+        }
 
         var list_flights_string = '';
         msg.list_flights.forEach(f => {
@@ -47,6 +53,11 @@ $(document).ready(function(){
         update_airports(msg.list_airports);
         update_runways(msg.list_runways);
         update_navaids(msg.list_navaids);
+    });
+
+
+    socket.on('info', function(msg) {
+        console.log('msg');
     });
 
 });

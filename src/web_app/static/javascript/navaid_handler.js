@@ -12,7 +12,11 @@ class Navaid extends Location{
 
         this.nav_url = (this.nav_type.includes('NDB')) ? ndb_url : vor_url;
         
-        var size = 2.9*mymap.getZoom() - 14.2;
+        var currentZoom = mymap.getZoom();
+        var size = 0
+        if (currentZoom <= 5) { size = 0; }
+        else if (5 < currentZoom && currentZoom <= 14) { size = 2.9*currentZoom - 14.2; }
+        else { size = 25; }
         var navaid_icon = L.icon({
             iconUrl: this.nav_url,
             iconSize:     [size, size],
