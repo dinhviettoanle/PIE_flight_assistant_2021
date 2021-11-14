@@ -188,5 +188,17 @@ class FlightRadar24Handler:
 
 
 
-
+class AutocompleteQueryHandler():
+    def __init__(self):
+        self.api = API()
+    
+    def query_flight(self, query, limit=10):
+        list_found = []
+        for r in self.api.get_search_results(query=query, limit=limit):
+            if r['type'] not in ('schedule', 'aircraft', 'operator', 'airport'):
+                route = "?? ⟶ ??" if not r.get('detail').get('route') else r['detail']['route'] 
+                str_result = f"{r['detail']['callsign']} : {route}"
+                # list_found.append(r['detail']['callsign'])
+                list_found.append(str_result)
+        return list_found
 

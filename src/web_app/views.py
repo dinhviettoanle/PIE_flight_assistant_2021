@@ -4,7 +4,7 @@ Web app views
 """
 # Start with a basic flask app webpage.
 from flask_socketio import SocketIO, emit
-from flask import Flask, render_template, url_for, copy_current_request_context, request
+from flask import Flask, render_template, url_for, copy_current_request_context, request, jsonify
 from random import random
 from time import sleep
 import os
@@ -33,6 +33,7 @@ airspace_worker = None
 thread = Thread()
 USE_RADAR = True
 
+autocomplete_query_handler = AutocompleteQueryHandler()
 
 # =======================================================================
 # ===================== BACKGROUND TASKS ================================
@@ -243,6 +244,14 @@ def get_change_focus(data):
         min_long, max_long = data['longitude'] - 2, data['longitude'] + 2
         box = (min_lat, max_lat, min_long, max_long)
         airspace_worker.update_box(box)
+
+
+@app.route('/_autocomplete', methods=['GET'])
+def autocomplete():
+    search = request.args.get('q')
+    fprint(f"Follow flight query : {search}")
+    results = autocomplete_query_handler.query_flight(query=search)
+    return jsonify(matching_results=results)
 
 
 

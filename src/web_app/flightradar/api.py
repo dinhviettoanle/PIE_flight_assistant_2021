@@ -73,6 +73,7 @@ class API:
         self.logger.info('Processing search request: {}'.format(query))
         req = Request(SEARCH_API_PATTERN.format(query, limit),
                       headers=HEADERS)
+        # print(SEARCH_API_PATTERN.format(query, limit))
         return json.loads(urlopen(req).read().decode())['results']
 
     def search(self, query: str, limit: int = 10):

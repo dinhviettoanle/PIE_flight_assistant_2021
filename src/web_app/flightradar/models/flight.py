@@ -67,6 +67,7 @@ class BriefFlight:
     @staticmethod
     def create_from_search(detail: dict, **kwargs):
         """Static method for Flight instance creation from search results."""
+        if not(detail.get('flight')) : detail['flight'] = ""
         return BriefFlight(flight_id=kwargs['res_id'], lat=detail['lat'],
                            lon=detail['lon'],
                            origin=detail['route'],

@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
   <script src="static/javascript/marker-direction.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  
   <title>Test FlightData APIs</title>
 
   <script>
@@ -88,6 +93,7 @@
     <h1>Test FlightData APIs</h1>
   </div>
 
+
   <hr>
 
   <div class="container" id="content">
@@ -151,8 +157,9 @@
         <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
           <div class="accordion-body">
             <div>
-              <b>Follow a flight :</b>
-              <input type="search" id="form1" class="form-control"/>
+              
+              <label for="flight_autocomplete"><b>Follow a flight :</b></label>
+              <input id="flight_autocomplete" name="autocomp" type="text" value="" class="form-control">
               <br>
               <b>Description :</b>
               XXX
@@ -190,10 +197,37 @@
   myModal.toggle();
 </script>
 
+<script>
+
+  $(function() {
+      $("#flight_autocomplete").autocomplete({
+          source:function(request, response) {
+              $.getJSON('/_autocomplete',{
+                  q: request.term,
+              }, function(data) {
+                  response(data.matching_results);
+              });
+          },
+          minLength: 2,
+          select: function(event, ui) {
+              console.log(ui.item);
+          }
+      });
+  });
+
+
+  function select_flight(value) {
+    console.log(value);
+  }
+
+</script>
+
 <script src="static/javascript/map_handler.js"></script>
 <script src="static/javascript/traffic_handler.js"></script>
 <script src="static/javascript/airport_handler.js"></script>
 <script src="static/javascript/runway_handler.js"></script>
 <script src="static/javascript/navaid_handler.js"></script>
+
+
 
 </html>
