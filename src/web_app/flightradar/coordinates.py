@@ -26,12 +26,13 @@ class Area:
 
 class Waypoint:
     """Class for collecting aircraft checkins on the map."""
-    def __init__(self, latitude, longitude, altitude, speed, heading):
+    def __init__(self, latitude, longitude, altitude, speed, heading, timestamp):
         self.latitude = latitude
         self.longitude = longitude
         self.altitude = altitude
         self.speed = speed
         self.heading = heading
+        self.timestamp = timestamp
 
     def __str__(self) -> str:
         return '{} {}'.format(self.latitude, self.longitude)

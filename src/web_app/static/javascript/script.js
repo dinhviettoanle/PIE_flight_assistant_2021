@@ -60,7 +60,23 @@ $(document).ready(function(){
 
 
     socket.on('info', function(msg) {
-        console.log('msg');
+        console.log(msg);
+    });
+
+    socket.on('current_flight', function(data) {
+        // console.log(data);
+        var flight_data_str = `
+            Position : (${data.lat}, ${data.lon}) ; 
+            Altitude : ${data.alt} ft ; 
+            Speed : ${data.speed} kt ; 
+            Heading : ${data.heading}`;
+        $('#DOM-flightDescription').html(flight_data_str);
     });
 
 });
+
+
+function select_flight(flight) {
+    console.log("Following " + flight.label);
+    socket.emit('follow', flight);
+}

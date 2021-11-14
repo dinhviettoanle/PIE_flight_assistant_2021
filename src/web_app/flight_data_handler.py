@@ -192,13 +192,37 @@ class AutocompleteQueryHandler():
     def __init__(self):
         self.api = API()
     
-    def query_flight(self, query, limit=10):
+    def query_partial_flight(self, query, limit=10):
         list_found = []
         for r in self.api.get_search_results(query=query, limit=limit):
             if r['type'] not in ('schedule', 'aircraft', 'operator', 'airport'):
                 route = "?? ⟶ ??" if not r.get('detail').get('route') else r['detail']['route'] 
                 str_result = f"{r['detail']['callsign']} : {route}"
+                flight_id = r['id']
                 # list_found.append(r['detail']['callsign'])
-                list_found.append(str_result)
+                list_found.append({'str' : str_result, 'id' : flight_id})
         return list_found
+
+    def query_complete_flight(self, flight_id):
+        print(flight_id)
+        flight = self.api.get_flight(flight_id, RAW=False)
+        last_waypoint = flight.trail[0]
+        before_waypoint = flight.trail[1]
+        dt = last_waypoint.timestamp - before_waypoint.timestamp
+        dh = last_waypoint.altitude - before_waypoint.altitude
+
+        return {
+            'id': flight.id, 
+            'callsign' : flight.flight, 
+            'registration' : flight.registration,
+            'lat': last_waypoint.latitude, 
+            'lon': last_waypoint.latitude,
+            'heading': last_waypoint.heading, 
+            'speed': last_waypoint.speed, 
+            'vertical_speed' : int(60*dh/dt),
+            'alt' : last_waypoint.altitude,        
+            'last_contact' : last_waypoint.timestamp,
+            'origin' : flight.origin, 
+            'destination' : flight.destination
+        }
 

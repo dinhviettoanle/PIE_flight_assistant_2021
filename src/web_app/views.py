@@ -222,14 +222,25 @@ def start_work(sid):
 # ===================== FLASK APP VIEWS =================================
 # =======================================================================
 
+# =============== ROUTE ==========================
 @app.route('/')
 def index():
     print(request)
     return render_template('index.html')
 
+@app.route('/_autocomplete', methods=['GET'])
+def autocomplete():
+    search = request.args.get('q')
+    results = autocomplete_query_handler.query_partial_flight(query=search)
+    fprint(f"Follow flight query : {search} , {results}")
+    return jsonify(matching_results=results)
+
+
+# =============== SOCKET =======================
+init_ontology_individuals()
+
 @sio.on('init_worker')
 def init_worker():
-    init_ontology_individuals()
     start_work("start")
 
 
@@ -246,12 +257,13 @@ def get_change_focus(data):
         airspace_worker.update_box(box)
 
 
-@app.route('/_autocomplete', methods=['GET'])
-def autocomplete():
-    search = request.args.get('q')
-    fprint(f"Follow flight query : {search}")
-    results = autocomplete_query_handler.query_flight(query=search)
-    return jsonify(matching_results=results)
+@sio.on('follow')
+def begin_follow_flight(data):
+    flight_id = data['flight_id']
+    fprint(f"Following flight : {data['label']}")
+    flight_data = autocomplete_query_handler.query_complete_flight(flight_id)
+    sio.emit('current_flight', flight_data)
+    # Update a thread that moves center
 
 
 

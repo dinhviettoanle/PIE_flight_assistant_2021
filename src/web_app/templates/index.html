@@ -67,6 +67,10 @@
       background-color: rgb(211, 211, 211);
       border: 1pt solid rgb(165, 165, 165);
     }
+
+    .ui-autocomplete-loading { 
+      background:url(http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif) no-repeat right center 
+    }
   </style>
 
 </head>
@@ -161,8 +165,8 @@
               <label for="flight_autocomplete"><b>Follow a flight :</b></label>
               <input id="flight_autocomplete" name="autocomp" type="text" value="" class="form-control">
               <br>
-              <b>Description :</b>
-              XXX
+              <b>Description :</b><br>
+              <span id="DOM-flightDescription">&nbsp;</span>
             </div>
             <div>
               <hr>
@@ -201,24 +205,23 @@
 
   $(function() {
       $("#flight_autocomplete").autocomplete({
-          source:function(request, response) {
+          source: function(request, response) {
               $.getJSON('/_autocomplete',{
                   q: request.term,
               }, function(data) {
-                  response(data.matching_results);
+                  response($.map(data.matching_results, function(item) {
+                    return {
+                      label: item.str,
+                      value: item.str,
+                      flight_id : item.id
+                    }
+                  }));
               });
           },
           minLength: 2,
-          select: function(event, ui) {
-              console.log(ui.item);
-          }
+          select: (event, ui) => select_flight(ui.item)
       });
   });
-
-
-  function select_flight(value) {
-    console.log(value);
-  }
 
 </script>
 

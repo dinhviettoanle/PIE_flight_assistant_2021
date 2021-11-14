@@ -101,7 +101,10 @@ class DetailedFlight:
                          point['lng'],
                          point['alt'],
                          point['spd'],
-                         point['hd']) for point in waypoints]
+                         point['hd'],
+                         point['ts']) for point in waypoints]
+
+
 
     @staticmethod
     def create(data: dict):
@@ -114,10 +117,8 @@ class DetailedFlight:
             data['aircraft']['model']['code'] else 'N/A',
             registration=data['aircraft']['registration'],
             airline=data['airline']['name'] if data['airline'] else 'N/A',
-            iata=data['airline']['code']['iata']
-            if 'airline' in data and 'code' in data['airline'] else 'N/A',
-            icao=data['airline']['code']['icao']
-            if 'airline' in data and 'code' in data['airline'] else 'N/A',
+            iata=get_airline_prop(data, 'iata'),
+            icao=get_airline_prop(data, 'icao'),
             origin=data['airport']['origin']['position']['region']['city']
             if data['airport']['origin'] else 'N/A',
             destination=data['airport']['destination']['position']
@@ -151,3 +152,9 @@ def flights_to_json(flights: List[BriefFlight]):
 
 def get_image_id(track: int) -> int:
     return TRACKS[min(TRACKS, key=lambda x: abs(x - track))]
+
+def get_airline_prop(data, prop):
+    try:
+        return data['airline']['code'][prop]
+    except:
+        return 'N/A'
