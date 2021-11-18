@@ -203,8 +203,9 @@ class AutocompleteQueryHandler():
                 list_found.append({'str' : str_result, 'id' : flight_id})
         return list_found
 
+
+    # Attention, risque de "HTTP Error 402: Payment Required" si trop de requetes
     def query_complete_flight(self, flight_id):
-        print(flight_id)
         flight = self.api.get_flight(flight_id, RAW=False)
         last_waypoint = flight.trail[0]
         before_waypoint = flight.trail[1]
@@ -216,7 +217,7 @@ class AutocompleteQueryHandler():
             'callsign' : flight.flight, 
             'registration' : flight.registration,
             'lat': last_waypoint.latitude, 
-            'lon': last_waypoint.latitude,
+            'lon': last_waypoint.longitude,
             'heading': last_waypoint.heading, 
             'speed': last_waypoint.speed, 
             'vertical_speed' : int(60*dh/dt),
@@ -225,4 +226,26 @@ class AutocompleteQueryHandler():
             'origin' : flight.origin, 
             'destination' : flight.destination
         }
+
+    def query_proximity_to_flight(self, lat, lng, flight_id):
+        center = (lat, lng)
+        s, n, w, e = get_box_from_center(center, 20)
+
+        area = Area(Point(n, w), Point(s, e))
+        data_raw = self.api.get_area(area, VERBOSE=False)
+        data = json.loads(data_raw)[flight_id]
+
+        return {
+            'lat' : data['lat'],
+            'lon' : data['lon'],
+            'heading' : data['track'],
+            'speed' : data['speed'],
+            'vertical_speed' : data['vertical_speed'],
+            'alt' : data['alt'],
+            'last_contact' : datetime.utcfromtimestamp(data['last_contact']).strftime('%H:%M:%S'),
+        }
+
+
+
+    
 

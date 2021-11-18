@@ -71,6 +71,14 @@
     .ui-autocomplete-loading { 
       background:url(http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/images/ui-anim_basic_16x16.gif) no-repeat right center 
     }
+
+    .entry {
+      font-variant: small-caps;
+    }
+
+    #DOM-flightDescription {
+      font-family: "DejaVu Sans Mono", "monospace";
+    }
   </style>
 
 </head>
@@ -162,15 +170,23 @@
           <div class="accordion-body">
             <div>
               
-              <label for="flight_autocomplete"><b>Follow a flight :</b></label>
-              <input id="flight_autocomplete" name="autocomp" type="text" value="" class="form-control">
+              <label for="flight_autocomplete"><b class="entry">Follow a flight :</b></label>
+              <!-- <input id="flight_autocomplete" name="autocomp" type="text" value="" class="form-control"> -->
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="callsignLabel">Callsign</span>
+                </div>
+                <input type="text" class="form-control" name="autocomp" id="flight_autocomplete" aria-label="Username" aria-describedby="callsignLabel">
+              </div>
+              
               <br>
-              <b>Description :</b><br>
-              <span id="DOM-flightDescription">&nbsp;</span>
+              <b class="entry">Description :</b><br>
+              <span id="DOM-flightDescription"></span>
             </div>
             <div>
               <hr>
-              <b>Query</b><br>
+              <b class="entry">Query</b><br>
               <div class="m-2">
                 <button type="button" class="btn btn-secondary">Departure airport</button>
                 <button type="button" class="btn btn-secondary">Nearest airport</button>
@@ -178,7 +194,7 @@
               </div>
             </div>
             <div>
-              <b>Response :</b>
+              <b class="entry">Response :</b>
             </div>
           </div>
         </div>
@@ -201,30 +217,7 @@
   myModal.toggle();
 </script>
 
-<script>
-
-  $(function() {
-      $("#flight_autocomplete").autocomplete({
-          source: function(request, response) {
-              $.getJSON('/_autocomplete',{
-                  q: request.term,
-              }, function(data) {
-                  response($.map(data.matching_results, function(item) {
-                    return {
-                      label: item.str,
-                      value: item.str,
-                      flight_id : item.id
-                    }
-                  }));
-              });
-          },
-          minLength: 2,
-          select: (event, ui) => select_flight(ui.item)
-      });
-  });
-
-</script>
-
+<script src="static/javascript/follow_flight_handler.js"></script>
 <script src="static/javascript/map_handler.js"></script>
 <script src="static/javascript/traffic_handler.js"></script>
 <script src="static/javascript/airport_handler.js"></script>

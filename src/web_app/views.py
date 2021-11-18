@@ -30,8 +30,10 @@ sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
 # ====================================
 
 airspace_worker = None
+flight_follower_worker = None
 thread = Thread()
 USE_RADAR = True
+SLEEP_TIME = .5
 
 autocomplete_query_handler = AutocompleteQueryHandler()
 
@@ -39,12 +41,12 @@ autocomplete_query_handler = AutocompleteQueryHandler()
 # ===================== BACKGROUND TASKS ================================
 # =======================================================================
 
-def get_near_airports(dict_message, center, RADIUS=100):
+def get_near_airports(surrounding_data, center, RADIUS=100):
     """ Updates the dictionary message sent to the client with airport data
 
     Parameters
     ----------
-    dict_message : dict
+    surrounding_data : dict
         Dictionary sent to the client
     center : (float, float)
         Center of the radar
@@ -53,18 +55,18 @@ def get_near_airports(dict_message, center, RADIUS=100):
     """    
     try:
         s, n, w, e = get_box_from_center(center, RADIUS)
-        dict_message['list_airports'] = query_map_near_airports(s, n, w, e)
+        surrounding_data['list_airports'] = query_map_near_airports(s, n, w, e)
     except Exception as e:
         fprint("Error querying airports", e)
-        dict_message['list_airports'] = []
+        surrounding_data['list_airports'] = []
 
 
-def get_near_runways(dict_message, center, RADIUS=100):
+def get_near_runways(surrounding_data, center, RADIUS=100):
     """ Updates the dictionary message sent to the client with runway data
 
     Parameters
     ----------
-    dict_message : dict
+    surrounding_data : dict
         Dictionary sent to the client
     center : (float, float)
         Center of the radar
@@ -73,22 +75,22 @@ def get_near_runways(dict_message, center, RADIUS=100):
     """    
     try:
         s, n, w, e = get_box_from_center(center, RADIUS)
-        dict_message['list_runways'] = query_map_near_runways(s, n, w, e)
+        surrounding_data['list_runways'] = query_map_near_runways(s, n, w, e)
     except Exception as e:
         fprint("Error querying runways", e)
-        dict_message['list_runways'] = []
+        surrounding_data['list_runways'] = []
 
 
-def get_near_frequencies(dict_message):
+def get_near_frequencies(surrounding_data):
     """ Updates the dictionary message sent to the client with frequency data
 
     Parameters
     ----------
-    dict_message : dict
+    surrounding_data : dict
         Dictionary sent to the client
     """    
     event_bug = ""
-    for airport in dict_message['list_airports']:
+    for airport in surrounding_data['list_airports']:
         current_icao = airport['icao']
         try:
             airport['list_frequencies'] = query_map_near_frequencies(current_icao)
@@ -100,12 +102,12 @@ def get_near_frequencies(dict_message):
         fprint("Error querying frequencies", event_bug)
 
 
-def get_near_navaids(dict_message, center, RADIUS=100):
+def get_near_navaids(surrounding_data, center, RADIUS=100):
     """ Updates the dictionary message sent to the client with navaid data
 
     Parameters
     ----------
-    dict_message : dict
+    surrounding_data : dict
         Dictionary sent to the client
     center : (float, float)
         Center of the radar
@@ -114,10 +116,10 @@ def get_near_navaids(dict_message, center, RADIUS=100):
     """    
     try:
         s, n, w, e = get_box_from_center(center, RADIUS)
-        dict_message['list_navaids'] = query_map_near_navaids(s, n, w, e) 
+        surrounding_data['list_navaids'] = query_map_near_navaids(s, n, w, e) 
     except Exception as e:
         fprint("Error querying navaids", e)
-        dict_message['list_navaids'] = []
+        surrounding_data['list_navaids'] = []
 
 
 
@@ -134,9 +136,11 @@ class AirspaceBackgroundWorker:
         self.switch = True
         self.box = box
         self.center = center
-        self.dict_message = {}
+        self.surrounding_data = {}
         self.flight_data_process = FlightRadar24Handler()
         self.update_static_data()
+
+
         fprint("----- Background airspace worker initialized -----")
 
     def do_work(self):
@@ -144,17 +148,19 @@ class AirspaceBackgroundWorker:
             try:
                 # Handle traffic
                 if USE_RADAR:
-                    self.flight_data_process.get_current_airspace(self.dict_message, center=self.center)
+                    self.flight_data_process.get_current_airspace(self.surrounding_data, center=self.center)
                 else:
-                    self.flight_data_process.get_current_airspace(self.dict_message, box=self.box)
+                    self.flight_data_process.get_current_airspace(self.surrounding_data, box=self.box)
         
 
-                self.sio.emit('airspace', self.dict_message)
+                self.sio.emit('airspace', self.surrounding_data)
+
                 fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
-                    f"# Flights : {self.dict_message['number_flights']}", 
-                    f"# Airports : {len(self.dict_message['list_airports'])}",
-                    f"# Runways : {len(self.dict_message['list_runways'])}",
+                    f"# Flights : {self.surrounding_data['number_flights']}", 
+                    f"# Airports : {len(self.surrounding_data['list_airports'])}",
+                    f"# Runways : {len(self.surrounding_data['list_runways'])}",
                     )
+
                 self.sio.sleep(.5)
 
             except Exception as e:
@@ -164,23 +170,23 @@ class AirspaceBackgroundWorker:
 
     def update_static_data(self):
         try:
-            self.dict_message['center'] = self.center
-            self.dict_message['box'] = self.box
+            self.surrounding_data['center'] = self.center
+            self.surrounding_data['box'] = self.box
 
             # Handle airports
-            self.dict_message['list_airports'] = []
-            get_near_airports(self.dict_message, self.center)
+            self.surrounding_data['list_airports'] = []
+            get_near_airports(self.surrounding_data, self.center)
 
             # # Handle frequencies
-            get_near_frequencies(self.dict_message)
+            get_near_frequencies(self.surrounding_data)
 
             # # Handle runways
-            self.dict_message['list_runways'] = []
-            get_near_runways(self.dict_message, self.center)
+            self.surrounding_data['list_runways'] = []
+            get_near_runways(self.surrounding_data, self.center)
             
             # # Handle navaids
-            self.dict_message['list_navaids'] = []
-            get_near_navaids(self.dict_message, self.center)
+            self.surrounding_data['list_navaids'] = []
+            get_near_navaids(self.surrounding_data, self.center)
         
         except Exception as e:
                 fprint(f"Error : {str(e)}")
@@ -200,9 +206,66 @@ class AirspaceBackgroundWorker:
 
 
 
+class FlightFollowerWorker:
+
+    def __init__(self, sio):
+        self.sio = sio
+        self.flight_id = ""
+        self.switch = True
+        self.is_following = False
+        # To search near this position
+        self.latitude = 0
+        self.longitude = 0
+        self.static_info = {
+            'id' : "",
+            'registration' : "",
+            'callsign' : "",
+            'origin' : "",
+            'destination' : ""
+        }
+
+    def do_work(self):
+        while self.switch:
+            try:
+                if self.is_following:
+                    dynamic_data = autocomplete_query_handler.query_proximity_to_flight(self.latitude, self.longitude, self.flight_id)
+                    # Move box around the current followed flight
+                    self.latitude = dynamic_data['lat']
+                    self.longitude = dynamic_data['lon']
+
+                    flight_data = self.static_info
+                    for k in dynamic_data:
+                        flight_data[k] = dynamic_data[k]
+                else:
+                    flight_data = {}
+                
+                fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+                    f"Following {self.flight_id}")
+
+                flight_data['is_following'] = self.is_following
+                
+                self.sio.emit('follow_flight_info', flight_data)
+                self.sio.sleep(SLEEP_TIME)
+
+            except Exception as e:
+                fprint(f"Error : {str(e)}")
+
+
+    def update_flight_static_info(self, flight_id):
+        self.is_following = True
+        self.flight_id = flight_id
+        current_flight_data = autocomplete_query_handler.query_complete_flight(self.flight_id)
+        self.latitude = current_flight_data['lat']
+        self.longitude = current_flight_data['lon']
+
+        for k in self.static_info:
+            self.static_info[k] = current_flight_data[k]
+
+
+
 
 def start_work(sid):
-    global thread, airspace_worker
+    global thread, airspace_worker, flight_follower_worker
     toulouse_lat, toulouse_long = 43.59972466458162, 1.4492797572165728
     min_lat, max_lat = toulouse_lat - 1, toulouse_lat + 1
     min_long, max_long = toulouse_long - 2, toulouse_long + 2
@@ -216,6 +279,13 @@ def start_work(sid):
         else:
             airspace_worker = AirspaceBackgroundWorker(sio, box=box, center=center)
             sio.start_background_task(airspace_worker.do_work)
+
+        if flight_follower_worker is not None:
+            flight_follower_worker.update_flight_id('')
+        else:
+            flight_follower_worker = FlightFollowerWorker(sio)
+            sio.start_background_task(flight_follower_worker.do_work)
+
 
 
 # =======================================================================
@@ -257,13 +327,14 @@ def get_change_focus(data):
         airspace_worker.update_box(box)
 
 
-@sio.on('follow')
-def begin_follow_flight(data):
+@sio.on('new_follow')
+def new_follow_flight(data):
     flight_id = data['flight_id']
-    fprint(f"Following flight : {data['label']}")
-    flight_data = autocomplete_query_handler.query_complete_flight(flight_id)
-    sio.emit('current_flight', flight_data)
+    fprint(f"New follow flight : {data['label']}")
     # Update a thread that moves center
+    flight_follower_worker.update_flight_static_info(flight_id)
+
+
 
 
 

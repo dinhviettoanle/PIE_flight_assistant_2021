@@ -2,6 +2,7 @@
 var socket = null;
 var mymap = null;
 var isInitialized = false;
+var isFollowing = false;
 
 $(document).ready(function(){
     //connect to the socket server.
@@ -35,7 +36,7 @@ $(document).ready(function(){
 
         var list_runway_string = '';
         msg.list_runways.forEach(r => {
-            list_runway_string = list_runway_string + `${r.le_ident}/${r.he_ident} (${r.airport})<br>`;
+            list_runway_string = list_runway_string + `${r.couple} (${r.airport})<br>`;
         });
 
         var list_navaid_string = '';
@@ -63,13 +64,26 @@ $(document).ready(function(){
         console.log(msg);
     });
 
-    socket.on('current_flight', function(data) {
+    socket.on('follow_flight_info', function(data) {
         // console.log(data);
-        var flight_data_str = `
-            Position : (${data.lat}, ${data.lon}) ; 
-            Altitude : ${data.alt} ft ; 
-            Speed : ${data.speed} kt ; 
-            Heading : ${data.heading}`;
+        var flight_data_str = "&nbsp;<br>&nbsp;<br>&nbsp;";
+        isFollowing = data.is_following;
+
+        if (isFollowing) {
+            var flight_data_str = `
+                <b>Callsign : </b>${data.callsign} ; 
+                <b>Registration : </b> ${data.registration} ; 
+                <b>Route : </b> ${data.origin} ⟶ ${data.destination}
+                <br>
+                <b>Last contact : </b> ${data.last_contact}
+                <br>
+                <b>Position : </b> (${data.lat}, ${data.lon}) ; 
+                <b>Altitude : </b> ${data.alt} ft ; 
+                <b>Vg : </b> ${data.speed} kt ; 
+                <b>Vz : </b> ${data.vertical_speed} ft/min ; 
+                <b>Heading : </b> ${data.heading}`;
+        }
+
         $('#DOM-flightDescription').html(flight_data_str);
     });
 
@@ -78,5 +92,5 @@ $(document).ready(function(){
 
 function select_flight(flight) {
     console.log("Following " + flight.label);
-    socket.emit('follow', flight);
+    socket.emit('new_follow', flight);
 }
