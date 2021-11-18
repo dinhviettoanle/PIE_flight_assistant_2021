@@ -35,8 +35,7 @@ thread = Thread()
 USE_RADAR = True
 SLEEP_TIME = .5
 
-autocomplete_query_handler = AutocompleteQueryHandler()
-
+autocomplete_handler = AutocompleteHandler()
 # =======================================================================
 # ===================== BACKGROUND TASKS ================================
 # =======================================================================
@@ -161,7 +160,7 @@ class AirspaceBackgroundWorker:
                     f"# Runways : {len(self.surrounding_data['list_runways'])}",
                     )
 
-                self.sio.sleep(.5)
+                self.sio.sleep(SLEEP_TIME)
 
             except Exception as e:
                 fprint(f"Error : {str(e)}")
@@ -208,11 +207,13 @@ class AirspaceBackgroundWorker:
 
 class FlightFollowerWorker:
 
-    def __init__(self, sio):
+    def __init__(self, sio, airspace_worker):
         self.sio = sio
         self.flight_id = ""
         self.switch = True
         self.is_following = False
+        self.flight_follower_query = FlightSpecificQueryHandler()
+
         # To search near this position
         self.latitude = 0
         self.longitude = 0
@@ -224,23 +225,27 @@ class FlightFollowerWorker:
             'destination' : ""
         }
 
+        self.airspace_worker = airspace_worker
+
     def do_work(self):
         while self.switch:
             try:
                 if self.is_following:
-                    dynamic_data = autocomplete_query_handler.query_proximity_to_flight(self.latitude, self.longitude, self.flight_id)
+                    dynamic_data =  self.flight_follower_query.query_dynamic_data(self.latitude, self.longitude, self.flight_id)
                     # Move box around the current followed flight
                     self.latitude = dynamic_data['lat']
                     self.longitude = dynamic_data['lon']
 
-                    flight_data = self.static_info
+                    flight_data = self.static_info.copy()
                     for k in dynamic_data:
                         flight_data[k] = dynamic_data[k]
+
+                    fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+                        f"Following {self.flight_id}")
                 else:
                     flight_data = {}
-                
-                fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-                    f"Following {self.flight_id}")
+                    fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+                        f"Not following")
 
                 flight_data['is_following'] = self.is_following
                 
@@ -254,12 +259,15 @@ class FlightFollowerWorker:
     def update_flight_static_info(self, flight_id):
         self.is_following = True
         self.flight_id = flight_id
-        current_flight_data = autocomplete_query_handler.query_complete_flight(self.flight_id)
+        current_flight_data =  self.flight_follower_query.query_complete_flight(self.flight_id)
         self.latitude = current_flight_data['lat']
         self.longitude = current_flight_data['lon']
 
         for k in self.static_info:
             self.static_info[k] = current_flight_data[k]
+
+    def stop_following(self):
+        self.is_following = False
 
 
 
@@ -281,9 +289,9 @@ def start_work(sid):
             sio.start_background_task(airspace_worker.do_work)
 
         if flight_follower_worker is not None:
-            flight_follower_worker.update_flight_id('')
+            flight_follower_worker.update_flight_static_info('')
         else:
-            flight_follower_worker = FlightFollowerWorker(sio)
+            flight_follower_worker = FlightFollowerWorker(sio, airspace_worker)
             sio.start_background_task(flight_follower_worker.do_work)
 
 
@@ -301,8 +309,8 @@ def index():
 @app.route('/_autocomplete', methods=['GET'])
 def autocomplete():
     search = request.args.get('q')
-    results = autocomplete_query_handler.query_partial_flight(query=search)
-    fprint(f"Follow flight query : {search} , {results}")
+    results = autocomplete_handler.query_partial_flight(query=search)
+    # fprint(f"Follow flight query : {search} , {results}")
     return jsonify(matching_results=results)
 
 
@@ -325,6 +333,9 @@ def get_change_focus(data):
         min_long, max_long = data['longitude'] - 2, data['longitude'] + 2
         box = (min_lat, max_lat, min_long, max_long)
         airspace_worker.update_box(box)
+
+    if not(data['follow']):
+        flight_follower_worker.stop_following()
 
 
 @sio.on('new_follow')

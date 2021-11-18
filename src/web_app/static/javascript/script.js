@@ -82,9 +82,15 @@ $(document).ready(function(){
                 <b>Vg : </b> ${data.speed} kt ; 
                 <b>Vz : </b> ${data.vertical_speed} ft/min ; 
                 <b>Heading : </b> ${data.heading}`;
+
+            if (center[0] != data.lat || center[1] != data.lon){
+                change_focus(data.lat, data.lon, true);
+            }
         }
 
         $('#DOM-flightDescription').html(flight_data_str);
+
+        
     });
 
 });

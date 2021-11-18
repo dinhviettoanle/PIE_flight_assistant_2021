@@ -84,24 +84,31 @@ function init_map() {
     // Set interaction
     mymap.on('click', function(e) {
         console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-        socket.emit('change_focus', {
-            latitude : e.latlng.lat,
-            longitude : e.latlng.lng,
-        });
-
-        maxLong = e.latlng.lng + 2;
-        minLong = e.latlng.lng - 2;
-        minLat = e.latlng.lat - 1;
-        maxLat = e.latlng.lat + 1;
-
-        // With circle
-        center = [ e.latlng.lat, e.latlng.lng];
-        
-        if (USE_RADAR) { update_radar(); }
-        else { update_box(); }
-
+        isFollowing = false;
+        change_focus(e.latlng.lat, e.latlng.lng, false);
+        $('#flight_autocomplete').val('');
     });
 
+}
+
+
+function change_focus(new_lat, new_lng, follow) {
+    socket.emit('change_focus', {
+        latitude : new_lat,
+        longitude : new_lng,
+        follow : follow,
+    });
+
+    maxLong = new_lng + 2;
+    minLong = new_lng - 2;
+    minLat = new_lat - 1;
+    maxLat = new_lat + 1;
+
+    // With circle
+    center = [ new_lat, new_lng ];
+    
+    if (USE_RADAR) { update_radar(); }
+    else { update_box(); }
 }
 
 function init_box() {

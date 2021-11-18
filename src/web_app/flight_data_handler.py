@@ -187,11 +187,10 @@ class FlightRadar24Handler:
 
 
 
-
-class AutocompleteQueryHandler():
+class AutocompleteHandler():
     def __init__(self):
         self.api = API()
-    
+
     def query_partial_flight(self, query, limit=10):
         list_found = []
         for r in self.api.get_search_results(query=query, limit=limit):
@@ -202,6 +201,13 @@ class AutocompleteQueryHandler():
                 # list_found.append(r['detail']['callsign'])
                 list_found.append({'str' : str_result, 'id' : flight_id})
         return list_found
+
+
+
+
+class FlightSpecificQueryHandler():
+    def __init__(self):
+        self.api = API()
 
 
     # Attention, risque de "HTTP Error 402: Payment Required" si trop de requetes
@@ -227,9 +233,9 @@ class AutocompleteQueryHandler():
             'destination' : flight.destination
         }
 
-    def query_proximity_to_flight(self, lat, lng, flight_id):
+    def query_dynamic_data(self, lat, lng, flight_id):
         center = (lat, lng)
-        s, n, w, e = get_box_from_center(center, 20)
+        s, n, w, e = get_box_from_center(center, 20) # Watch 20km around the center
 
         area = Area(Point(n, w), Point(s, e))
         data_raw = self.api.get_area(area, VERBOSE=False)
