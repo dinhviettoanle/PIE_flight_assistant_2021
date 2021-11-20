@@ -37,6 +37,10 @@ SLEEP_TIME = .5
 ontology_is_init = False
 
 autocomplete_handler = AutocompleteHandler()
+
+def print_info(*args, **kwargs):
+    print(args, flush=True)
+
 # =======================================================================
 # ===================== BACKGROUND TASKS ================================
 # =======================================================================
@@ -275,8 +279,13 @@ class FlightFollowerWorker:
     def handle_query(self, query_type):
         fprint(f"Query for {query_type}")
         response_str = "N/A"
+
         if query_type == "DepartureAirport":
             response_str = f"The departure airport is {self.static_info.get('origin')}."
+        elif query_type == "NearestAirport":
+            response_dict = query_nearest_airport(self.latitude, self.longitude)
+            response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} km."
+        
         return {'response_str' : response_str}
 
 

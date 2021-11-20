@@ -1,4 +1,6 @@
 import owlready2 as owl
+import numpy as np
+import pandas as pd
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
@@ -13,6 +15,11 @@ def init_ontology_individuals():
     fprint("Ontology loaded !")
     return onto_individuals
 
+
+
+# ======================================================================================
+# ================ MAP QUERIES =========================================================
+# ======================================================================================
 
 def query_map_near_airports(s, n, w, e):
     near_airports = list(owl.default_world.sparql(
@@ -108,3 +115,48 @@ def query_map_near_navaids(s, n, w, e):
         """))
     fields = ['ident', 'name', 'nav_type', 'frequency', 'latitude', 'longitude', 'altitude']
     return [dict(zip(fields, navaid_tuple)) for navaid_tuple in near_navaids]
+
+
+# ======================================================================================
+# ================ USER QUERIES ========================================================
+# ======================================================================================
+
+def query_nearest_airport(lat, lng):
+    response = list(owl.default_world.sparql(
+        f"""
+        PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+        SELECT ?Name ?ICAO ?lat ?long
+        WHERE {{
+            ?Airport pie:AirportICAOCode ?ICAO .
+            ?Airport pie:AirportName ?Name .
+            ?Airport pie:AirportGPSLongitude ?long .
+            ?Airport pie:AirportGPSLatitude ?lat .
+            }}
+        """))
+
+    l = np.array(response)
+
+    df=  pd.DataFrame({
+        'name': l[:, 0],
+        'ICAO': l[:, 1],
+        'lat': l[:, 2],
+        'lng': l[:, 3],
+    })
+
+    df['lat'] = pd.to_numeric(df['lat'], downcast="float")
+    df['lng'] = pd.to_numeric(df['lng'], downcast="float")
+
+    df['distance'] = df.apply(lambda x: coord_to_dist(x["lat"], x["lng"], lat, lng), axis=1)
+    return df.iloc[df['distance'].idxmin()].to_dict()
+
+
+
+# ======================================================================================
+# ================ UTILS ===============================================================
+# ======================================================================================
+def coord_to_dist(cur_lat, cur_long, dest_lat, dest_long):
+    cur_lat = cur_lat*np.pi/180
+    cur_long = cur_long*np.pi/180
+    dest_lat = dest_lat*np.pi/180
+    dest_long = dest_long*np.pi/180
+    return 60*180/np.pi*np.arccos(np.sin(cur_lat)*np.sin(dest_lat)+np.cos(cur_lat)*np.cos(dest_lat)*np.cos(dest_long-cur_long))
