@@ -131,7 +131,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="callsignLabel">Callsign</span>
                 </div>
-                <input type="text" class="form-control" name="autocomp" id="flight_autocomplete" aria-describedby="callsignLabel">
+                <input type="text" class="form-control" name="autocomp" id="flight_autocomplete" aria-describedby="callsignLabel" onClick="this.select();">
               </div>
               
               <br>
@@ -142,13 +142,14 @@
               <hr>
               <b class="entry">Query</b><br>
               <div class="m-2">
-                <button type="button" class="btn btn-secondary DOM-queryButton" disabled>Departure airport</button>
-                <button type="button" class="btn btn-secondary DOM-queryButton" disabled>Nearest airport</button>
-                <button type="button" class="btn btn-secondary DOM-queryButton" disabled>Runways at arrival</button>
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-DepartureAirport" disabled>Departure airport</button>
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-NearestAirport" disabled>Nearest airport</button>
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-RunwaysArrival" disabled>Runways at arrival</button>
               </div>
             </div>
             <div>
-              <b class="entry">Response :</b>
+              <b class="entry">Response :</b><br>
+              <span id="DOM-responseQuery">&nbsp;<br></span>
             </div>
           </div>
         </div>
@@ -177,6 +178,7 @@
 <script src="static/javascript/runway_handler.js"></script>
 <script src="static/javascript/navaid_handler.js"></script>
 <script src="static/javascript/follow_flight_handler.js"></script>
+<script src="static/javascript/query_sender.js"></script>
 
 
 

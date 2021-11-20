@@ -87,6 +87,7 @@ function init_map() {
         isFollowing = false;
         change_focus(e.latlng.lat, e.latlng.lng, false);
         $('#flight_autocomplete').val('');
+        clean_query_response()
     });
 
 }

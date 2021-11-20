@@ -10,8 +10,8 @@ class Airplane extends Location {
         this.altitude = flight.altitude;
         this.speed = flight.speed;
         this.vertical_speed = flight.vertical_speed;
-        this.origin = flight.origin.length > 0 ? flight.origin : "???";
-        this.destination = flight.destination.length > 0 ? flight.destination : "???";
+        this.origin = flight.origin.length > 0 ? flight.origin : "N/A";
+        this.destination = flight.destination.length > 0 ? flight.destination : "N/A";
 
         var img = new Image();
         img.src = arrow_url;

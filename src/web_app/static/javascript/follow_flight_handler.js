@@ -1,3 +1,4 @@
+/* Autocomplete text input */
 $(function() {
     $("#flight_autocomplete").autocomplete({
         source: function(request, response) {
@@ -19,3 +20,10 @@ $(function() {
         }
     });
 });
+
+
+function select_flight(flight) {
+  clean_query_response();
+  console.log("Following " + flight.label);
+  socket.emit('new_follow', flight);
+}

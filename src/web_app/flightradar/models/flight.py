@@ -109,13 +109,21 @@ class DetailedFlight:
     @staticmethod
     def create(data: dict):
         """Static method for Flight instance creation."""
+        
+        try: this_model = data['aircraft']['model']['code']
+        except KeyError: this_model = 'N/A'
+
+        try: this_registration = data['aircraft']['registration']
+        except KeyError: this_registration = 'N/A'
+
+
+
         return DetailedFlight(
             flight_id=data['identification']['id'],
             flight=data['identification']['callsign'],
             status=data['status']['text'],
-            model=data['aircraft']['model']['code'] if
-            data['aircraft']['model']['code'] else 'N/A',
-            registration=data['aircraft']['registration'],
+            model=this_model,
+            registration=this_registration,
             airline=data['airline']['name'] if data['airline'] else 'N/A',
             iata=get_airline_prop(data, 'iata'),
             icao=get_airline_prop(data, 'icao'),

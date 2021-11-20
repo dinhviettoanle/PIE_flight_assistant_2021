@@ -195,7 +195,7 @@ class AutocompleteHandler():
         list_found = []
         for r in self.api.get_search_results(query=query, limit=limit):
             if r['type'] not in ('schedule', 'aircraft', 'operator', 'airport'):
-                route = "?? ⟶ ??" if not r.get('detail').get('route') else r['detail']['route'] 
+                route = "N/A ⟶ N/A" if not r.get('detail').get('route') else r['detail']['route'] 
                 str_result = f"{r['detail']['callsign']} : {route}"
                 flight_id = r['id']
                 # list_found.append(r['detail']['callsign'])

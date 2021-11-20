@@ -6,7 +6,7 @@ var isFollowing = false;
 
 $(document).ready(function(){
     //connect to the socket server.
-    var namespace = '/test'
+    // var namespace = '/test'
     // socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
     socket = io();
 
@@ -90,18 +90,13 @@ $(document).ready(function(){
 
         }
         else {
+            // Disable query buttons
             $('.DOM-queryButton').attr('disabled', true);
         }
 
         $('#DOM-flightDescription').html(flight_data_str);
-
-        
+ 
     });
-
 });
 
 
-function select_flight(flight) {
-    console.log("Following " + flight.label);
-    socket.emit('new_follow', flight);
-}

@@ -14,7 +14,7 @@ from .flight_data_handler import *
 
 import logging
 from .query_ontology import *
-
+import traceback
 
 # =======================================================================
 # ===================== FLASK APP INIT ==================================
@@ -189,7 +189,7 @@ class AirspaceBackgroundWorker:
             get_near_navaids(self.surrounding_data, self.center)
         
         except Exception as e:
-                fprint(f"Error : {str(e)}")
+                fprint(f"Error airspace : {str(e)}")
 
 
     def update_box(self, box):
@@ -254,7 +254,8 @@ class FlightFollowerWorker:
                 self.sio.sleep(SLEEP_TIME)
 
             except Exception as e:
-                fprint(f"Error : {str(e)}")
+                print(traceback.format_exc())
+                fprint(f"Error following flight : {type(e).__name__} {str(e)}")
 
 
     def update_flight_static_info(self, flight_id):
@@ -270,6 +271,13 @@ class FlightFollowerWorker:
     def stop_following(self):
         self.is_following = False
         self.flight_id = ''
+
+    def handle_query(self, query_type):
+        fprint(f"Query for {query_type}")
+        response_str = "N/A"
+        if query_type == "DepartureAirport":
+            response_str = f"The departure airport is {self.static_info.get('origin')}."
+        return {'response_str' : response_str}
 
 
 
@@ -314,6 +322,13 @@ def autocomplete():
     results = autocomplete_handler.query_partial_flight(query=search)
     # fprint(f"Follow flight query : {search} , {results}")
     return jsonify(matching_results=results)
+
+
+@app.route('/_query', methods=['GET'])
+def receive_query():
+    query_type = request.args.get('q').split('-')[1]
+    response_str = flight_follower_worker.handle_query(query_type)
+    return jsonify(response=response_str)
 
 
 # =============== SOCKET =======================

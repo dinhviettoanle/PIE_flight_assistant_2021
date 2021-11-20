@@ -65,7 +65,11 @@ class API:
             print(FLIGHT_API_PATTERN.format(flight_id))
             return json.loads(urlopen(req).read().decode())
         else:
-            return DetailedFlight.create(json.loads(urlopen(req).read().decode()))
+            try:
+                return DetailedFlight.create(json.loads(urlopen(req).read().decode()))
+            except KeyError as e:
+                print(f'KeyError: {e}')
+                print(FLIGHT_API_PATTERN.format(flight_id))
 
 
     def get_search_results(self, query: str, limit: int):
