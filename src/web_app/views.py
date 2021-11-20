@@ -38,8 +38,29 @@ ontology_is_init = False
 
 autocomplete_handler = AutocompleteHandler()
 
+# ================== LOGGING UTILS ===================
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 def print_info(*args, **kwargs):
-    print(args, flush=True)
+    # print(args, flush=True)
+    return
+
+def print_error(*args, **kwargs):
+    print(f"{bcolors.FAIL}{args}{bcolors.ENDC}", flush=True)
+
+def print_event(*args, **kwargs):
+    print(f"{bcolors.OKBLUE}{args}{bcolors.ENDC}", flush=True)
+
 
 # =======================================================================
 # ===================== BACKGROUND TASKS ================================
@@ -61,7 +82,7 @@ def get_near_airports(surrounding_data, center, RADIUS=100):
         s, n, w, e = get_box_from_center(center, RADIUS)
         surrounding_data['list_airports'] = query_map_near_airports(s, n, w, e)
     except Exception as e:
-        fprint("Error querying airports", e)
+        print_error("Error querying airports", e)
         surrounding_data['list_airports'] = []
 
 
@@ -81,7 +102,7 @@ def get_near_runways(surrounding_data, center, RADIUS=100):
         s, n, w, e = get_box_from_center(center, RADIUS)
         surrounding_data['list_runways'] = query_map_near_runways(s, n, w, e)
     except Exception as e:
-        fprint("Error querying runways", e)
+        print_error("Error querying runways", e)
         surrounding_data['list_runways'] = []
 
 
@@ -103,7 +124,7 @@ def get_near_frequencies(surrounding_data):
             event_bug = e
     
     if event_bug != "":
-        fprint("Error querying frequencies", event_bug)
+        print_error("Error querying frequencies", event_bug)
 
 
 def get_near_navaids(surrounding_data, center, RADIUS=100):
@@ -122,7 +143,7 @@ def get_near_navaids(surrounding_data, center, RADIUS=100):
         s, n, w, e = get_box_from_center(center, RADIUS)
         surrounding_data['list_navaids'] = query_map_near_navaids(s, n, w, e) 
     except Exception as e:
-        fprint("Error querying navaids", e)
+        print_error("Error querying navaids", e)
         surrounding_data['list_navaids'] = []
 
 
@@ -145,7 +166,7 @@ class AirspaceBackgroundWorker:
         self.update_static_data()
 
 
-        fprint("----- Background airspace worker initialized -----")
+        print_info("----- Background airspace worker initialized -----")
 
     def do_work(self):
         while self.switch:
@@ -159,7 +180,7 @@ class AirspaceBackgroundWorker:
 
                 self.sio.emit('airspace', self.surrounding_data)
 
-                fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
+                print_info(datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
                     f"# Flights : {self.surrounding_data['number_flights']}", 
                     f"# Airports : {len(self.surrounding_data['list_airports'])}",
                     f"# Runways : {len(self.surrounding_data['list_runways'])}",
@@ -168,7 +189,7 @@ class AirspaceBackgroundWorker:
                 self.sio.sleep(SLEEP_TIME)
 
             except Exception as e:
-                fprint(f"Error : {str(e)}")
+                print_error(f"Error : {str(e)}")
     
 
 
@@ -193,7 +214,7 @@ class AirspaceBackgroundWorker:
             get_near_navaids(self.surrounding_data, self.center)
         
         except Exception as e:
-                fprint(f"Error airspace : {str(e)}")
+                print_error(f"Error airspace : {str(e)}")
 
 
     def update_box(self, box):
@@ -245,11 +266,11 @@ class FlightFollowerWorker:
                     for k in dynamic_data:
                         flight_data[k] = dynamic_data[k]
 
-                    fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+                    print_info(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
                         f"Following {self.flight_id}")
                 else:
                     flight_data = {}
-                    fprint(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
+                    print_info(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
                         f"Not following")
 
                 flight_data['is_following'] = self.is_following
@@ -258,8 +279,8 @@ class FlightFollowerWorker:
                 self.sio.sleep(SLEEP_TIME)
 
             except Exception as e:
-                print(traceback.format_exc())
-                fprint(f"Error following flight : {type(e).__name__} {str(e)}")
+                print_error(traceback.format_exc())
+                print_error(f"Error following flight : {type(e).__name__} {str(e)}")
 
 
     def update_flight_static_info(self, flight_id):
@@ -277,7 +298,7 @@ class FlightFollowerWorker:
         self.flight_id = ''
 
     def handle_query(self, query_type):
-        fprint(f"Query for {query_type}")
+        print_event(f"Query for {query_type}")
         response_str = "N/A"
 
         if query_type == "DepartureAirport":
@@ -322,14 +343,13 @@ def start_work(sid):
 # =============== ROUTE ==========================
 @app.route('/')
 def index():
-    print(request)
+    print_event(request)
     return render_template('index.html')
 
 @app.route('/_autocomplete', methods=['GET'])
 def autocomplete():
     search = request.args.get('q')
     results = autocomplete_handler.query_partial_flight(query=search)
-    # fprint(f"Follow flight query : {search} , {results}")
     return jsonify(matching_results=results)
 
 
@@ -350,7 +370,7 @@ def init_worker():
 
 @sio.on('change_focus')
 def get_change_focus(data):
-    fprint(f"Change focus : {data}")
+    print_event(f"Change focus : {data}")
     if USE_RADAR:
         center = (data['latitude'], data['longitude'])
         airspace_worker.update_center(center)
@@ -367,7 +387,7 @@ def get_change_focus(data):
 @sio.on('new_follow')
 def new_follow_flight(data):
     flight_id = data['flight_id']
-    fprint(f"New follow flight : {data['label']}")
+    print_event(f"New follow flight : {data['label']}")
     # Update a thread that moves center
     flight_follower_worker.update_flight_static_info(flight_id)
 
@@ -377,4 +397,4 @@ def new_follow_flight(data):
 
 @sio.on('disconnect')
 def test_disconnect():
-    print('Client disconnected')
+    print_event('Client disconnected')
