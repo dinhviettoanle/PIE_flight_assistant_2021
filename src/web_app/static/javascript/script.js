@@ -86,6 +86,11 @@ $(document).ready(function(){
             if (center[0] != data.lat || center[1] != data.lon){
                 change_focus(data.lat, data.lon, true);
             }
+            $(".DOM-queryButton").attr("disabled", false);
+
+        }
+        else {
+            $('.DOM-queryButton').attr('disabled', true);
         }
 
         $('#DOM-flightDescription').html(flight_data_str);

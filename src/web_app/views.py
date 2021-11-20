@@ -34,6 +34,7 @@ flight_follower_worker = None
 thread = Thread()
 USE_RADAR = True
 SLEEP_TIME = .5
+ontology_is_init = False
 
 autocomplete_handler = AutocompleteHandler()
 # =======================================================================
@@ -268,6 +269,7 @@ class FlightFollowerWorker:
 
     def stop_following(self):
         self.is_following = False
+        self.flight_id = ''
 
 
 
@@ -289,7 +291,7 @@ def start_work(sid):
             sio.start_background_task(airspace_worker.do_work)
 
         if flight_follower_worker is not None:
-            flight_follower_worker.update_flight_static_info('')
+            flight_follower_worker.stop_following()
         else:
             flight_follower_worker = FlightFollowerWorker(sio, airspace_worker)
             sio.start_background_task(flight_follower_worker.do_work)
