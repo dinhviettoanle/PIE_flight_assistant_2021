@@ -110,16 +110,13 @@ class DetailedFlight:
     def create(data: dict):
         """Static method for Flight instance creation."""
         
-        # try: this_model = data['aircraft']['model']['code']
-        # except KeyError: this_model = 'N/A'
+        try: this_model = data['aircraft']['model']['code']
+        except KeyError: this_model = 'N/A'
 
-        # try: this_registration = data['aircraft']['registration']
-        # except KeyError: this_registration = 'N/A'
+        try: this_registration = data['aircraft']['registration']
+        except KeyError: this_registration = 'N/A'
 
-        this_model = data.get('aircraft', {}).get('model', {}).get('code', 'N/A')
-        this_registration = data.get('aircraft', {}).get('registration', 'N/A')
-        this_iata = data.get('airline', {}).get('code', {}).get('iata', 'N/A')
-        this_icao = data.get('airline', {}).get('code', {}).get('icao', 'N/A')
+
 
         return DetailedFlight(
             flight_id=data['identification']['id'],
@@ -128,8 +125,8 @@ class DetailedFlight:
             model=this_model,
             registration=this_registration,
             airline=data['airline']['name'] if data['airline'] else 'N/A',
-            iata=this_iata,
-            icao=this_icao,
+            iata=get_airline_prop(data, 'iata'),
+            icao=get_airline_prop(data, 'icao'),
             origin=data['airport']['origin']['position']['region']['city']
             if data['airport']['origin'] else 'N/A',
             destination=data['airport']['destination']['position']
@@ -163,3 +160,9 @@ def flights_to_json(flights: List[BriefFlight]):
 
 def get_image_id(track: int) -> int:
     return TRACKS[min(TRACKS, key=lambda x: abs(x - track))]
+
+def get_airline_prop(data, prop):
+    try:
+        return data['airline']['code'][prop]
+    except:
+        return 'N/A'
