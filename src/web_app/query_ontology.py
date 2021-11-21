@@ -82,12 +82,12 @@ def query_map_near_frequencies(current_icao):
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
             SELECT ?frq_type ?desc ?frq_mhz 
             WHERE {{
-                ?Airport pie:AirportICAOCode ?ICAO .
+                ?Airport pie:AirportICAOCode ?icao .
                 ?Airport pie:HasFrequency ?Frequency .
                 ?Frequency pie:FrequencyDescription ?desc .
                 ?Frequency pie:FrequencyMHz ?frq_mhz .
                 ?Frequency pie:FrequencyType ?frq_type .
-                FILTER regex(?ICAO, "{current_icao}", "i")
+                FILTER regex(?icao, "{current_icao}", "i")
                 
             }}
         """))
@@ -125,9 +125,9 @@ def query_nearest_airport(lat, lng):
     response = list(owl.default_world.sparql(
         f"""
         PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
-        SELECT ?Name ?ICAO ?lat ?long
+        SELECT ?Name ?icao ?lat ?long
         WHERE {{
-            ?Airport pie:AirportICAOCode ?ICAO .
+            ?Airport pie:AirportICAOCode ?icao .
             ?Airport pie:AirportName ?Name .
             ?Airport pie:AirportGPSLongitude ?long .
             ?Airport pie:AirportGPSLatitude ?lat .
@@ -148,6 +148,32 @@ def query_nearest_airport(lat, lng):
 
     df['distance'] = df.apply(lambda x: coord_to_dist(x["lat"], x["lng"], lat, lng), axis=1)
     return df.iloc[df['distance'].idxmin()].to_dict()
+
+
+
+
+
+def query_runways_at_arrival(name_arrival):
+    response = list(owl.default_world.sparql(
+        f"""
+            PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+            SELECT ?rw_id ?airport_icao
+            WHERE {{
+                ?Airport pie:AirportName ?airport_name .
+                ?Airport pie:AirportICAOCode ?airport_icao .
+                ?Airport pie:HasRunway ?Runway .
+                ?Runway pie:RunwayIdentifier ?rw_id .
+                FILTER regex(?airport_name, "{name_arrival}", "i")
+                
+            }}
+        """))
+
+    if len(response) == 0:
+        return {"status": False}
+
+    list_runways = [i[0] for i in response]
+    this_icao = response[0][1]
+    return {"status": True, "icao": this_icao, "list_runways": list_runways}
 
 
 

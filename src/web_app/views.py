@@ -303,9 +303,18 @@ class FlightFollowerWorker:
 
         if query_type == "DepartureAirport":
             response_str = f"The departure airport is {self.static_info.get('origin')}."
+        
         elif query_type == "NearestAirport":
             response_dict = query_nearest_airport(self.latitude, self.longitude)
             response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} km."
+
+        elif query_type == "RunwaysAtArrival":
+            response_dict = query_runways_at_arrival(self.static_info.get('destination'))
+            if response_dict.get('status'):
+                list_runways_arrival = response_dict.get('list_runways')
+                response_str = f"""Runways at {self.static_info.get('destination')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
+            else:
+                response_str = f"Arrival airport is not available."
         
         return {'response_str' : response_str}
 
