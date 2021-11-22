@@ -248,7 +248,9 @@ class FlightFollowerWorker:
             'registration' : "",
             'callsign' : "",
             'origin' : "",
-            'destination' : ""
+            'origin_icao' : "",
+            'destination' : "",
+            'destination_icao' : ""
         }
 
         self.airspace_worker = airspace_worker
@@ -306,10 +308,10 @@ class FlightFollowerWorker:
         
         elif query_type == "NearestAirport":
             response_dict = query_nearest_airport(self.latitude, self.longitude)
-            response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} km."
+            response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
 
         elif query_type == "RunwaysAtArrival":
-            response_dict = query_runways_at_arrival(self.static_info.get('destination'))
+            response_dict = query_runways_at_arrival(self.static_info.get('destination_icao'))
             if response_dict.get('status'):
                 list_runways_arrival = response_dict.get('list_runways')
                 response_str = f"""Runways at {self.static_info.get('destination')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""

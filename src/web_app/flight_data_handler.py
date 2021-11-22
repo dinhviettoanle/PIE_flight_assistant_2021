@@ -213,6 +213,7 @@ class FlightSpecificQueryHandler():
     # Attention, risque de "HTTP Error 402: Payment Required" si trop de requetes
     def query_complete_flight(self, flight_id):
         flight = self.api.get_flight(flight_id, RAW=False)
+        self.api.get_flight(flight_id, RAW=True)
         last_waypoint = flight.trail[0]
         before_waypoint = flight.trail[1]
         dt = last_waypoint.timestamp - before_waypoint.timestamp
@@ -230,7 +231,9 @@ class FlightSpecificQueryHandler():
             'alt' : last_waypoint.altitude,        
             'last_contact' : last_waypoint.timestamp,
             'origin' : flight.origin, 
-            'destination' : flight.destination
+            'origin_icao' : flight.origin_icao, 
+            'destination' : flight.destination,
+            'destination_icao' : flight.destination_icao
         }
 
     def query_dynamic_data(self, lat, lng, flight_id):

@@ -81,7 +81,7 @@ class DetailedFlight:
     """Class for storing info of selected flight.
     Must be displayed separately."""
     def __init__(self, flight_id, flight, status, model, registration, airline,
-                 origin, destination, trail, iata, icao):
+                 origin, destination, trail, iata, icao, origin_icao, destination_icao):
         self.id = flight_id
         self.flight = flight
         self.status = status
@@ -91,7 +91,9 @@ class DetailedFlight:
         self.icao = icao
         self.iata = iata
         self.origin = origin
+        self.origin_icao = origin_icao
         self.destination = destination
+        self.destination_icao = destination_icao
         self.trail = self.collect_trail(trail)
 
     @staticmethod
@@ -127,11 +129,10 @@ class DetailedFlight:
             airline=data['airline']['name'] if data['airline'] else 'N/A',
             iata=get_airline_prop(data, 'iata'),
             icao=get_airline_prop(data, 'icao'),
-            origin=data['airport']['origin']['position']['region']['city']
-            if data['airport']['origin'] else 'N/A',
-            destination=data['airport']['destination']['position']
-            ['region']['city'] if data['airport']['destination']
-            else 'N/A',
+            origin=data['airport']['origin']['name'] if data['airport']['origin'] else 'N/A',
+            origin_icao=data['airport']['origin']['code']['icao'] if data['airport']['origin'] else 'N/A',
+            destination=data['airport']['destination']['name'] if data['airport']['destination'] else 'N/A',
+            destination_icao=data['airport']['destination']['code']['icao'] if data['airport']['destination'] else 'N/A',
             trail=data['trail']
         )
 

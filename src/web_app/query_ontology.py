@@ -153,7 +153,8 @@ def query_nearest_airport(lat, lng):
 
 
 
-def query_runways_at_arrival(name_arrival):
+def query_runways_at_arrival(icao_arrival):
+    print(icao_arrival)
     response = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
@@ -163,7 +164,7 @@ def query_runways_at_arrival(name_arrival):
                 ?Airport pie:AirportICAOCode ?airport_icao .
                 ?Airport pie:HasRunway ?Runway .
                 ?Runway pie:RunwayIdentifier ?rw_id .
-                FILTER regex(?airport_name, "{name_arrival}", "i")
+                FILTER regex(?airport_icao, "{icao_arrival}", "i")
                 
             }}
         """))
