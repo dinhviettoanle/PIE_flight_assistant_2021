@@ -7,6 +7,9 @@ import io
 from tqdm.autonotebook import tqdm
 import logging as lg
 
+import multiprocessing
+from joblib import Parallel, delayed
+from bs4 import BeautifulSoup
 
 class AirportLoader:
     """
@@ -223,3 +226,112 @@ class FrequencyLoader:
          )
 
         return df_all
+
+# =========================================================================================
+
+class WaypointLoader:
+    
+    def __init__(self):
+        try:
+            self.data = pd.read_csv('../data/waypoints.csv')
+            print("Loading ../data/waypoints.csv")
+        except FileNotFoundError:
+            print("../data/waypoints.csv not found")
+            self.data = pd.DataFrame({'ident': [], 'latitude': [], 'longitude': []})
+    
+
+    def get_waypoint_data(self):
+        return self.data
+
+
+    def add_waypoints(self, min_i, max_i):
+        """Adds waypoints to an already (full or not) self.data
+
+        Parameters
+        ----------
+        min_i : int
+            Minimum index of the plan on the website
+        max_i : int
+            Maximum index of the plan on the website
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame containing already existing waypoints and new parsed waypoints
+        """
+        num_cores = multiprocessing.cpu_count()
+
+        url_list = tqdm([f"https://flightplandatabase.com/plan/{i}" for i in range(min_i, max_i)])
+
+        # Run web scraping in parallel
+        processed_list = Parallel(n_jobs=num_cores)(delayed(self.parse_page)(url) for url in url_list)
+
+        # Remove None and []
+        list_list_waypoints = [item for item in processed_list if item not in (None, [])]
+        # Flatten the list of list
+        list_waypoints_flatten = [item for sublist in list_list_waypoints for item in sublist]
+        # Remove duplicate dicts
+        list_waypoints = [dict(t) for t in {tuple(d.items()) for d in list_waypoints_flatten}]
+        df_waypoints = pd.DataFrame(list_waypoints)
+
+        print(f"{len(df_waypoints)} waypoints found between {min_i} and {max_i}")
+
+        self.data = pd.concat([self.data, df_waypoints]).drop_duplicates().reset_index(drop=True)
+        print(f"Current number of waypoints: {len(self.data)}")
+
+        return self.data
+
+
+
+    def export_waypoints(self):
+        """ Export self.data to a csv file
+        """
+        print("Export to ../data/waypoints.csv")
+        self.data.to_csv("../data/waypoints.csv", index=False)
+    
+
+
+    @staticmethod
+    def parse_page(url, list_waypoints=None):
+        page = requests.get(url)
+        if page.status_code != 200: 
+            return
+
+        soup = BeautifulSoup(page.content, "html.parser")
+        plan_route_table = soup.find("table", {"class": "plan-route-table"})
+
+        list_new_waypoints = []
+        for tr in plan_route_table.find_all("tr"):
+            tds = tr.find_all("td")
+            if len(tds) == 0: continue
+            _, ident, type_wpt, via, alt, position, dist, name = [item.text for item in tds]
+            if type_wpt == "FIX":
+                lat, lng = position.replace(' ', '').split('/')
+                new_waypoint = {
+                    'ident': ident,
+                    'latitude': float(lat),
+                    'longitude': float(lng)
+                }
+                # Parallel
+                list_new_waypoints.append(new_waypoint)
+                
+                # Sequential
+                if list_waypoints is not None:
+                    if new_waypoint not in list_waypoints:
+                        list_waypoints.append(new_waypoint)
+                        list_new_waypoints.append(new_waypoint)
+                    else:
+                        print(new_waypoint['ident'], end=' ', flush=True)
+        # Parallel
+        return list_new_waypoints
+
+
+
+
+
+if __name__ == '__main__':
+    # min_i, max_i = 499, 800 # 4_778_086
+    min_i, max_i = 250000, 300000 # 4_778_086
+    wpl = WaypointLoader()
+    wpl.add_waypoints(min_i, max_i)
+    wpl.export_waypoints()
