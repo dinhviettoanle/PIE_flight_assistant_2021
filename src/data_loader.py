@@ -7,9 +7,8 @@ import io
 from tqdm.autonotebook import tqdm
 import logging as lg
 
-import multiprocessing
-from joblib import Parallel, delayed
 from bs4 import BeautifulSoup
+import re
 
 class AirportLoader:
     """
@@ -232,106 +231,160 @@ class FrequencyLoader:
 class WaypointLoader:
     
     def __init__(self):
-        try:
-            self.data = pd.read_csv('../data/waypoints.csv')
-            print("Loading ../data/waypoints.csv")
-        except FileNotFoundError:
-            print("../data/waypoints.csv not found")
-            self.data = pd.DataFrame({'ident': [], 'latitude': [], 'longitude': []})
+        self.data = self.download_waypoints()
+        print(len(self.data), "waypoints parsed")
     
 
     def get_waypoint_data(self):
         return self.data
 
+    def download_waypoints(self):
+        df_waypoints = pd.DataFrame({
+            'ident' : [],
+            'latitude' : [],
+            'longitude' : [],
+            'country_code' : [],
+            'country_name' : []
+        })
 
-    def add_waypoints(self, min_i, max_i):
-        """Adds waypoints to an already (full or not) self.data
-
-        Parameters
-        ----------
-        min_i : int
-            Minimum index of the plan on the website
-        max_i : int
-            Maximum index of the plan on the website
-
-        Returns
-        -------
-        pd.DataFrame
-            DataFrame containing already existing waypoints and new parsed waypoints
-        """
-        num_cores = multiprocessing.cpu_count()
-
-        url_list = tqdm([f"https://flightplandatabase.com/plan/{i}" for i in range(min_i, max_i)])
-
-        # Run web scraping in parallel
-        processed_list = Parallel(n_jobs=num_cores)(delayed(self.parse_page)(url) for url in url_list)
-
-        # Remove None and []
-        list_list_waypoints = [item for item in processed_list if item not in (None, [])]
-        # Flatten the list of list
-        list_waypoints_flatten = [item for sublist in list_list_waypoints for item in sublist]
-        # Remove duplicate dicts
-        list_waypoints = [dict(t) for t in {tuple(d.items()) for d in list_waypoints_flatten}]
-        df_waypoints = pd.DataFrame(list_waypoints)
-
-        print(f"{len(df_waypoints)} waypoints found between {min_i} and {max_i}")
-
-        self.data = pd.concat([self.data, df_waypoints]).drop_duplicates().reset_index(drop=True)
-        print(f"Current number of waypoints: {len(self.data)}")
-
-        return self.data
+        df_down_all = self.download_opennav(df_waypoints)
+        df_waypoints = pd.concat([df_waypoints, df_down_all])
+        return df_waypoints
 
 
 
-    def export_waypoints(self):
-        """ Export self.data to a csv file
-        """
-        print("Export to ../data/waypoints.csv")
-        self.data.to_csv("../data/waypoints.csv", index=False)
+    def download_opennav(self, df_waypoints):
+        df_countries = pd.read_csv("../data/countries.csv")[['code', 'name']]
+
+        list_waypoints = []
+
+        pbar = tqdm(total=len(df_countries)-1, desc="Requesting opennav")
+        for i, row in df_countries.iterrows():
+            if row['name'] == 'Namibia': row['code'] = "NA"
+            if row['code'] == "US": continue
+            self.get_waypoints_country(row, list_waypoints)
+            pbar.update(1)
+        pbar.close()
+        df_down = pd.DataFrame(list_waypoints)
+
+        return df_down
     
 
+    @staticmethod
+    def download_us():
+        # US Waypoints :
+        # https://nfdc.faa.gov/nfdcApps/controllers/PublicDataController/getLidData?dataType=LIDFIXESWAYPOINTS&start=0&length=10&sortcolumn=fix_identifier&sortdir=asc&searchval=&r=gPD1a6CE3DzbIdafpyoXptCE
+        return
 
     @staticmethod
-    def parse_page(url, list_waypoints=None):
-        page = requests.get(url)
-        if page.status_code != 200: 
+    def get_waypoints_country(row, list_waypoints, country_code=None, country=None):
+        if country_code is None and country is None:
+            country_code, country = row['code'], row['name']
+        page = requests.get(f"https://opennav.com/waypoint/{country_code}")
+        if len(page.history) > 0: 
             return
 
         soup = BeautifulSoup(page.content, "html.parser")
-        plan_route_table = soup.find("table", {"class": "plan-route-table"})
+        for i, tr in enumerate(soup.find_all("tr")[2:]):
+            content_tr = tr.find_all("td", class_=lambda x: x != 'layout_col50')
+            waypoint_ident = content_tr[0].find("a").text
+            
+            if re.match(r"""\d+\s\d+.\d+[NSEW]""", content_tr[1].text):
+                # Case Brazil
+                waypoint_latitude = content_tr[1].text
+                waypoint_longitude = content_tr[2].text
+            else:
+                # Other cases
+                waypoint_latitude = content_tr[1].text.replace(' ', '')
+                waypoint_longitude = content_tr[2].text.replace(' ', '')
 
-        list_new_waypoints = []
-        for tr in plan_route_table.find_all("tr"):
-            tds = tr.find_all("td")
-            if len(tds) == 0: continue
-            _, ident, type_wpt, via, alt, position, dist, name = [item.text for item in tds]
-            if type_wpt == "FIX":
-                lat, lng = position.replace(' ', '').split('/')
-                new_waypoint = {
-                    'ident': ident,
-                    'latitude': float(lat),
-                    'longitude': float(lng)
-                }
-                # Parallel
-                list_new_waypoints.append(new_waypoint)
-                
-                # Sequential
-                if list_waypoints is not None:
-                    if new_waypoint not in list_waypoints:
-                        list_waypoints.append(new_waypoint)
-                        list_new_waypoints.append(new_waypoint)
-                    else:
-                        print(new_waypoint['ident'], end=' ', flush=True)
-        # Parallel
-        return list_new_waypoints
+            try:
+                list_waypoints.append({
+                    'ident' : waypoint_ident,
+                    'latitude' : convert_coordinate_str(waypoint_latitude),
+                    'longitude' : convert_coordinate_str(waypoint_longitude),
+                    'country_code' : country_code,
+                    'country_name' : country,
+                })
+            except Exception as e:
+                print(e, country_code, waypoint_ident, waypoint_latitude, waypoint_longitude, flush=True)
 
 
+
+def convert_coordinate_str(old):
+    direction = {'N':1, 'S':-1, 'E': 1, 'W':-1}
+    
+    if re.match(r"""\s*\d+(:*)°\d+'\d+.\d*"\s*[NSEW]""", old):
+        new = old.replace(u'°',' ').replace('\'',' ').replace('"',' ').replace(':', ' ')
+        new = new.split()
+        new_dir = new.pop()
+        new.extend([0,0,0])
+
+    elif re.match(r"""\d+[NSEW]""", old):
+        new_dir = old[-1]
+        new = old[:-1]
+        new = str(int(new))
+        new = [new[i:i+2] for i in range(0, len(new), 2)]
+
+    elif re.match(r"""\d+-\d+-\d+.\d+[NSEW]""", old):
+        new_dir = old[-1]
+        new = old[:-1].split("-")
+    
+    elif re.match(r"""\d+\s\d+.\d+[NSEW]""", old):
+        new_dir = old[-1]
+        new = old[:-1].replace('.', ' ')
+        new = new.split()
+    
+    elif re.match(r"""\d+°-\d'\d-.\d+(.\d+)*"[NSEW]""", old):
+        new_dir = old[-1]
+        new = old[:-1].replace("'",'').replace('°-', ' ').replace('-.', ' ').replace('"', '')
+        new = new.split()
+    
+    elif re.match(r"""\d+°\d+'\d+..\d+"[NSEW]""", old):
+        new_dir = old[-1]
+        new = old[:-1].replace('°', ' ').replace("'", '').replace('..',' ').replace('"', '')
+        new = new.split()
+    else:
+        assert False
+    
+    return (float(new[0])+float(new[1])/60.0+float(new[2])/3600.0) * direction[new_dir]
+
+
+
+
+def test_convert_latlng():
+    lat, lon = """45°20'52.00" N, 002°29'59.00"E""".split(',')
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = "47-22-59.27N", "015-00-23.87E"
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = "253226N", "0545455E"
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = "13 51.48S", "041 24.44W"
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = "22 18.55S", "042 25.51W"
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = """40°50'17.52"N""", """28:°47'17.13"E"""
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = """25°-4'8-.22.91"N""", """121°-4'9-.02.84"E"""
+    # ==> 25°48'22.91" N, 121° 49'02.84" E
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = """24°-4'3-.48"N""", """120°-3'0-.30"E"""
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
+
+    lat, lon = """25°2'1..9"N""", """121°2'6..3"E"""
+    # ==> 25°21'9"N, 121°26'3" E
+    convert_coordinate_str(lat), convert_coordinate_str(lon)
 
 
 
 if __name__ == '__main__':
-    # min_i, max_i = 499, 800 # 4_778_086
-    min_i, max_i = 250000, 300000 # 4_778_086
     wpl = WaypointLoader()
-    wpl.add_waypoints(min_i, max_i)
-    wpl.export_waypoints()
+
+
