@@ -3,6 +3,7 @@ var socket = null;
 var mymap = null;
 var isInitialized = false;
 var isFollowing = false;
+var currentFollowing = "";
 
 $(document).ready(function(){
     //connect to the socket server.
@@ -70,6 +71,15 @@ $(document).ready(function(){
         isFollowing = data.is_following;
 
         if (isFollowing) {
+
+            if (data.callsign != currentFollowing){
+                if (currentFollowing != "") { // If we were already following a flight
+                    dict_airplanes[currentFollowing].set_traffic_marker();
+                }
+                dict_airplanes[data.callsign].set_follow_marker();
+                currentFollowing = data.callsign;
+            }
+
             var flight_data_str = `
                 <b>Callsign : </b>${data.callsign} ; 
                 <b>Registration : </b> ${data.registration} ; 

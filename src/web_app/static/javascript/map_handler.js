@@ -85,9 +85,13 @@ function init_map() {
     mymap.on('click', function(e) {
         console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
         isFollowing = false;
+        if (currentFollowing != "") {
+            dict_airplanes[currentFollowing].set_traffic_marker();
+            currentFollowing = "";
+        }
         change_focus(e.latlng.lat, e.latlng.lng, false);
         $('#flight_autocomplete').val('');
-        clean_query_response()
+        clean_query_response();
     });
 
 }

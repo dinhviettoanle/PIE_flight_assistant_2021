@@ -1,3 +1,5 @@
+// TODO: le callsign, c est plutot registration et icao24, le callsign...
+
 var dict_airplanes = {};
 
 class Airplane extends Location {
@@ -51,6 +53,33 @@ class Airplane extends Location {
 
         this.marker.setHeading(flight.heading / 180 * Math.PI);
         this.set_marker_popup("update");
+    }
+
+    set_follow_marker() {
+        var new_img = new Image();
+        new_img.src = follow_url;
+
+        var new_icon = new L.AngleIcon({
+            ciFlag: true,
+            label: this.icao24,
+            textColor: 'black',
+            img: new_img
+        });
+        new_icon.setHeading(this.heading / 180 * Math.PI);
+        this.marker.setIcon(new_icon);
+    }
+
+    set_traffic_marker() {
+        var new_img = new Image();
+        new_img.src = arrow_url;
+        var new_icon = new L.AngleIcon({
+            ciFlag: true,
+            label: this.icao24,
+            textColor: 'black',
+            img: new_img
+        });
+        new_icon.setHeading(this.heading / 180 * Math.PI);
+        this.marker.setIcon(new_icon);
     }
 }
 
