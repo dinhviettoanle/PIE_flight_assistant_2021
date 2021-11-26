@@ -230,13 +230,20 @@ class FrequencyLoader:
 
 class WaypointLoader:
     
-    def __init__(self):
-        self.data = self.download_waypoints()
-        print(len(self.data), "waypoints parsed")
+    def __init__(self, PATH=False):
+        if not(PATH):
+            self.data = self.download_waypoints()
+            print(len(self.data), "waypoints parsed")
+        else:
+            self.data = pd.read_csv(PATH)
     
 
     def get_waypoint_data(self):
         return self.data
+
+    def export_waypoint_data(self):
+        self.data.sort_values(by=['country_code', 'ident'], inplace=True)
+        self.data.to_csv("../data/waypoints.csv", index=False)
 
     def download_waypoints(self):
         df_waypoints = pd.DataFrame({
@@ -247,13 +254,13 @@ class WaypointLoader:
             'country_name' : []
         })
 
-        df_down_all = self.download_opennav(df_waypoints)
-        df_waypoints = pd.concat([df_waypoints, df_down_all])
+        df_down_all = self.download_opennav()
+        df_down_us = self.download_faa()
+        df_waypoints = pd.concat([df_waypoints, df_down_all, df_down_us])
         return df_waypoints
 
 
-
-    def download_opennav(self, df_waypoints):
+    def download_opennav(self):
         df_countries = pd.read_csv("../data/countries.csv")[['code', 'name']]
 
         list_waypoints = []
@@ -270,11 +277,18 @@ class WaypointLoader:
         return df_down
     
 
-    @staticmethod
-    def download_us():
-        # US Waypoints :
-        # https://nfdc.faa.gov/nfdcApps/controllers/PublicDataController/getLidData?dataType=LIDFIXESWAYPOINTS&start=0&length=10&sortcolumn=fix_identifier&sortdir=asc&searchval=&r=gPD1a6CE3DzbIdafpyoXptCE
-        return
+    def download_faa(self):
+        list_us_wp = []
+        tot_us_waypoints = 65875
+        pbar = tqdm(total=tot_us_waypoints, desc="Requesting FAA")
+        for start_id in range(0, tot_us_waypoints, 1000):
+            self.get_us_part_waypoints(start_id, list_us_wp)
+            pbar.update(1000)
+        pbar.close()
+        df_down = pd.DataFrame(list_us_wp)
+
+        return df_down
+
 
     @staticmethod
     def get_waypoints_country(row, list_waypoints, country_code=None, country=None):
@@ -308,6 +322,37 @@ class WaypointLoader:
                 })
             except Exception as e:
                 print(e, country_code, waypoint_ident, waypoint_latitude, waypoint_longitude, flush=True)
+
+
+
+
+
+    @staticmethod
+    def get_us_part_waypoints(start_id, list_us_wp):
+        url = f"https://nfdc.faa.gov/nfdcApps/controllers/PublicDataController/getLidData?dataType=LIDFIXESWAYPOINTS&start={start_id}&length=1000&sortcolumn=fix_identifier&sortdir=asc"
+        r = requests.get(url)
+        json_waypoints = r.json()['data']
+        for i, wp_data in enumerate(json_waypoints):
+            latitude, longitude = get_coordinates_from_desc(wp_data['description'])
+            list_us_wp.append({
+                'ident' : wp_data['fix_identifier'],
+                'latitude' : latitude,
+                'longitude' : longitude,
+                'country_code' : "US",
+                'country_name' : "United States",
+            })
+
+
+
+def get_coordinates_from_desc(desc):
+    # For US Waypoints
+    direction = {'N':1, 'S':-1, 'E': 1, 'W':-1}
+    lng_str = re.match(r".*\s(\d+-\d+-\d+\.\d+(W|E))", desc).group(1)
+    lat_str = re.match(r".*(\d{2,2}-\d+-\d+\.\d+(N|S)).*", desc).group(1)
+    lat = convert_coordinate_str(lat_str)
+    lng = convert_coordinate_str(lng_str)
+    return lat, lng
+
 
 
 
