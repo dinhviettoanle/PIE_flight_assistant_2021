@@ -235,7 +235,7 @@ class WaypointLoader:
             self.data = self.download_waypoints()
             print(len(self.data), "waypoints parsed")
         else:
-            self.data = pd.read_csv(PATH)
+            self.data = pd.read_csv(PATH, na_filter=False)
     
 
     def get_waypoint_data(self):
@@ -265,7 +265,7 @@ class WaypointLoader:
 
         list_waypoints = []
 
-        pbar = tqdm(total=len(df_countries)-1, desc="Requesting opennav")
+        pbar = tqdm(total=len(df_countries)-1, desc="Requesting waypoint@opennav")
         for i, row in df_countries.iterrows():
             if row['name'] == 'Namibia': row['code'] = "NA"
             if row['code'] == "US": continue
@@ -280,7 +280,7 @@ class WaypointLoader:
     def download_faa(self):
         list_us_wp = []
         tot_us_waypoints = 65875
-        pbar = tqdm(total=tot_us_waypoints, desc="Requesting FAA")
+        pbar = tqdm(total=tot_us_waypoints, desc="Requesting waypoint@faa")
         for start_id in range(0, tot_us_waypoints, 1000):
             self.get_us_part_waypoints(start_id, list_us_wp)
             pbar.update(1000)

@@ -5,7 +5,7 @@ Individual loader in the ontology
 import owlready2 as owl
 import pandas as pd
 from tqdm.autonotebook import tqdm
-from data_loader import AirportLoader, RunwayLoader, NavaidLoader, FrequencyLoader
+from data_loader import AirportLoader, RunwayLoader, NavaidLoader, FrequencyLoader, WaypointLoader
 
 filename_onto = "./ontology/final-archi.owl"
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
@@ -115,7 +115,7 @@ def create_runway_individuals(dict_airports):
 # ================ FREQUENCIES ======================================================
 # ===================================================================================
 
-def create_frequencies_individuals(dict_airports):
+def create_frequency_individuals(dict_airports):
     """ Creates Frequency individuals in the ontology
 
     Parameters
@@ -165,12 +165,35 @@ def create_navaid_individuals():
     pbar.close()
 
 
+# ===================================================================================
+# ================ WAYPOINTS ========================================================
+# ===================================================================================
+
+def create_waypoint_individuals():
+    PATH = "../data/waypoints.csv"
+    waypoint_data = WaypointLoader(PATH=PATH).get_waypoint_data()
+    pbar = tqdm(total=len(waypoint_data), desc="Waypoints")
+    for i, row in waypoint_data.iterrows():
+        new_waypoint = onto.Waypoint(f"Waypoint_{i}")
+        new_waypoint.WaypointCountryCode.append(row['country_code'])
+        new_waypoint.WaypointGPSLatitude.append(row['latitude'])
+        new_waypoint.WaypointGPSLongitude.append(row['longitude'])
+        new_waypoint.WaypointIdentifier.append(row['ident'])
+        new_waypoint.WaypointPlannedAltitude.append(-1)
+
+        pbar.update(1)
+    pbar.close()
+
+
+
+
 
 def main():
     dict_airports = create_airport_individuals()
     create_runway_individuals(dict_airports)
-    create_frequencies_individuals(dict_airports)
+    create_frequency_individuals(dict_airports)
     create_navaid_individuals()
+    create_waypoint_individuals()
     onto.save(file=filename_onto_individuals, format="rdfxml")
     print("Done !")
     return
