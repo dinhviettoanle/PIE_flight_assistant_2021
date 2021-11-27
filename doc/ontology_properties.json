@@ -113,6 +113,7 @@
         "RunwayAltitude": "",
         "RunwayBeginGPSLatitude": "",
         "RunwayBeginGPSLongitude": "",
+        "RunwayCouple": "",
         "RunwayEndGPSLatitude": "",
         "RunwayEndGPSLongitude": "",
         "RunwayIdentifier": "",
@@ -125,9 +126,10 @@
         "RunwayWidth": ""
     },
     "WaypointDataProp": {
+        "WaypointCountryCode": "",
         "WaypointGPSLatitude": "",
         "WaypointGPSLongitude": "",
-        "WaypointName": "",
+        "WaypointIdentifier": "",
         "WaypointPlannedAltitude": ""
     },
     "WeatherDataProp": {
