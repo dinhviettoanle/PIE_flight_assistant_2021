@@ -160,6 +160,26 @@ def get_near_navaids(surrounding_data, center, RADIUS=100):
         surrounding_data['list_navaids'] = []
 
 
+def get_near_waypoints(surrounding_data, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with waypoint data
+
+    Parameters
+    ----------
+    surrounding_data : dict
+        Dictionary sent to the client
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        surrounding_data['list_waypoints'] = query_map_near_waypoints(s, n, w, e)
+    except Exception as e:
+        print_error("Error querying navaids", e)
+        surrounding_data['list_waypoints'] = []
+
+
 
 
 
@@ -224,6 +244,10 @@ class AirspaceBackgroundWorker:
             # # Handle navaids
             self.surrounding_data['list_navaids'] = []
             get_near_navaids(self.surrounding_data, self.center)
+
+            # # Handle waypoints
+            self.surrounding_data['list_waypoints'] = []
+            get_near_waypoints(self.surrounding_data, self.center)
         
         except Exception as e:
                 print_error(f"Error airspace : {str(e)}")

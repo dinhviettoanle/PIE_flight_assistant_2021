@@ -20,16 +20,18 @@ df_all_airports = None
 df_all_runways = None
 df_all_frequencies = None
 df_all_navaids = None
+df_all_waypoints = None
 
 
 
 def init_dataframes_individuals():
-    global df_all_airports, df_all_runways, df_all_frequencies, df_all_navaids
+    global df_all_airports, df_all_runways, df_all_frequencies, df_all_navaids, df_all_waypoints
     fprint("Loading individuals", end=" ")
     df_all_airports = init_df_all_airports()
     df_all_runways = init_df_all_runways()
     df_all_frequencies = init_df_all_frequencies()
     df_all_navaids = init_df_all_navaids()
+    df_all_waypoints = init_df_all_waypoints()
     fprint("Individuals loaded !")
     return
 
@@ -124,6 +126,24 @@ def init_df_all_navaids():
     return pd.DataFrame(dict_all_navaids)
 
 
+def init_df_all_waypoints():
+    all_waypoints = list(owl.default_world.sparql(
+        f"""
+            PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+            SELECT ?ident ?country ?latitude ?longitude
+            WHERE {{
+                ?Waypoint pie:WaypointIdentifier ?ident .
+                ?Waypoint pie:WaypointCountryCode ?country .
+                ?Waypoint pie:WaypointGPSLatitude ?latitude .
+                ?Waypoint pie:WaypointGPSLongitude ?longitude .
+            }}
+        """))
+    fields = ['ident', 'country', 'latitude', 'longitude']
+    dict_all_waypoints = [dict(zip(fields, waypoint_tuple)) for waypoint_tuple in all_waypoints]
+    return pd.DataFrame(dict_all_waypoints)
+
+
+
 
 # ======================================================================================
 # ================ MAP QUERIES =========================================================
@@ -158,8 +178,15 @@ def query_map_near_navaids(s, n, w, e):
         df_all_navaids['longitude'].between(w, e) & \
         df_all_navaids['latitude'].between(s, n)
     ]
-    return df_all_navaids.to_dict('records')
+    return df_near_navaids.to_dict('records')
 
+
+def query_map_near_waypoints(s, n, w, e):
+    df_near_waypoints = df_all_waypoints.loc[
+        df_all_waypoints['longitude'].between(w, e) & \
+        df_all_waypoints['latitude'].between(s, n)
+    ]
+    return df_near_waypoints.to_dict('records')
 
 # ======================================================================================
 # ================ USER QUERIES ========================================================

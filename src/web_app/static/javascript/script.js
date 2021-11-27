@@ -17,7 +17,7 @@ $(document).ready(function(){
     
     //receive details from server
     socket.on('airspace', function(msg) {
-        // console.log(msg.list_airports);
+        // console.log(msg);
 
         if (!isInitialized) {
             init_graphics(msg.center, msg.radius);
@@ -45,6 +45,11 @@ $(document).ready(function(){
             list_navaid_string = list_navaid_string + `(${r.nav_type}) ${r.ident} ${r.name}<br>`;
         });
 
+        var list_waypoint_string = '';
+        msg.list_waypoints.forEach(w => {
+            list_waypoint_string = list_waypoint_string + `${w.ident} (${w.country})<br>`;
+        });
+
 
         $('#DOM-lastUpdate').html(msg.time_update_str);
         $('#DOM-numberFlights').html(msg.number_flights);
@@ -52,12 +57,14 @@ $(document).ready(function(){
         $('#DOM-listAirports').html(list_airport_string);
         $('#DOM-listRunways').html(list_runway_string);
         $('#DOM-listNavaids').html(list_navaid_string);
+        $('#DOM-listWaypoints').html(list_waypoint_string);
 
 
         update_traffic(msg.list_flights);
         update_airports(msg.list_airports);
         update_runways(msg.list_runways);
         update_navaids(msg.list_navaids);
+        update_waypoints(msg.list_waypoints);
     });
 
 

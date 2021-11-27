@@ -31,6 +31,7 @@
     var airport_url = "static/images/red.png";
     var vor_url = "static/images/vor.png";
     var ndb_url = "static/images/ndb.png";
+    var waypoint_url = "static/images/triangle.png";
   </script>
 
   <link rel="stylesheet" href="static/css/style.css">
@@ -110,6 +111,17 @@
                 </div>
               </div>
             </div>
+            <br>
+            <div class="row">
+              <div class="col-3">
+                <b>Waypoints : </b><br>
+                <div class="contListStuff">
+                  <span id="DOM-listWaypoints"></span>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </div>
@@ -178,6 +190,7 @@
 <script src="static/javascript/airport_handler.js"></script>
 <script src="static/javascript/runway_handler.js"></script>
 <script src="static/javascript/navaid_handler.js"></script>
+<script src="static/javascript/waypoint_handler.js"></script>
 <script src="static/javascript/follow_flight_handler.js"></script>
 <script src="static/javascript/query_sender.js"></script>
 
