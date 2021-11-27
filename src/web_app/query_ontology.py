@@ -6,23 +6,37 @@ filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
 
 def fprint(*args, **kwargs):
-    print(args, flush=True)
+    print(args, flush=True, **kwargs)
 
 
 def init_ontology_individuals():
-    fprint("Loading ontology...")
+    fprint("Loading ontology...", end=" ")
     onto_individuals = owl.get_ontology(filename_onto_individuals).load()
     fprint("Ontology loaded !")
     return onto_individuals
 
 
+df_all_airports = None
+df_all_runways = None
+df_all_frequencies = None
+df_all_navaids = None
 
-# ======================================================================================
-# ================ MAP QUERIES =========================================================
-# ======================================================================================
 
-def query_map_near_airports(s, n, w, e):
-    near_airports = list(owl.default_world.sparql(
+
+def init_dataframes_individuals():
+    global df_all_airports, df_all_runways, df_all_frequencies, df_all_navaids
+    fprint("Loading individuals", end=" ")
+    df_all_airports = init_df_all_airports()
+    df_all_runways = init_df_all_runways()
+    df_all_frequencies = init_df_all_frequencies()
+    df_all_navaids = init_df_all_navaids()
+    fprint("Individuals loaded !")
+    return
+
+
+
+def init_df_all_airports():
+    all_airports = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
             SELECT ?name ?iata ?icao ?latitude ?longitude ?altitude ?country
@@ -34,17 +48,15 @@ def query_map_near_airports(s, n, w, e):
                 ?Airport pie:AirportGPSLongitude ?longitude .
                 ?Airport pie:AirportAltitude ?altitude .
                 ?Airport pie:AirportCountry ?country .
-                FILTER (?longitude > {w} && ?longitude < {e} 
-                    &&  ?latitude > {s} && ?latitude < {n})
-                
             }}
         """))
     fields = ['name', 'iata', 'icao', 'latitude', 'longitude', 'altitude', 'country']
-    return [dict(zip(fields, airport_tuple)) for airport_tuple in near_airports]
+    dict_all_airports = [dict(zip(fields, airport_tuple)) for airport_tuple in all_airports]
+    return pd.DataFrame(dict_all_airports)
 
 
-def query_map_near_runways(s, n, w, e):
-    near_runways = list(owl.default_world.sparql(
+def init_df_all_runways():
+    all_runways = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
             SELECT ?icao ?couple ?ident ?altitude ?beg_latitude ?beg_longitude ?end_latitude ?end_longitude
@@ -66,37 +78,34 @@ def query_map_near_runways(s, n, w, e):
                 ?Runway pie:RunwaySurface ?surface .
                 ?Runway pie:RunwayThresholdLength ?threshold .
                 ?Runway pie:RunwayWidth ?width .
-                FILTER (?beg_longitude > {w} && ?beg_longitude < {e} 
-                    &&  ?beg_latitude > {s} && ?beg_latitude < {n})
-                
             }}
         """))
     fields = ['airport', 'couple', 'ident', 'altitude', 'beg_latitude', 'beg_longitude', 'end_latitude', 'end_longitude', 
             'length', 'lights', 'orientation', 'surface', 'threshold', 'width']
-    return [dict(zip(fields, runway_tuple)) for runway_tuple in near_runways]
+    dict_all_runways = [dict(zip(fields, runway_tuple)) for runway_tuple in all_runways]
+    return pd.DataFrame(dict_all_runways)
 
 
-def query_map_near_frequencies(current_icao):
-    associated_frequencies = list(owl.default_world.sparql(
+def init_df_all_frequencies():
+    all_frequencies = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
-            SELECT ?frq_type ?desc ?frq_mhz 
+            SELECT ?frq_type ?desc ?frq_mhz ?icao
             WHERE {{
                 ?Airport pie:AirportICAOCode ?icao .
                 ?Airport pie:HasFrequency ?Frequency .
                 ?Frequency pie:FrequencyDescription ?desc .
                 ?Frequency pie:FrequencyMHz ?frq_mhz .
-                ?Frequency pie:FrequencyType ?frq_type .
-                FILTER regex(?icao, "{current_icao}", "i")
-                
+                ?Frequency pie:FrequencyType ?frq_type .                
             }}
         """))
-    fields = ['frq_type', 'desc', 'frq_mhz']
-    return [dict(zip(fields, frq_tuple)) for frq_tuple in associated_frequencies]
+    fields = ['frq_type', 'desc', 'frq_mhz', 'icao']
+    dict_all_frequencies = [dict(zip(fields, frq_tuple)) for frq_tuple in all_frequencies]
+    return pd.DataFrame(dict_all_frequencies)
 
 
-def query_map_near_navaids(s, n, w, e):
-    near_navaids = list(owl.default_world.sparql(
+def init_df_all_navaids():
+    all_navaids = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
             SELECT ?ident ?name ?nav_type ?frequency ?latitude ?longitude ?altitude
@@ -108,13 +117,48 @@ def query_map_near_navaids(s, n, w, e):
                 ?Navaid pie:NavaidGPSLatitude ?latitude .
                 ?Navaid pie:NavaidGPSLongitude ?longitude .
                 ?Navaid pie:NavaidAltitude ?altitude .
-                FILTER (?longitude > {w} && ?longitude < {e} 
-                    &&  ?latitude > {s} && ?latitude < {n})
-                
             }}
         """))
     fields = ['ident', 'name', 'nav_type', 'frequency', 'latitude', 'longitude', 'altitude']
-    return [dict(zip(fields, navaid_tuple)) for navaid_tuple in near_navaids]
+    dict_all_navaids = [dict(zip(fields, navaid_tuple)) for navaid_tuple in all_navaids]
+    return pd.DataFrame(dict_all_navaids)
+
+
+
+# ======================================================================================
+# ================ MAP QUERIES =========================================================
+# ======================================================================================
+
+
+def query_map_near_airports(s, n, w, e):
+    df_near_airports = df_all_airports.loc[
+        df_all_airports['longitude'].between(w, e) & \
+        df_all_airports['latitude'].between(s, n)
+    ]
+    return df_near_airports.to_dict('records')
+
+
+def query_map_near_runways(s, n, w, e):
+    df_near_runways = df_all_runways.loc[
+        df_all_runways['beg_longitude'].between(w, e) & \
+        df_all_runways['beg_latitude'].between(s, n)
+    ]
+    return df_near_runways.to_dict('records')
+
+
+def query_map_near_frequencies(current_icao):
+    df_associated_frequencies = df_all_frequencies.loc[
+        df_all_frequencies['icao'] == current_icao
+    ]
+    return df_associated_frequencies.to_dict('records')
+
+
+def query_map_near_navaids(s, n, w, e):
+    df_near_navaids = df_all_navaids.loc[
+        df_all_navaids['longitude'].between(w, e) & \
+        df_all_navaids['latitude'].between(s, n)
+    ]
+    return df_all_navaids.to_dict('records')
 
 
 # ======================================================================================

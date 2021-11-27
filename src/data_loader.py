@@ -230,8 +230,8 @@ class FrequencyLoader:
 
 class WaypointLoader:
     
-    def __init__(self, PATH=False):
-        if not(PATH):
+    def __init__(self, PATH=None):
+        if PATH is None:
             self.data = self.download_waypoints()
             print(len(self.data), "waypoints parsed")
         else:

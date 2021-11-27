@@ -6,7 +6,7 @@ Web app views
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context, request, jsonify
 from random import random
-from time import sleep
+from time import sleep, perf_counter
 import os
 from threading import Thread, Event
 
@@ -15,6 +15,7 @@ from .flight_data_handler import *
 import logging
 from .query_ontology import *
 import traceback
+import functools
 
 # =======================================================================
 # ===================== FLASK APP INIT ==================================
@@ -60,6 +61,18 @@ def print_error(*args, **kwargs):
 
 def print_event(*args, **kwargs):
     print(f"{bcolors.OKBLUE}{args}{bcolors.ENDC}", flush=True)
+
+
+def timeit(func):
+    @functools.wraps(func)
+    def wrapper_timer(*args, **kwargs):
+        tic = time.perf_counter()
+        value = func(*args, **kwargs)
+        toc = time.perf_counter()
+        elapsed_time = toc - tic
+        print_event(f"Elapsed time: {elapsed_time:0.4f} seconds")
+        return value
+    return wrapper_timer
 
 
 # =======================================================================
@@ -191,7 +204,6 @@ class AirspaceBackgroundWorker:
             except Exception as e:
                 print_error(f"Error : {str(e)}")
     
-
 
     def update_static_data(self):
         try:
@@ -373,6 +385,7 @@ def receive_query():
 
 # =============== SOCKET =======================
 init_ontology_individuals()
+init_dataframes_individuals()
 
 @sio.on('init_worker')
 def init_worker():
