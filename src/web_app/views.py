@@ -335,6 +335,7 @@ class FlightFollowerWorker:
         self.is_following = False
         self.flight_id = ''
 
+    @timeit
     def handle_query(self, query_type):
         print_event(f"Query for {query_type}")
         response_str = "N/A"

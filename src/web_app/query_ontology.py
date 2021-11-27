@@ -193,29 +193,12 @@ def query_map_near_waypoints(s, n, w, e):
 # ======================================================================================
 
 def query_nearest_airport(lat, lng):
-    response = list(owl.default_world.sparql(
-        f"""
-        PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
-        SELECT ?Name ?icao ?lat ?long
-        WHERE {{
-            ?Airport pie:AirportICAOCode ?icao .
-            ?Airport pie:AirportName ?Name .
-            ?Airport pie:AirportGPSLongitude ?long .
-            ?Airport pie:AirportGPSLatitude ?lat .
-            }}
-        """))
-
-    l = np.array(response)
-
     df=  pd.DataFrame({
-        'name': l[:, 0],
-        'ICAO': l[:, 1],
-        'lat': l[:, 2],
-        'lng': l[:, 3],
+        'name': df_all_airports['name'],
+        'ICAO': df_all_airports['icao'],
+        'lat': df_all_airports['latitude'],
+        'lng': df_all_airports['longitude'],
     })
-
-    df['lat'] = pd.to_numeric(df['lat'], downcast="float")
-    df['lng'] = pd.to_numeric(df['lng'], downcast="float")
 
     df['distance'] = df.apply(lambda x: coord_to_dist(x["lat"], x["lng"], lat, lng), axis=1)
     return df.iloc[df['distance'].idxmin()].to_dict()
