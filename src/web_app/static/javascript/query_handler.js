@@ -7,7 +7,7 @@ $(".DOM-queryButton").click(function(e) {
         dataType: 'json',
         data: sent_object,
         success: function(data) {
-            $('#DOM-responseQuery').html(data.response.response_str);
+            process_response_str(data.response.response_str);
         }
     });
 });
@@ -15,4 +15,8 @@ $(".DOM-queryButton").click(function(e) {
 
 function clean_query_response() {
     $('#DOM-responseQuery').html('&nbsp;<br>');
+}
+
+function process_response_str(response_str) {
+    $('#DOM-responseQuery').html(response_str);
 }

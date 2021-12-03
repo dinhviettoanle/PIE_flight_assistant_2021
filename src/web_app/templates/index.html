@@ -130,7 +130,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-            <b>Query</b>
+            <b>Flight</b>
           </button>
         </h2>
         <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingTwo">
@@ -138,7 +138,6 @@
             <div>
               
               <label for="flight_autocomplete"><b class="entry">Follow a flight :</b></label>
-              <!-- <input id="flight_autocomplete" name="autocomp" type="text" value="" class="form-control"> -->
 
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -151,14 +150,46 @@
               <b class="entry">Description :</b><br>
               <span id="DOM-flightDescription"></span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+            <b>Query</b>
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
+          <div class="accordion-body">
             <div>
-              <hr>
-              <b class="entry">Query</b><br>
+              <b class="entry">Button</b><br>
               <div class="m-2">
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-DepartureAirport" disabled>Departure airport</button>
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-NearestAirport" disabled>Nearest airport</button>
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-RunwaysAtArrival" disabled>Runways at arrival</button>
               </div>
+            </div>
+            <div>
+              <b class="entry">Speech Recognition</b><br>
+              <div class="m-2">
+                <div class="my-2">
+                  <button class="btn btn-secondary DOM-queryButton" id="start_button" onclick="trigger_button(event)">START</button>
+                </div>
+        
+        
+                <div id="speech_results">
+                  <span id="final_span" class="final"></span>
+                  <span id="interim_span" class="interim"></span>
+                  <p>
+                </div>
+              </div>
+
+              <!-- <div>
+                <canvas class="visualizer" width="640" height="100"></canvas>
+              </div> -->
+
             </div>
             <div>
               <b class="entry">Response :</b><br>
@@ -167,6 +198,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <br>
@@ -192,7 +224,10 @@
 <script src="static/javascript/navaid_handler.js"></script>
 <script src="static/javascript/waypoint_handler.js"></script>
 <script src="static/javascript/follow_flight_handler.js"></script>
-<script src="static/javascript/query_sender.js"></script>
+<script src="static/javascript/query_handler.js"></script>
+
+<script src="static/javascript/speech_recognition.js"></script>
+<!-- <script src="static/javascript/audio_display.js"></script> -->
 
 
 

@@ -26,4 +26,5 @@ function select_flight(flight) {
   clean_query_response();
   console.log("Following " + flight.label);
   socket.emit('new_follow', flight);
+  $('input').blur();
 }

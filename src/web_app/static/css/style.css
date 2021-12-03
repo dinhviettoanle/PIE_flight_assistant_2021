@@ -48,3 +48,11 @@ body {
 #DOM-responseQuery {
     font-family: "DejaVu Sans Mono", "monospace";
 }
+
+#speech_results {
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: left;
+    min-height: 30px;
+    max-height: 50px;
+}

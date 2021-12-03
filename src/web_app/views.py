@@ -383,6 +383,16 @@ def start_work(sid):
             sio.start_background_task(flight_follower_worker.do_work)
 
 
+def process_transcript(transcript):
+    query = ""
+    print_event(transcript)
+    # DO STUFF with Snips-NLU
+
+    if transcript.lower() == "what is the nearest airport":
+        query = "NearestAirport"
+
+    return query
+
 
 # =======================================================================
 # ===================== FLASK APP VIEWS =================================
@@ -406,6 +416,13 @@ def receive_query():
     query_type = request.args.get('q').split('-')[1]
     response_str = flight_follower_worker.handle_query(query_type)
     return jsonify(response=response_str)
+
+@app.route('/_transcript', methods=['GET'])
+def get_speech_transcript():
+    transcript = request.args.get('transcript')
+    query_type = process_transcript(transcript)
+    response_str = flight_follower_worker.handle_query(query_type)
+    return jsonify({"success" : True, "response" : response_str})
 
 
 # =============== SOCKET =======================
