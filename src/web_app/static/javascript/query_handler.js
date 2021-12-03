@@ -40,6 +40,7 @@ function process_response_str(response_str) {
 
 const abbreviations = {
     " nm" : " nautical miles",
+    "N/A" : "not available"
 }
 
 String.prototype.allReplace = function(obj) {

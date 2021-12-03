@@ -391,6 +391,12 @@ def process_transcript(transcript):
     if transcript.lower() == "what is the nearest airport":
         query = "NearestAirport"
 
+    elif transcript.lower() == "what are the runways at arrival":
+        query = "RunwaysAtArrival"
+    
+    elif transcript.lower() == "what is the departure airport":
+        query = "DepartureAirport"
+
     return query
 
 
