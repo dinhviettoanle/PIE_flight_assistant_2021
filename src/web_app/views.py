@@ -354,6 +354,15 @@ class FlightFollowerWorker:
                 response_str = f"""Runways at {self.static_info.get('destination')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
             else:
                 response_str = f"Arrival airport is not available."
+
+        elif query_type == "TemperatureAtArrival":
+            response_dict = query_weather_at_arrival(self.static_info.get('destination_icao'))
+            if response_dict.get('status'):
+                list_runways_arrival = response_dict.get('list_runways')
+                response_str = f"""The temperature at {self.static_info.get('destination')} is {response_dict.get('temperature')} celsius."""
+            else:
+                response_str = f"Arrival airport is not available."
+
         
         return {'response_str' : response_str}
 
@@ -385,7 +394,7 @@ def start_work(sid):
 
 def process_transcript(transcript):
     query = ""
-    print_event(transcript)
+    print_event("SPEECH RECOGNITION", transcript)
     # DO STUFF with Snips-NLU
 
     if transcript.lower() == "what is the nearest airport":
@@ -396,6 +405,9 @@ def process_transcript(transcript):
     
     elif transcript.lower() == "what is the departure airport":
         query = "DepartureAirport"
+
+    elif transcript.lower() == "what is the temperature at arrival":
+        query = "TemperatureAtArrival"
 
     return query
 
@@ -417,12 +429,14 @@ def autocomplete():
     return jsonify(matching_results=results)
 
 
+# Query by button
 @app.route('/_query', methods=['GET'])
 def receive_query():
     query_type = request.args.get('q').split('-')[1]
     response_str = flight_follower_worker.handle_query(query_type)
     return jsonify(response=response_str)
 
+# Query by speech recognition
 @app.route('/_transcript', methods=['GET'])
 def get_speech_transcript():
     transcript = request.args.get('transcript')

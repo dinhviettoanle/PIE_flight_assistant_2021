@@ -1,9 +1,13 @@
 import owlready2 as owl
+import pyowm
 import numpy as np
 import pandas as pd
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
+OWM_APIKEY = 'a39692b70ec17cf580fbd700f2e4416e'
+owm = pyowm.OWM(OWM_APIKEY)
+mgr = owm.weather_manager()
 
 def fprint(*args, **kwargs):
     print(args, flush=True, **kwargs)
@@ -225,6 +229,19 @@ def query_runways_at_arrival(icao_arrival):
 
     list_runways = [i[0] for i in response]
     return {"status": True, "icao": icao_arrival, "list_runways": list_runways}
+
+
+
+def query_weather_at_arrival(icao_arrival):
+    row = df_all_airports.loc[df_all_airports['icao'] == icao_arrival]
+    
+    if len(row) == 0:
+        return {"status": False}
+    
+    coord = (float(row['latitude']), float(row['longitude']))
+    current_weather = mgr.weather_at_coords(*coord).weather
+    temperature = current_weather.temperature('celsius')['temp']
+    return {"status": True, "temperature": temperature}
 
 
 
