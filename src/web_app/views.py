@@ -337,8 +337,13 @@ class FlightFollowerWorker:
 
     @timeit
     def handle_query(self, query_type):
-        print_event(f"Query for {query_type}")
         response_str = "N/A"
+
+        if "?" in query_type:
+            query_type, arg = query_type.split("?")
+            print_event(f"Query for {query_type}. Argument : {arg}")
+        else:
+            print_event(f"Query for {query_type}")
 
         if query_type == "DepartureAirport":
             response_str = f"The departure airport is {self.static_info.get('origin')}."
@@ -356,12 +361,16 @@ class FlightFollowerWorker:
                 response_str = f"Arrival airport is not available."
 
         elif query_type == "TemperatureAtArrival":
-            response_dict = query_weather_at_arrival(self.static_info.get('destination_icao'))
+            response_dict = query_temperature_at_airport(self.static_info.get('destination_icao'))
             if response_dict.get('status'):
                 list_runways_arrival = response_dict.get('list_runways')
-                response_str = f"""The temperature at {self.static_info.get('destination')} is {response_dict.get('temperature')} celsius."""
+                response_str = f"The temperature at {response_dict.get('airport_name')} is {response_dict.get('temperature')} celsius."
             else:
                 response_str = f"Arrival airport is not available."
+
+        elif query_type == "WindAtAirport":
+            response_dict = query_wind_at_airport(arg)
+            response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
 
         
         return {'response_str' : response_str}
@@ -408,6 +417,9 @@ def process_transcript(transcript):
 
     elif transcript.lower() == "what is the temperature at arrival":
         query = "TemperatureAtArrival"
+
+    elif transcript.lower() in ["what is the wind at LFBO", "what is the wind at toulouse blagnac"]:
+        query = "WindAtAirport?LFBO"
 
     return query
 

@@ -232,8 +232,9 @@ def query_runways_at_arrival(icao_arrival):
 
 
 
-def query_weather_at_arrival(icao_arrival):
-    row = df_all_airports.loc[df_all_airports['icao'] == icao_arrival]
+def query_temperature_at_airport(icao):
+    row = df_all_airports.loc[df_all_airports['icao'] == icao]
+    airport_name = row['name'].values[0]
     
     if len(row) == 0:
         return {"status": False}
@@ -241,7 +242,31 @@ def query_weather_at_arrival(icao_arrival):
     coord = (float(row['latitude']), float(row['longitude']))
     current_weather = mgr.weather_at_coords(*coord).weather
     temperature = current_weather.temperature('celsius')['temp']
-    return {"status": True, "temperature": temperature}
+    return {
+        "status": True, 
+        "temperature": temperature, 
+        "airport_name" : airport_name
+    }
+
+
+
+def query_wind_at_airport(icao):
+    row = df_all_airports.loc[df_all_airports['icao'] == icao]
+    airport_name = row['name'].values[0]
+    
+    if len(row) == 0:
+        return {"status": False}
+    
+    coord = (float(row['latitude']), float(row['longitude']))
+    current_weather = mgr.weather_at_coords(*coord).weather
+    wind_speed = current_weather.wind().get('speed')
+    wind_orientation = current_weather.wind().get('deg')
+    return {
+        "status": True, 
+        "wind_speed": wind_speed, 
+        "wind_orientation" : wind_orientation,
+        "airport_name" : airport_name
+    }
 
 
 
