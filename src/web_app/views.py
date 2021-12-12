@@ -283,6 +283,8 @@ class FlightFollowerWorker:
             'id' : "",
             'registration' : "",
             'callsign' : "",
+            'model' : "",
+            'model_text' : "",
             'origin' : "",
             'origin_icao' : "",
             'destination' : "",

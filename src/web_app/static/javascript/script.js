@@ -90,8 +90,9 @@ $(document).ready(function(){
             var flight_data_str = `
                 <b>Callsign : </b>${data.callsign} ; 
                 <b>Registration : </b> ${data.registration} ; 
-                <b>Route : </b> ${data.origin} ⟶ ${data.destination}
+                <b>Model : </b> ${data.model} (${data.model_text})
                 <br>
+                <b>Route : </b> ${data.origin} ⟶ ${data.destination} ;
                 <b>Last contact : </b> ${data.last_contact}
                 <br>
                 <b>Position : </b> (${data.lat}, ${data.lon}) ; 

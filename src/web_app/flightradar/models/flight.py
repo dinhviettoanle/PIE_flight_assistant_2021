@@ -80,12 +80,13 @@ class BriefFlight:
 class DetailedFlight:
     """Class for storing info of selected flight.
     Must be displayed separately."""
-    def __init__(self, flight_id, flight, status, model, registration, airline,
+    def __init__(self, flight_id, flight, status, model, model_text, registration, airline,
                  origin, destination, trail, iata, icao, origin_icao, destination_icao):
         self.id = flight_id
         self.flight = flight
         self.status = status
         self.model = model
+        self.model_text = model_text
         self.registration = registration
         self.airline = airline
         self.icao = icao
@@ -115,6 +116,9 @@ class DetailedFlight:
         try: this_model = data['aircraft']['model']['code']
         except KeyError: this_model = 'N/A'
 
+        try: this_model_text = data['aircraft']['model']['text']
+        except KeyError: this_model_text = 'N/A'
+
         try: this_registration = data['aircraft']['registration']
         except KeyError: this_registration = 'N/A'
 
@@ -125,6 +129,7 @@ class DetailedFlight:
             flight=data['identification']['callsign'],
             status=data['status']['text'],
             model=this_model,
+            model_text=this_model_text,
             registration=this_registration,
             airline=data['airline']['name'] if data['airline'] else 'N/A',
             iata=get_airline_prop(data, 'iata'),

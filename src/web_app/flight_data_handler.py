@@ -223,6 +223,8 @@ class FlightSpecificQueryHandler():
             'id': flight.id, 
             'callsign' : flight.flight, 
             'registration' : flight.registration,
+            'model' : flight.model,
+            'model_text' : flight.model_text,
             'lat': last_waypoint.latitude, 
             'lon': last_waypoint.longitude,
             'heading': last_waypoint.heading, 
