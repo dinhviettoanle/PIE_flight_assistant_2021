@@ -15,6 +15,8 @@ $(".DOM-queryButton").click(function(e) {
 
 function clean_query_response() {
     $('#DOM-responseQuery').html('&nbsp;<br>');
+    $('#final_span').html('');
+    $('#interim_span').html('');
 }
 
 /* SPEECH SYNTHESIS */
