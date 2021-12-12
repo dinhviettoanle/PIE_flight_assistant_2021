@@ -264,9 +264,14 @@ def query_wind_at_airport(icao):
     return {
         "status": True, 
         "wind_speed": wind_speed, 
-        "wind_orientation" : wind_orientation,
-        "airport_name" : airport_name
+        "wind_orientation": wind_orientation,
+        "airport_name": airport_name
     }
+
+
+def get_landing_checklist(model):
+    checklist = [("landing gear", "down"), ("autopilot", "disconnect"), ("go around altitude", "set")]
+    return {"status": True, "checklist": checklist}
 
 
 
