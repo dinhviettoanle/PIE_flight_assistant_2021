@@ -27,7 +27,30 @@ class Airplane extends Location {
         this.marker = L.angleMarker([this.latitude, this.longitude], options);
         this.marker.setHeading(this.heading / 180 * Math.PI);
         this.set_marker_popup("set");
+
+        // On click, select flight
+        this.marker.on('click', params => {
+            var sent_object = {'q': this.icao24};
+
+            $.ajax({
+                type: "GET",
+                url: "/_autocomplete",
+                dataType: 'json',
+                data: sent_object,
+                success: function(data) {
+                    var this_flight = data['matching_results'][0];
+                    select_flight({
+                        label: this_flight.str,
+                        value: this_flight.str,
+                        flight_id: this_flight.id
+                    });
+                }
+            });
+        });
     }
+
+
+
 
     set_marker_popup(fun) {
         var str_update = `${this.icao24} - ${this.callsign} <br> \

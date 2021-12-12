@@ -23,6 +23,7 @@ $(function() {
 
 
 function select_flight(flight) {
+  /* flight = {label: str, value: str, flight_id: str} */
   clean_query_response();
   console.log("Following " + flight.label);
   socket.emit('new_follow', flight);

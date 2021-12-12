@@ -11,7 +11,8 @@ from .models.operator import Operator
 FLIGHTS_API_PATTERN = ('https://data-live.flightradar24.com/zones'
                        '/fcgi/feed.js?bounds={},{},{},{}'
                        '&faa=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1'
-                       '&estimated=1&maxage=14400&gliders=1&stats=1')
+                       '&estimated=1&maxage=14400&gliders=0&stats=1')
+                    #    '&estimated=1&maxage=14400&gliders=1&stats=1')
 FLIGHT_API_PATTERN = ('https://data-live.flightradar24.com/clickhandler/'
                       '?version=1.5&flight={}')
 SEARCH_API_PATTERN = ('https://www.flightradar24.com/v1/search/web/find?'
