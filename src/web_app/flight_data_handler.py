@@ -215,8 +215,14 @@ class FlightSpecificQueryHandler():
         flight = self.api.get_flight(flight_id, RAW=False)
         self.api.get_flight(flight_id, RAW=True)
         last_waypoint = flight.trail[0]
-        before_waypoint = flight.trail[1]
-        dt = last_waypoint.timestamp - before_waypoint.timestamp
+        # To compute Vz
+        if len(flight.trail) > 1:
+            before_waypoint = flight.trail[1]
+            dt = last_waypoint.timestamp - before_waypoint.timestamp
+        else:
+            before_waypoint = flight.trail[0]
+            dt = 1
+        
         dh = last_waypoint.altitude - before_waypoint.altitude
 
         return {
