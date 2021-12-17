@@ -42,6 +42,7 @@
 
 <body>
 
+  <!-- MODAL INIT ONTOLOGY -->
   <div class="modal" id="modalWaitingOntolgy">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -55,6 +56,27 @@
     </div>
   </div>
 
+  <!-- MODAL CHECKLIST -->
+
+  <button class="btn btn-primary" id="start_button" onclick="test_checklist(event)">Checklist</button>
+
+  <div class="modal fade" id="checklistModal" tabindex="-1" aria-labelledby="checklistModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checklistModalLabel">Checklist</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="checklistModalBody">
+          <table id="checklistTable" style="width:100%">
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <div class="container">

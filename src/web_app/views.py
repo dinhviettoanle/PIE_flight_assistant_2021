@@ -340,6 +340,7 @@ class FlightFollowerWorker:
     @timeit
     def handle_query(self, query_type):
         response_str = "N/A"
+        args = None
 
         if "?" in query_type:
             query_type, arg = query_type.split("?")
@@ -376,10 +377,14 @@ class FlightFollowerWorker:
 
         elif query_type == "ChecklistLanding":
             response_dict = get_landing_checklist(self.static_info.get('model'))
-            response_str = "Landing checklist"
+            response_str = "CHECKLIST"
+            args = {
+                'name' : 'Landing checklist',
+                'checklist' : response_dict.get('checklist')
+            }
 
         
-        return {'response_str' : response_str}
+        return {'response_str' : response_str, 'args': args}
 
 
 

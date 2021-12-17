@@ -7,7 +7,12 @@ $(".DOM-queryButton").click(function(e) {
         dataType: 'json',
         data: sent_object,
         success: function(data) {
-            process_response_str(data.response.response_str);
+            if (data.response.response_str == 'CHECKLIST') {
+                process_checklist(data.response.args);
+            }
+            else {
+                process_response_str(data.response.response_str);
+            }
         }
     });
 });
@@ -65,4 +70,64 @@ function response_str_to_speak(response_str) {
     response_speak = response_speak.replace(pattern, "$1 left");
 
     return response_speak;
+}
+
+
+function test_checklist() {
+    process_checklist({
+        'name' : 'Landing checklist',
+        'checklist' : [["Landing gear", "DOWN"], ["Autopilot", "DISCONNECTED"], ["Go-around altitude", "SET"]]
+    });
+}
+
+
+function set_gui_checklist(checklist_tuple) {
+    $("#checklistTable tr").remove(); 
+    var DOMChecklistTable = document.getElementById('checklistTable');
+
+    checklist_tuple.forEach(tuple => {
+        var item = tuple[0];
+        var response = tuple[1];
+        
+        var new_row = DOMChecklistTable.insertRow();
+        var cell1 = new_row.insertCell(0);
+        var cell2 = new_row.insertCell(1);
+
+        cell1.innerHTML = item;
+        cell2.innerHTML = `<span id="DOMCheck-${response}" style="color:#FF0000"> ${response} </span>`;
+    });
+}
+
+
+function process_talking_checklist(checklist_tuple) {
+
+    msg.voice = voices.find(voice => voice.name === "Google UK English Male");
+    
+    checklist_tuple.forEach(tuple => {
+        var item = tuple[0];
+        var response = tuple[1];
+        
+        // TODO HERE
+        msg.text = item;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(msg);
+    });
+
+
+    return
+}
+
+function process_checklist(data) {
+    var checkModal = new bootstrap.Modal(document.getElementById('checklistModal'));
+
+    var checklist_name = data.name;
+    var checklist_tuple = data.checklist
+    console.log(checklist_tuple)
+
+    $('#checklistModalLabel').html(checklist_name);
+    set_gui_checklist(checklist_tuple);
+
+    process_talking_checklist(checklist_tuple);
+
+    checkModal.show();
 }
