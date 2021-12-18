@@ -145,8 +145,12 @@ function send_transcript(transcript) {
         dataType: 'json',
         data: sent_object,
         success: function(data) {
-            // console.log(data);
-            process_response_str(data.response.response_str);
+            if (data.response.response_str == 'CHECKLIST') {
+                process_checklist(data.response.args);
+            }
+            else {
+                process_response_str(data.response.response_str);
+            }
         }
     });
 }

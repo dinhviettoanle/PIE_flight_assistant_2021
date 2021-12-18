@@ -383,6 +383,14 @@ class FlightFollowerWorker:
                 'checklist' : response_dict.get('checklist')
             }
 
+        elif query_type == "ChecklistApproach":
+            response_dict = get_approach_checklist(self.static_info.get('model'))
+            response_str = "CHECKLIST"
+            args = {
+                'name' : 'Approach checklist',
+                'checklist' : response_dict.get('checklist')
+            }
+
         
         return {'response_str' : response_str, 'args': args}
 
@@ -431,6 +439,12 @@ def process_transcript(transcript):
 
     elif transcript.lower() in ["what is the wind at LFBO", "what is the wind at toulouse blagnac"]:
         query = "WindAtAirport?LFBO"
+
+    elif transcript.lower() in ["give me the landing checklist", "landing checklist"]:
+        query = "ChecklistLanding"
+
+    elif transcript.lower() in ["give me the approach checklist", "approach checklist"]:
+        query = "ChecklistApproach"
 
     return query
 

@@ -57,9 +57,6 @@
   </div>
 
   <!-- MODAL CHECKLIST -->
-
-  <button class="btn btn-primary" id="start_button" onclick="test_checklist(event)">Checklist</button>
-
   <div class="modal fade" id="checklistModal" tabindex="-1" aria-labelledby="checklistModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -72,7 +69,7 @@
           </table>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="DOM-ChecklistButton" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -196,6 +193,7 @@
               </div>
               <div class="m-2">
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-ChecklistLanding" disabled>Landing Checklist</button>
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-ApproachChecklist" disabled>Approach Checklist</button>
 
               </div>
             </div>

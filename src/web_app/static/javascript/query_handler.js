@@ -73,14 +73,6 @@ function response_str_to_speak(response_str) {
 }
 
 
-function test_checklist() {
-    process_checklist({
-        'name' : 'Landing checklist',
-        'checklist' : [["Landing gear", "DOWN"], ["Autopilot", "DISCONNECTED"], ["Go-around altitude", "SET"]]
-    });
-}
-
-
 function set_gui_checklist(checklist_tuple) {
     $("#checklistTable tr").remove(); 
     var DOMChecklistTable = document.getElementById('checklistTable');
@@ -88,46 +80,119 @@ function set_gui_checklist(checklist_tuple) {
     checklist_tuple.forEach(tuple => {
         var item = tuple[0];
         var response = tuple[1];
+        var id_item = tuple[2]
         
         var new_row = DOMChecklistTable.insertRow();
         var cell1 = new_row.insertCell(0);
         var cell2 = new_row.insertCell(1);
 
         cell1.innerHTML = item;
-        cell2.innerHTML = `<span id="DOMCheck-${response}" style="color:#FF0000"> ${response} </span>`;
+        cell2.innerHTML = `<span id="DOMCheck-Item${id_item}" style="color:#FF0000"> ${response} </span>`;
     });
 }
 
+function process_talking_checklist(checklist_name, checklist_tuple) {
 
-function process_talking_checklist(checklist_tuple) {
-
-    msg.voice = voices.find(voice => voice.name === "Google UK English Male");
+    const title_check_msg = new SpeechSynthesisUtterance();
+    title_check_msg.voice = voices.find(voice => voice.name === "Google UK English Male");
     
-    checklist_tuple.forEach(tuple => {
-        var item = tuple[0];
-        var response = tuple[1];
-        
-        // TODO HERE
-        msg.text = item;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(msg);
-    });
+    title_check_msg.text = checklist_name;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(title_check_msg);
 
-
+    title_check_msg.onend = function(event) {
+        loop_items(checklist_tuple, checklist_name);
+    }
     return
 }
 
-function process_checklist(data) {
-    var checkModal = new bootstrap.Modal(document.getElementById('checklistModal'));
 
+
+var response_transcript = '';
+function loop_items(checklist_tuple, checklist_name) {
+    const item_msg = new SpeechSynthesisUtterance();
+    item_msg.voice = voices.find(voice => voice.name === "Google UK English Male");
+    
+    // If the checklist is empty (all the items have been done)
+    if (checklist_tuple.length == 0) {
+        item_msg.text = `${checklist_name} complete`;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(item_msg);
+        checkModal.hide();
+        return
+    }
+
+    var item = checklist_tuple[0][0];
+    var response = checklist_tuple[0][1];
+    var id_item = checklist_tuple[0][2];
+
+    // Speak item
+    item_msg.text = item;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(item_msg);
+
+    // Speech recognition
+    const check_recognition = new webkitSpeechRecognition();
+    check_recognition.continuous = true;
+    check_recognition.interimResults = true;
+    check_recognition.lang = 'en-US';
+
+
+    // When ends speaking, begin speech recognition
+    item_msg.onend = function(event) {
+        check_recognition.start();
+        // console.log("[CHECKLIST] Begin recognition")  
+    }
+
+    // When there is a recognition
+    response_transcript = '';
+    check_recognition.onresult = function(event) {
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+                response_transcript += event.results[i][0].transcript;
+            } 
+        }
+
+        if (response_transcript.length > 0) {
+            // If the response is correct, continue with the remaining checklist
+            if (response_is_correct(response.toLowerCase(), response_transcript)) {
+                document.getElementById(`DOMCheck-Item${id_item}`).style.color = '#00FF00';
+                check_recognition.stop();
+                
+                var remaining_checklist = checklist_tuple.slice(1);
+                loop_items(remaining_checklist, checklist_name);
+            }
+            // Else repeat the current item
+            else {
+                console.log(response, response_transcript);
+                check_recognition.stop();
+                loop_items(checklist_tuple, checklist_name);
+            }
+            
+        }
+    };
+}
+
+
+
+function response_is_correct(expected, transcript) {
+    // TODO : il faudrait que si ca "ressemble un minimum", ca passe
+    return expected == transcript;
+}
+
+
+
+
+
+var checkModal = new bootstrap.Modal(document.getElementById('checklistModal'));
+function process_checklist(data) {
     var checklist_name = data.name;
     var checklist_tuple = data.checklist
-    console.log(checklist_tuple)
 
     $('#checklistModalLabel').html(checklist_name);
     set_gui_checklist(checklist_tuple);
 
-    process_talking_checklist(checklist_tuple);
+    process_talking_checklist(checklist_name, checklist_tuple);
 
     checkModal.show();
 }

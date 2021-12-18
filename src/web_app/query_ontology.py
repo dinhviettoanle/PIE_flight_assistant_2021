@@ -269,8 +269,13 @@ def query_wind_at_airport(icao):
     }
 
 
+# (Item, Response, ID) -- ID used for DOM, for example if there are many "ON" responses
 def get_landing_checklist(model):
-    checklist = [("Landing gear", "DOWN"), ("Autopilot", "DISCONNECTED"), ("Go-around altitude", "SET")]
+    checklist = [("Landing gear", "DOWN", 1), ("Autopilot", "DISCONNECTED", 2), ("Go-around altitude", "SET", 3)]
+    return {"status": True, "checklist": checklist}
+
+def get_approach_checklist(model):
+    checklist = [("Seat belts", "ON", 1), ("Landing lights", "ON", 2), ("Auto brake", "SET", 3), ("Flaps", "FLAPS 1", 4)]
     return {"status": True, "checklist": checklist}
 
 
