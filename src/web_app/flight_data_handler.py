@@ -7,110 +7,14 @@ import requests
 import json
 import pandas as pd
 from datetime import datetime
-from math import sin, cos, sqrt, atan2, radians, asin
-import math
 from .flightradar.api import API
 from .flightradar.coordinates import *
+from .geo_utils import *
+
+
 
 def fprint(*args, **kwargs):
     print(args, flush=True)
-
-def dist_flight_center(center_lat, center_lng, flight_lat, flight_lng):
-    """ Computes the distance between a center point and a flight
-        based on their GPS coordinates
-
-    Parameters
-    ----------
-    center_lat : float
-        Latitude of the center
-    center_lng : float
-        Longitude of the center
-    flight_lat : float
-        Latitude of the flight
-    flight_lng : float
-        Longitude of the flight
-
-    Returns
-    -------
-    float
-        Distance between the point and a flight
-    """
-    R = 6373.0
-
-    lat1, lon1 = radians(center_lat), radians(center_lng)
-    lat2, lon2 = radians(flight_lat), radians(flight_lng)
-
-    dlon = lon2 - lon1
-    dlat = lat2 - lat1
-
-    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-
-    distance = R * c
-    return distance
-
-
-# From https://stackoverflow.com/questions/238260/how-to-calculate-the-bounding-box-for-a-given-lat-lng-location
-# degrees to radians
-def deg2rad(degrees):
-    return math.pi*degrees/180.0
-# radians to degrees
-def rad2deg(radians):
-    return 180.0*radians/math.pi
-
-# Semi-axes of WGS-84 geoidal reference
-WGS84_a = 6378137.0  # Major semiaxis [m]
-WGS84_b = 6356752.3  # Minor semiaxis [m]
-
-# Earth radius at a given latitude, according to the WGS-84 ellipsoid [m]
-def WGS84EarthRadius(lat):
-    # http://en.wikipedia.org/wiki/Earth_radius
-    An = WGS84_a*WGS84_a * math.cos(lat)
-    Bn = WGS84_b*WGS84_b * math.sin(lat)
-    Ad = WGS84_a * math.cos(lat)
-    Bd = WGS84_b * math.sin(lat)
-    return math.sqrt( (An*An + Bn*Bn)/(Ad*Ad + Bd*Bd) )
-
-# Bounding box surrounding the point at given coordinates,
-# assuming local approximation of Earth surface as a sphere
-# of radius given by WGS84
-def boundingBox(latitudeInDegrees, longitudeInDegrees, halfSideInKm):
-    lat = deg2rad(latitudeInDegrees)
-    lon = deg2rad(longitudeInDegrees)
-    halfSide = 1000*halfSideInKm
-
-    # Radius of Earth at given latitude
-    radius = WGS84EarthRadius(lat)
-    # Radius of the parallel at given latitude
-    pradius = radius*math.cos(lat)
-
-    latMin = lat - halfSide/radius
-    latMax = lat + halfSide/radius
-    lonMin = lon - halfSide/pradius
-    lonMax = lon + halfSide/pradius
-
-    return (rad2deg(latMin), rad2deg(lonMin), rad2deg(latMax), rad2deg(lonMax))
-
-
-def get_box_from_center(center, RADIUS):
-    """ Computes a box around a circle with a center and a radius
-
-    Parameters
-    ----------
-    center : (float, float)
-        GPS coordinates of the center
-    RADIUS : float
-        Radius of the cercle in km
-
-    Returns
-    -------
-    (float, float, float, float)
-        South / North latitude
-        West / East longitude
-    """
-    lat, lng = center
-    s, w, n, e = boundingBox(lat, lng, RADIUS)
-    return s, n, w, e
 
 
 
@@ -121,8 +25,24 @@ class FlightRadar24Handler:
     
     def __init__(self):
         self.api = API()
-    
+
+
     def get_current_airspace(self, dict_message, center=None, box=None, RADIUS=100, VERBOSE=False):
+        """ Updates a dictionnary with traffic data within a zone
+
+        Parameters
+        ----------
+        dict_message : dict
+            Dictionnary to update
+        center : tuple, optional
+            Geo point (lat, lon), by default None
+        box : tuple, optional
+            Geo box (south, north, west, east), by default None
+        RADIUS : int, optional
+            Radius of the circle if center is used, by default 100
+        VERBOSE : bool, optional
+            Displays the url, by default False
+        """
         # box : (south, north, west, east)
         # area(southwest, northeast)
         # point(lat, lon)
@@ -188,10 +108,32 @@ class FlightRadar24Handler:
 
 
 class AutocompleteHandler():
+    """ 
+    Handles the auto-completion of the search field
+    """
     def __init__(self):
         self.api = API()
 
+
     def query_partial_flight(self, query, limit=10):
+        """ Gets the result of a query to fr24 API
+
+        Parameters
+        ----------
+        query : str
+            Query to be sent (generally the callsign)
+        limit : int, optional
+            Number of results, by default 10
+
+        Returns
+        -------
+        list
+            List of dictionaries like
+            [{
+                'str': string to be displayed in the GUI,
+                'id' : unique ID of the flight
+            }]
+        """
         list_found = []
         for r in self.api.get_search_results(query=query, limit=limit):
             if r['type'] not in ('schedule', 'aircraft', 'operator', 'airport'):
@@ -209,19 +151,51 @@ class FlightSpecificQueryHandler():
     def __init__(self):
         self.api = API()
 
+    def get_last_position(self, flight, flight_id):
+        detail = self.api.get_search_results(query=flight.flight, limit=1)[0]['detail']
+        print(detail['lat'], detail['lon'], flight_id)
+        dynamic_data = self.query_dynamic_data(detail['lat'], detail['lon'], flight_id, RADIUS=300)
+        print(dynamic_data)
+        return Waypoint(
+            latitude=dynamic_data['lat'], 
+            longitude=dynamic_data['lon'], 
+            altitude=dynamic_data['alt'], 
+            speed=dynamic_data['speed'], 
+            heading=dynamic_data['heading'], 
+            timestamp=dynamic_data['last_contact']
+        )
+
 
     # Attention, risque de "HTTP Error 402: Payment Required" si trop de requetes
     def query_complete_flight(self, flight_id):
+        """ Gets the precise flight static data from its ID
+
+        Parameters
+        ----------
+        flight_id : str
+            Flight ID generated by the FR24 API
+
+        Returns
+        -------
+        dict
+            Dictionary containing multiple static stuff
+        """
         flight = self.api.get_flight(flight_id, RAW=False)
         self.api.get_flight(flight_id, RAW=True)
-        last_waypoint = flight.trail[0]
-        # To compute Vz
-        if len(flight.trail) > 1:
-            before_waypoint = flight.trail[1]
-            dt = last_waypoint.timestamp - before_waypoint.timestamp
-        else:
+        
+        if len(flight.trail) == 0:
+            last_waypoint = self.get_last_position(flight, flight_id)
+            before_waypoint = last_waypoint
+            dt = 1
+        elif len(flight.trail) == 1:
+            last_waypoint = flight.trail[0]
             before_waypoint = flight.trail[0]
             dt = 1
+        else:
+            last_waypoint = flight.trail[0]
+            before_waypoint = flight.trail[1]
+            dt = last_waypoint.timestamp - before_waypoint.timestamp
+        
         
         dh = last_waypoint.altitude - before_waypoint.altitude
 
@@ -244,9 +218,28 @@ class FlightSpecificQueryHandler():
             'destination_icao' : flight.destination_icao
         }
 
-    def query_dynamic_data(self, lat, lng, flight_id):
+
+    def query_dynamic_data(self, lat, lng, flight_id, RADIUS=20):
+        """ Updates the dynamic data regarding a flight
+
+        Parameters
+        ----------
+        lat : float
+            Current latitude of the flight
+        lng : float
+            Current longitude of the flight
+        flight_id : str
+            Flight ID generated by the FR24 API
+        RADIUS : int, optional
+            Radius of the circle within we search, by default 20
+
+        Returns
+        -------
+        dict
+            Dictionary contianing updated dynamic data regarding a flight
+        """""
         center = (lat, lng)
-        s, n, w, e = get_box_from_center(center, 20) # Watch 20km around the center
+        s, n, w, e = get_box_from_center(center, RADIUS) # Watch 20km around the center
 
         area = Area(Point(n, w), Point(s, e))
         data_raw = self.api.get_area(area, VERBOSE=False)

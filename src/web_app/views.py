@@ -85,7 +85,7 @@ def get_near_airports(surrounding_data, center, RADIUS=100):
     Parameters
     ----------
     surrounding_data : dict
-        Dictionary sent to the client
+        Dictionary sent to the client containing all the data
     center : (float, float)
         Center of the radar
     RADIUS : float, optional
@@ -105,7 +105,7 @@ def get_near_runways(surrounding_data, center, RADIUS=100):
     Parameters
     ----------
     surrounding_data : dict
-        Dictionary sent to the client
+        Dictionary sent to the client containing all the data
     center : (float, float)
         Center of the radar
     RADIUS : float, optional
@@ -125,7 +125,7 @@ def get_near_frequencies(surrounding_data):
     Parameters
     ----------
     surrounding_data : dict
-        Dictionary sent to the client
+        Dictionary sent to the client containing all the data
     """    
     event_bug = ""
     for airport in surrounding_data['list_airports']:
@@ -146,7 +146,7 @@ def get_near_navaids(surrounding_data, center, RADIUS=100):
     Parameters
     ----------
     surrounding_data : dict
-        Dictionary sent to the client
+        Dictionary sent to the client containing all the data
     center : (float, float)
         Center of the radar
     RADIUS : float, optional
@@ -166,7 +166,7 @@ def get_near_waypoints(surrounding_data, center, RADIUS=100):
     Parameters
     ----------
     surrounding_data : dict
-        Dictionary sent to the client
+        Dictionary sent to the client containing all the data
     center : (float, float)
         Center of the radar
     RADIUS : float, optional
@@ -185,7 +185,7 @@ def get_near_waypoints(surrounding_data, center, RADIUS=100):
 
 class AirspaceBackgroundWorker:
     """
-    Thread handling periodic queries and calls to the traffic data API
+    Thread handling periodic queries and calls to the traffic data API and to the static data
     """
     switch = False
 
@@ -198,10 +198,12 @@ class AirspaceBackgroundWorker:
         self.flight_data_process = FlightRadar24Handler()
         self.update_static_data()
 
-
         print_info("----- Background airspace worker initialized -----")
 
+
     def do_work(self):
+        """ Main loop of the airspace thread
+        """
         while self.switch:
             try:
                 # Handle traffic
@@ -226,6 +228,8 @@ class AirspaceBackgroundWorker:
     
 
     def update_static_data(self):
+        """ Updates static data (airport, runways, navaids, waypoints), when focus changes
+        """
         try:
             self.surrounding_data['center'] = self.center
             self.surrounding_data['box'] = self.box
@@ -254,21 +258,40 @@ class AirspaceBackgroundWorker:
 
 
     def update_box(self, box):
+        """ Updates the focus box
+
+        Parameters
+        ----------
+        box : tuple
+            New box
+        """
         self.box = box
         self.update_static_data()
 
     
     def update_center(self, center):
+        """ Updates the focus center
+
+        Parameters
+        ----------
+        center : tuple
+            New center
+        """
         self.center = center
         self.update_static_data()
+
 
     def stop(self):
         self.switch = False
 
 
 
-class FlightFollowerWorker:
 
+
+class FlightFollowerWorker:
+    """ 
+    Thread handling the follow-up of a specific flight
+    """
     def __init__(self, sio, airspace_worker):
         self.sio = sio
         self.flight_id = ""
@@ -293,7 +316,10 @@ class FlightFollowerWorker:
 
         self.airspace_worker = airspace_worker
 
+
     def do_work(self):
+        """ Main loop of the follow-up worker
+        """
         while self.switch:
             try:
                 if self.is_following:
@@ -319,11 +345,18 @@ class FlightFollowerWorker:
                 self.sio.sleep(SLEEP_TIME)
 
             except Exception as e:
-                print_error(traceback.format_exc())
+                # print_error(traceback.format_exc())
                 print_error(f"Error following flight : {type(e).__name__} {str(e)}")
 
 
     def update_flight_static_info(self, flight_id):
+        """ Gets the static data of the flight (callsign, departure, arrival, ...)
+
+        Parameters
+        ----------
+        flight_id : str
+            Flight ID
+        """
         self.is_following = True
         self.flight_id = flight_id
         current_flight_data =  self.flight_follower_query.query_complete_flight(self.flight_id)
@@ -333,12 +366,21 @@ class FlightFollowerWorker:
         for k in self.static_info:
             self.static_info[k] = current_flight_data[k]
 
+
     def stop_following(self):
         self.is_following = False
         self.flight_id = ''
 
+
     @timeit
     def handle_query(self, query_type):
+        """ Gets the response to a query
+
+        Parameters
+        ----------
+        query_type : str
+            ID of the Query
+        """
         response_str = "N/A"
         args = None
 
@@ -398,6 +440,13 @@ class FlightFollowerWorker:
 
 
 def start_work(sid):
+    """ Starts all the background workers (airspace, follow-up)
+
+    Parameters
+    ----------
+    sid : str
+        Action to do
+    """
     global thread, airspace_worker, flight_follower_worker
     toulouse_lat, toulouse_long = 43.59972466458162, 1.4492797572165728
     min_lat, max_lat = toulouse_lat - 1, toulouse_lat + 1

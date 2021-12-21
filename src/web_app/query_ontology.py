@@ -2,6 +2,7 @@ import owlready2 as owl
 import pyowm
 import numpy as np
 import pandas as pd
+from .geo_utils import *
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
@@ -14,6 +15,8 @@ def fprint(*args, **kwargs):
 
 
 def init_ontology_individuals():
+    """ Initializes the ontology instance from the file
+    """
     fprint("Loading ontology...", end=" ")
     onto_individuals = owl.get_ontology(filename_onto_individuals).load()
     fprint("Ontology loaded !")
@@ -29,6 +32,9 @@ df_all_waypoints = None
 
 
 def init_dataframes_individuals():
+    """ Initializes dataframe objects containing Airport, Runway, Frequency, Navaid, Waypoint
+    from ontology
+    """
     global df_all_airports, df_all_runways, df_all_frequencies, df_all_navaids, df_all_waypoints
     fprint("Loading individuals", end=" ")
     df_all_airports = init_df_all_airports()
@@ -42,6 +48,8 @@ def init_dataframes_individuals():
 
 
 def init_df_all_airports():
+    """ Initializes the airport dataframe from the Airport ontology's object
+    """
     all_airports = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
@@ -62,6 +70,8 @@ def init_df_all_airports():
 
 
 def init_df_all_runways():
+    """ Initializes the runway dataframe from the Runway ontology's object
+    """
     all_runways = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
@@ -93,6 +103,8 @@ def init_df_all_runways():
 
 
 def init_df_all_frequencies():
+    """ Initializes the frequency dataframe from the Frequency ontology's object
+    """
     all_frequencies = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
@@ -111,6 +123,8 @@ def init_df_all_frequencies():
 
 
 def init_df_all_navaids():
+    """ Initializes the navaid dataframe from the Navaid ontology's object
+    """
     all_navaids = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
@@ -131,6 +145,8 @@ def init_df_all_navaids():
 
 
 def init_df_all_waypoints():
+    """ Initializes the waypoint dataframe from the Waypoint ontology's object
+    """
     all_waypoints = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
@@ -152,7 +168,7 @@ def init_df_all_waypoints():
 # ======================================================================================
 # ================ MAP QUERIES =========================================================
 # ======================================================================================
-
+# Queries to update the map on the GUI
 
 def query_map_near_airports(s, n, w, e):
     df_near_airports = df_all_airports.loc[
@@ -277,15 +293,3 @@ def get_landing_checklist(model):
 def get_approach_checklist(model):
     checklist = [("Seat belts", "ON", 1), ("Landing lights", "ON", 2), ("Auto brake", "SET", 3), ("Flaps", "FLAPS 1", 4)]
     return {"status": True, "checklist": checklist}
-
-
-
-# ======================================================================================
-# ================ UTILS ===============================================================
-# ======================================================================================
-def coord_to_dist(cur_lat, cur_long, dest_lat, dest_long):
-    cur_lat = cur_lat*np.pi/180
-    cur_long = cur_long*np.pi/180
-    dest_lat = dest_lat*np.pi/180
-    dest_long = dest_long*np.pi/180
-    return 60*180/np.pi*np.arccos(np.sin(cur_lat)*np.sin(dest_lat)+np.cos(cur_lat)*np.cos(dest_lat)*np.cos(dest_long-cur_long))
