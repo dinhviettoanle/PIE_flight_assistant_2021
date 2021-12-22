@@ -418,7 +418,7 @@ class FlightFollowerWorker:
             response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
 
         elif query_type == "ChecklistLanding":
-            response_dict = get_landing_checklist(self.static_info.get('model'))
+            response_dict = get_checklist('landing', self.static_info.get('model'))
             response_str = "CHECKLIST"
             args = {
                 'name' : 'Landing checklist',
@@ -426,7 +426,7 @@ class FlightFollowerWorker:
             }
 
         elif query_type == "ChecklistApproach":
-            response_dict = get_approach_checklist(self.static_info.get('model'))
+            response_dict = get_checklist('approach', self.static_info.get('model'))
             response_str = "CHECKLIST"
             args = {
                 'name' : 'Approach checklist',

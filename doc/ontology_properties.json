@@ -89,9 +89,9 @@
         "AirportWidthTaxiway": ""
     },
     "ChecklistDataProp": {
-        "ChecklistApproach": "",
-        "ChecklistLanding": "",
-        "ChecklistStart": ""
+        "ChecklistContent": "",
+        "ChecklistModel": "",
+        "ChecklistType": ""
     },
     "FrequencyDataProp": {
         "FrequencyDescription": "",

@@ -6,6 +6,8 @@ import pandas as pd
 import io
 from tqdm.autonotebook import tqdm
 import logging as lg
+from csv import reader
+import os
 
 from bs4 import BeautifulSoup
 import re
@@ -428,8 +430,34 @@ def test_convert_latlng():
     convert_coordinate_str(lat), convert_coordinate_str(lon)
 
 
+# =========================================================================================
+
+class ChecklistLoader:
+    
+    def __init__(self):
+        self.data = self.set_checklist_df()
+
+    def get_checklist_data(self):
+        return self.data
+
+    def set_checklist_df(self):
+        list_checklists = []
+        for subdir, dirs, files in os.walk("./checklist"):
+            for filename in files:
+                filepath = os.path.join(subdir, filename).replace('\\', '/')
+                model_, type_ = filename.split('.')[0].split('_')
+                list_checklists.append({
+                    'model': model_,
+                    'type': type_,
+                    'content': filepath,
+                })
+        df_checklists = pd.DataFrame(list_checklists)
+        
+        return df_checklists
+
 
 if __name__ == '__main__':
-    wpl = WaypointLoader()
+    # wpl = WaypointLoader()
+    cl = ChecklistLoader()
 
 

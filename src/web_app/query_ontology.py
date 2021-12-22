@@ -2,6 +2,7 @@ import owlready2 as owl
 import pyowm
 import numpy as np
 import pandas as pd
+from csv import reader
 from .geo_utils import *
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
@@ -28,6 +29,7 @@ df_all_runways = None
 df_all_frequencies = None
 df_all_navaids = None
 df_all_waypoints = None
+df_all_checklists = None
 
 
 
@@ -35,13 +37,14 @@ def init_dataframes_individuals():
     """ Initializes dataframe objects containing Airport, Runway, Frequency, Navaid, Waypoint
     from ontology
     """
-    global df_all_airports, df_all_runways, df_all_frequencies, df_all_navaids, df_all_waypoints
+    global df_all_airports, df_all_runways, df_all_frequencies, df_all_navaids, df_all_waypoints, df_all_checklists
     fprint("Loading individuals", end=" ")
     df_all_airports = init_df_all_airports()
     df_all_runways = init_df_all_runways()
     df_all_frequencies = init_df_all_frequencies()
     df_all_navaids = init_df_all_navaids()
     df_all_waypoints = init_df_all_waypoints()
+    df_all_checklists = init_df_all_checklists()
     fprint("Individuals loaded !")
     return
 
@@ -114,7 +117,7 @@ def init_df_all_frequencies():
                 ?Airport pie:HasFrequency ?Frequency .
                 ?Frequency pie:FrequencyDescription ?desc .
                 ?Frequency pie:FrequencyMHz ?frq_mhz .
-                ?Frequency pie:FrequencyType ?frq_type .                
+                ?Frequency pie:FrequencyType ?frq_type .
             }}
         """))
     fields = ['frq_type', 'desc', 'frq_mhz', 'icao']
@@ -161,6 +164,24 @@ def init_df_all_waypoints():
     fields = ['ident', 'country', 'latitude', 'longitude']
     dict_all_waypoints = [dict(zip(fields, waypoint_tuple)) for waypoint_tuple in all_waypoints]
     return pd.DataFrame(dict_all_waypoints)
+
+
+def init_df_all_checklists():
+    """ Initializes the checklist dataframe from the Checklist ontology's object
+    """
+    all_checklists = list(owl.default_world.sparql(
+        f"""
+            PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+            SELECT ?type ?model ?content
+            WHERE {{
+                ?Waypoint pie:ChecklistContent ?content .
+                ?Waypoint pie:ChecklistModel ?model .
+                ?Waypoint pie:ChecklistType ?type .
+            }}
+        """))
+    fields = ['type', 'model', 'content']
+    dict_all_checklists = [dict(zip(fields, checklist_tuple)) for checklist_tuple in all_checklists]
+    return pd.DataFrame(dict_all_checklists)
 
 
 
@@ -286,10 +307,15 @@ def query_wind_at_airport(icao):
 
 
 # (Item, Response, ID) -- ID used for DOM, for example if there are many "ON" responses
-def get_landing_checklist(model):
-    checklist = [("Landing gear", "DOWN", 1), ("Autopilot", "DISCONNECTED", 2), ("Go-around altitude", "SET", 3)]
-    return {"status": True, "checklist": checklist}
+def get_checklist(type_checklist, model):
+    model = 'a320' #### TO DELETE in the future
 
-def get_approach_checklist(model):
-    checklist = [("Seat belts", "ON", 1), ("Landing lights", "ON", 2), ("Auto brake", "SET", 3), ("Flaps", "FLAPS 1", 4)]
+    row = df_all_checklists.loc[(df_all_checklists['type'] == type_checklist) & (df_all_checklists['model'] == model)]
+    checklist_file = row['content'].iloc[0]
+
+    with open(checklist_file, 'r') as read_obj:
+        csv_reader = reader(read_obj)
+        list_of_rows = list(csv_reader)
+
+    checklist = [(item, response, i+1) for i, (item, response) in enumerate(list_of_rows)]
     return {"status": True, "checklist": checklist}

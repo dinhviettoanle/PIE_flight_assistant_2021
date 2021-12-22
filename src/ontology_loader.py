@@ -5,7 +5,7 @@ Individual loader in the ontology
 import owlready2 as owl
 import pandas as pd
 from tqdm.autonotebook import tqdm
-from data_loader import AirportLoader, RunwayLoader, NavaidLoader, FrequencyLoader, WaypointLoader
+from data_loader import AirportLoader, RunwayLoader, NavaidLoader, FrequencyLoader, WaypointLoader, ChecklistLoader
 
 filename_onto = "./ontology/final-archi.owl"
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
@@ -48,6 +48,8 @@ def create_airport_individuals():
         dict_airports[row['icao']] = new_airport
         pbar.update(1)
     pbar.close()
+    print()
+
 
     return dict_airports
 
@@ -110,6 +112,8 @@ def create_runway_individuals(dict_airports):
         
         pbar.update(1)
     pbar.close()
+    print()
+
 
 # ===================================================================================
 # ================ FREQUENCIES ======================================================
@@ -138,6 +142,8 @@ def create_frequency_individuals(dict_airports):
 
         pbar.update(1)
     pbar.close()
+    print()
+
 
 
 # ===================================================================================
@@ -163,6 +169,8 @@ def create_navaid_individuals():
 
         pbar.update(1)
     pbar.close()
+    print()
+
 
 
 # ===================================================================================
@@ -170,7 +178,8 @@ def create_navaid_individuals():
 # ===================================================================================
 
 def create_waypoint_individuals():
-    PATH = "../data/waypoints.csv"
+    # PATH = "../data/waypoints.csv"
+    PATH = "../data/waypoints_crop.csv"
     waypoint_data = WaypointLoader(PATH=PATH).get_waypoint_data()
     pbar = tqdm(total=len(waypoint_data), desc="Waypoints")
     for i, row in waypoint_data.iterrows():
@@ -183,6 +192,25 @@ def create_waypoint_individuals():
 
         pbar.update(1)
     pbar.close()
+    print()
+
+
+# ===================================================================================
+# ================ CHECKLISTS =======================================================
+# ===================================================================================
+
+def create_checklist_individuals():
+    checklist_data = ChecklistLoader().get_checklist_data()
+    pbar = tqdm(total=len(checklist_data), desc="Checklists")
+    for i, row in checklist_data.iterrows():
+        new_checklist = onto.Checklist(f"{row['model']}_{row['type']}")
+        new_checklist.ChecklistContent.append(row['content'])
+        new_checklist.ChecklistModel.append(row['model'])
+        new_checklist.ChecklistType.append(row['type'])
+        pbar.update(1)
+    pbar.close()
+    print()
+
 
 
 
@@ -190,6 +218,7 @@ def create_waypoint_individuals():
 
 def main():
     dict_airports = create_airport_individuals()
+    create_checklist_individuals()
     create_runway_individuals(dict_airports)
     create_frequency_individuals(dict_airports)
     create_navaid_individuals()
