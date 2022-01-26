@@ -82,8 +82,8 @@ function start_recording(event) {
     start_timestamp = event.timeStamp;
 
     // DISPLAY
-    // init_audio_display();
-    // unmute();
+    init_audio_display();
+    set_audio_display();
 }
 
 function end_recording(event) {
@@ -98,7 +98,7 @@ function trigger_button(event) {
     if (recognizing) {
         end_recording(event);
         // DISPLAY
-        // mute();
+        clear_audio_display();
     }
     else {
         start_recording(event);
@@ -120,7 +120,7 @@ document.addEventListener('keyup', event => {
     down = false;
     setTimeout(end_recording, DELAY_AFTER_SPEAK, event);
     // DISPLAY
-    // mute();
+    clear_audio_display();
     }
 });
 

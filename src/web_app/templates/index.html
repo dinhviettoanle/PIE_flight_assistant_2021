@@ -200,10 +200,17 @@
             <div>
               <b class="entry">Speech Recognition</b><br>
               <div class="m-2">
-                <div class="my-2">
-                  <button class="btn btn-secondary DOM-queryButton" id="start_button" onclick="trigger_button(event)">START</button>
+
+                <div id="ui_speech">
+                  <div class="my-2">
+                    <button class="btn btn-secondary DOM-queryButton" id="start_button" onclick="trigger_button(event)">START</button>
+                  </div>
+                  <div>
+                    <canvas class="visualizer" width="640" height="33%" style="display: none"></canvas>
+                  </div>
                 </div>
-        
+          
+
         
                 <div id="speech_results">
                   <span id="final_span" class="final"></span>
@@ -211,10 +218,6 @@
                   <p>
                 </div>
               </div>
-
-              <!-- <div>
-                <canvas class="visualizer" width="640" height="100"></canvas>
-              </div> -->
 
             </div>
             <div>
@@ -253,7 +256,7 @@
 <script src="static/javascript/query_handler.js"></script>
 
 <script src="static/javascript/speech_recognition.js"></script>
-<!-- <script src="static/javascript/audio_display.js"></script> -->
+<script src="static/javascript/audio_display.js"></script>
 
 
 

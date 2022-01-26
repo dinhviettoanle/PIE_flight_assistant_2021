@@ -41,6 +41,18 @@ body {
     font-variant: small-caps;
 }
 
+#ui_speech {
+    height:100%;
+    display: flex;
+    align-items: center; 
+}
+
+.visualizer {
+    display: block;
+    margin: 0 auto;
+    margin-left: 1pt;
+}
+
 #DOM-flightDescription {
     font-family: "DejaVu Sans Mono", "monospace";
 }

@@ -76,12 +76,14 @@ function init_audio_display() {
 }
 
 
-function mute() {
+function clear_audio_display() {
     gainNode.gain.value = 0;
+    canvas.style.display = 'none';
 }
 
-function unmute() {
+function set_audio_display() {
     gainNode.gain.value = 1;
+    canvas.style.display = 'block';
 }
 
 const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
@@ -96,23 +98,12 @@ function visualize() {
 
         analyser.getByteFrequencyData(dataArrayAlt);
 
-        canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+        canvasCtx.fillStyle = 'rgb(25, 25, 25)';
         canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
-        var barWidth = (WIDTH / bufferLengthAlt) * 2.5;
-        var barHeight;
-        var x = 0;
-
-        for (var i = 0; i < bufferLengthAlt; i++) {
-            barHeight = dataArrayAlt[i];
-            // barHeight = Math.max(...dataArrayAlt);
-            // barHeight = average(dataArrayAlt);
-            
-            canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
-            canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
-
-            x += barWidth + 1;
-        }
+        var barWidth = average(dataArrayAlt) / 200 * WIDTH;
+        canvasCtx.fillStyle = 'rgb(50,255,50)';
+        canvasCtx.fillRect(0, 0, barWidth, HEIGHT);
     };
 
     drawAlt();
