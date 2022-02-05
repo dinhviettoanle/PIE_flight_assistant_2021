@@ -3,7 +3,7 @@
 ## Lancement
 - Installer les packages requis `pip install -r requirements.txt`
 - Si besoin, créer les individus pour l'ontologie : `python3 ./ontology_loader.py`
-- Lancer ici `python3 ./run.py`
+- Lancer ici `python3 ./app.py`
 - Aller sur `localhost:5000`
 
 ## Files
@@ -19,4 +19,4 @@
   - `views.py` : Flask app views
 - `data_loader.py` : Classes for static data (Airport, Runway, Navaid, Frequency)
 - `ontology_loader.py` : Individual loader for the ontology
-- `run.py` : Run server script
+- `app.py` : Run server script
