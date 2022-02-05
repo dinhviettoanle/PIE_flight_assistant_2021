@@ -11,5 +11,9 @@ In the folder `src/`:
 3. Run `python app.py`
 4. Open `localhost:5000`
 
-### Docker
-
+### Docker 
+*Only for test purposes*
+In the root folder (where the `Dockerfile` is located) :
+1. Build the image : `docker build -t flightassistant:latest .`
+2. Run the image in a container : `docker run -it -p 5000:5000 flightassistant`
+3. Open `localhost:5000`
