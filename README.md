@@ -1,5 +1,7 @@
 # PIE Flight Assistant 2021
 
+## Repository
+You will need Git Large File Storage (git-lfs) to clone the repository. Follow these [instructions](https://git-lfs.github.com/).
 
 ## Setup 
 Works under Python 3.8
