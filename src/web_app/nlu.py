@@ -29,8 +29,11 @@ def process_transcript(transcript):
 
     question = transcript.lower()
     parsing = nlu_engine.parse(question)
-    query = parsing['intent']['intentName']
+    intent_name = parsing['intent']['intentName']
 
+    if intent_name is not None:
+        query = intent_name
+    
     print_event("NLU", parsing['intent'], parsing['slots'])
 
     # if transcript.lower() == "what is the nearest airport":

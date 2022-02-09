@@ -400,6 +400,9 @@ class FlightFollowerWorker:
                 'checklist' : response_dict.get('checklist')
             }
 
+        elif query_type == "clear":
+            response_str = "_"
+
         
         return {'response_str' : response_str, 'args': args}
 
