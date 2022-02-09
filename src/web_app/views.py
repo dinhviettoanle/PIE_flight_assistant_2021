@@ -357,14 +357,14 @@ class FlightFollowerWorker:
         else:
             print_event(f"Query for {query_type}")
 
-        if query_type == "DepartureAirport":
+        if query_type == "departureAirport":
             response_str = f"The departure airport is {self.static_info.get('origin')}."
         
-        elif query_type == "NearestAirport":
+        elif query_type == "nearestAirport":
             response_dict = query_nearest_airport(self.latitude, self.longitude)
             response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
 
-        elif query_type == "RunwaysAtArrival":
+        elif query_type == "runwaysAtArrival":
             response_dict = query_runways_at_arrival(self.static_info.get('destination_icao'))
             if response_dict.get('status'):
                 list_runways_arrival = response_dict.get('list_runways')
@@ -372,7 +372,7 @@ class FlightFollowerWorker:
             else:
                 response_str = f"Arrival airport is not available."
 
-        elif query_type == "TemperatureAtArrival":
+        elif query_type == "temperatureAtArrival":
             response_dict = query_temperature_at_airport(self.static_info.get('destination_icao'))
             if response_dict.get('status'):
                 list_runways_arrival = response_dict.get('list_runways')
@@ -380,11 +380,11 @@ class FlightFollowerWorker:
             else:
                 response_str = f"Arrival airport is not available."
 
-        elif query_type == "WindAtAirport":
+        elif query_type == "windAtAirport":
             response_dict = query_wind_at_airport(arg)
             response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
 
-        elif query_type == "ChecklistLanding":
+        elif query_type == "checklistLanding":
             response_dict = get_checklist('landing', self.static_info.get('model'))
             response_str = "CHECKLIST"
             args = {
@@ -392,7 +392,7 @@ class FlightFollowerWorker:
                 'checklist' : response_dict.get('checklist')
             }
 
-        elif query_type == "ChecklistApproach":
+        elif query_type == "checklistApproach":
             response_dict = get_checklist('approach', self.static_info.get('model'))
             response_str = "CHECKLIST"
             args = {
@@ -474,6 +474,7 @@ def get_speech_transcript():
 # =============== SOCKET =======================
 init_ontology_individuals()
 init_dataframes_individuals()
+load_nlu_engine()
 
 @sio.on('init_worker')
 def init_worker():

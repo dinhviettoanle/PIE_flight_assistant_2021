@@ -18,6 +18,9 @@ def print_info(*args, **kwargs):
     # print(args, flush=True)
     return
 
+def fprint(*args, **kwargs):
+    print(args, flush=True, **kwargs)
+
 def print_error(*args, **kwargs):
     print(f"{bcolors.FAIL}{args}{bcolors.ENDC}", flush=True)
 

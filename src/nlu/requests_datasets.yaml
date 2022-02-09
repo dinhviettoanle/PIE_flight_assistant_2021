@@ -1,0 +1,244 @@
+# weatherAirport Intent
+---
+type: intent
+name: weatherAirport
+slots:
+  - name: place
+    entity: airport
+  - name: info
+    entity: weatherInfo
+utterances:
+  - give me the [info] at [place]
+  - i need the [info] in [place]
+  - what is the [info] at [place] ?
+  - can i have the [info] at [place] ?
+
+# NearestAirport Intent
+---
+type: intent
+name: nearestAirport
+utterances:
+  - give me the nearest airport
+  - can you give me the nearest airfield
+  - what is the nearest airport
+
+# LandingAirport Intent
+---
+type: intent
+name: landingAirport
+utterances:
+  - give me the nearest airport i can land on
+  - where can i land now ?
+  - emergency landing
+
+# LandingDistance Intent
+---
+type: intent
+name: landingDistance
+utterances:
+  - give me my landing distance
+  - what is the needed distance to land
+  - how many meters are needed to land
+  - what is my landing distance
+  - compute the landing distance please
+
+# Maximum Achievable Range Intent
+---
+type: intent
+name: MAR
+utterances:
+  - give me the maximal achievable range
+  - what is the maximal distance i can fly
+  - what is my maximal achievable range
+  - how far can i go
+
+# Airport Intent
+---
+type: intent
+name: checklist
+slots:
+  - name: phase
+    entity: flightPhase
+utterances:
+  - begin [phase] checklist
+  - start the [phase] check please
+  - can you give me the [phase] checklist
+
+# Speed Intent
+---
+type: intent
+name: speed
+slots:
+  - name: phase
+    entity: speedPhase
+utterances:
+  - what is my [phase] speed ?
+  - How fast should i do the [phase] ?
+  - Give me the [phase] speed
+  - Calculate the [phase] speed please
+
+# Antiicing Intent
+---
+type: intent
+name: antiicing
+utterances:
+  - do i need anti-icing now
+  - are there icing conditions
+  - should i switch the anti-icing on
+
+# fuelRemaining Intent
+---
+type: intent
+name: fuelRemaining
+utterances:
+  - what is the fuel remaining
+  - how much fuel do i have
+  - how many fuel in my aircraft
+
+
+#############################################################################
+
+# Airport Entity
+---
+type: entity
+name: airport
+values:
+  - [LFBA, Agen La Garenne, Agen La Garenne Airport, AGF]
+  - [LFMA, Aix-en-Provence, Aix-en-Provence Airport, QXB]
+  - [LFKJ, Ajaccio Napoleon Bonaparte, Ajaccio Napoleon Bonaparte Airport, AJA]
+  - [LFAQ, Albert Picardie, Albert Picardie Airport, BYF]
+  - [LFCI, Albi Le Sequestre, Albi Le Sequestre Airport, LBI]
+  - [LFJR, Angers Loire, Angers Loire Airport, ANE]
+  - [LFBU, Angouleme Cognac International, Angouleme Cognac International Airport, ANG]
+  - [LFLP, Annecy Mont Blanc, Annecy Mont Blanc Airport, NCY]
+  - [LFLI, Annemasse, Annemasse Airport, QYA]
+  - [LFCH, Arcachon La Teste-de-Buch, Arcachon La Teste-de-Buch Airport, XAC]
+  - [LFLW, Aurillac Tronquieres, Aurillac Tronquieres Airport, AUR]
+  - [LFLA, Auxerre Branches, Auxerre Branches Airport, AUF]
+  - [LFMV, Avignon Caumont, Avignon Caumont Airport, AVN]
+  - [LFSB, Basel Mulhouse-Freiburg EuroAirport, Basel Mulhouse-Freiburg EuroAirport, BSL]
+  - [LFKB, Bastia Poretta, Bastia Poretta Airport, BIA]
+  - [LFBE, Bergerac Dordogne Perigord, Bergerac Dordogne Perigord Airport, EGC]
+  - [LFQM, Besancon La Veze, Besancon La Veze Airport, QYB]
+  - [LFMU, Beziers Cap dAgde, Beziers Cap dAgde Airport, BZR]
+  - [LFBZ, Biarritz Pays Basque, Biarritz Pays Basque Airport, BIQ]
+  - [LFBD, Bordeaux Merignac, Bordeaux Merignac Airport, BOD]
+  - [LFLD, Bourges, Bourges Airport, BOU]
+  - [LFRB, Brest Bretagne, Brest Bretagne Airport, BES]
+  - [LFSL, Brive Souillac, Brive Souillac Airport, BVE]
+  - [LFRK, Caen Carpiquet, Caen Carpiquet Airport, CFR]
+  - [LFAC, Calais Dunkerque, Calais Dunkerque Airport, CQF]
+  - [LFKC, Calvi Sainte-Catherine, Calvi Sainte-Catherine Airport, CLY]
+  - [LFMD, Cannes Mandelieu, Cannes Mandelieu Airport, CEQ]
+  - [LFMK, Carcassonne, Carcassonne Airport, CCF]
+  - [LFCK, Castres Mazamet, Castres Mazamet Airport, DCM]
+  - [LFLB, Chambery, Chambery Airport, CMF]
+  - [LFLX, Chateauroux Centre Marcel Dassault, Chateauroux Centre Marcel Dassault Airport, CHR]
+  - [LFRC, Cherbourg Maupertus, Cherbourg Maupertus Airport, CER]
+  - [LFOU, Cholet Le Pontreau, Cholet Le Pontreau Airport, CET]
+  - [LFLC, Clermont-Ferrand Auvergne, Clermont-Ferrand Auvergne Airport, CFE]
+  - [LFGA, Colmar Houssen, Colmar Houssen Airport, CMR]
+  - [LFLJ, Courchevel Altiport, Courchevel Altiport, CVF]
+  - [LFRG, Deauville Saint Gatien, Deauville Saint Gatien Airport, DOL]
+  - [LFSD, Dijon Longvic, Dijon Longvic Airport, DIJ]
+  - [LFRD, Dinard Pleurtuit Saint-Malo, Dinard Pleurtuit Saint-Malo Airport, DNR]
+  - [LFGJ, Dole Jura, Dole Jura Airport, DLE]
+  - [LFSG, Epinal Mirecourt, Epinal Mirecourt Airport, EPL]
+  - [LFKF, Figari Sud-Corse, Figari Sud-Corse Airport, FSC]
+  - [LFLS, Grenoble Isere, Grenoble Isere Airport, GNB]
+  - [LFRI, La Roche-sur-Yon Les Ajoncs, La Roche-sur-Yon Les Ajoncs Airport, EDM]
+  - [LFBH, La Rochelle Ile de Re, La Rochelle Ile de Re Airport, LRH]
+  - [LFRO, Lannion, Lannion Airport, LAI]
+  - [LFOV, Laval Entrammes, Laval Entrammes Airport, LVA]
+  - [LFMQ, Le Castellet, Le Castellet Airport, CTT]
+  - [LFOH, Le Havre Octeville, Le Havre Octeville Airport, LEH]
+  - [LFRM, Le Mans Arnage, Le Mans Arnage Airport, LME]
+  - [LFHP, Le Puy Loudes, Le Puy Loudes Airport, LPY]
+  - [LFAT, Le Touquet Cote dOpale, Le Touquet Cote dOpale Airport, LTQ]
+  - [LFQQ, Lille, Lille Airport, LIL]
+  - [LFBL, Limoges Bellegarde, Limoges Bellegarde Airport, LIG]
+  - [LFRH, Lorient South Brittany, Lorient South Brittany Airport, LRT]
+  - [LFLY, Lyon Bron, Lyon Bron Airport, LYN]
+  - [LFLL, Lyon Saint Exupery, Lyon Saint Exupery Airport, LYS]
+  - [LFML, Marseille Provence, Marseille Provence Airport, MRS]
+  - [LFNB, Mende Brenoux, Mende Brenoux Airport, MEN]
+  - [LFQT, Merville Calonne, Merville Calonne Airport, HZB]
+  - [LFJL, Metz-Nancy-Lorraine, Metz-Nancy-Lorraine Airport, ETZ]
+  - [LFMT, Montpellier Mediterranee, Montpellier Mediterranee Airport, MPL]
+  - [LFRU, Morlaix Ploujean, Morlaix Ploujean Airport, MXN]
+  - [LFHY, Moulins Montbeugny, Moulins Montbeugny Airport, XMU]
+  - [LFSN, Nancy Essey, Nancy Essey Airport, ENC]
+  - [LFRS, Nantes Atlantique, Nantes Atlantique Airport, NTE]
+  - [LFQG, Nevers Fourchambault, Nevers Fourchambault Airport, NVS]
+  - [LFMN, Nice Cote dAzur, Nice Cote dAzur Airport, NCE]
+  - [LFTW, Nimes Ales Camargue Cevennes, Nimes Ales Camargue Cevennes Airport, FNI]
+  - [LFBN, Niort Souche, Niort Souche Airport, NIT]
+  - [LFOZ, Orleans Saint-Denis-de-lHotel, Orleans Saint-Denis-de-lHotel Airport, ORE]
+  - [LFOB, Paris Beauvais-Tille, Paris Beauvais-Tille Airport, BVA]
+  - [LFPG, Paris Charles de Gaulle, Paris Charles de Gaulle Airport, CDG]
+  - [LFPB, Paris Le Bourget, Paris Le Bourget Airport, LBG]
+  - [LFPO, Paris Orly, Paris Orly Airport, ORY]
+  - [LFOK, Paris Vatry Chalons, Paris Vatry Chalons Airport, XCR]
+  - [LFBP, Pau Pyrenees, Pau Pyrenees Airport, PUF]
+  - [LFBX, Perigueux Bassillac, Perigueux Bassillac Airport, PGX]
+  - [LFMP, Perpignan Rivesaltes, Perpignan Rivesaltes Airport, PGF]
+  - [LFBI, Poitiers – Biard, Poitiers – Biard Airport, PIS]
+  - [LFPT, Pontoise Cormeilles, Pontoise Cormeilles Airport, POX]
+  - [LFRQ, Quimper Cornouaille, Quimper Cornouaille Airport, UIP]
+  - [LFQA, Reims Prunay, Reims Prunay Airport, QYR]
+  - [LFRN, Rennes Saint-Jacques, Rennes Saint-Jacques Airport, RNS]
+  - [LFLO, Roanne, Roanne Airport, QYO]
+  - [LFCR, Rodez Marcillac, Rodez Marcillac Airport, RDZ]
+  - [LFOP, Rouen, Rouen Airport, URO]
+  - [LFMH, Saint Etienne Boutheon, Saint Etienne Boutheon Airport, EBU]
+  - [LFRZ, Saint Nazaire Montoir, Saint Nazaire Montoir Airport, SNR]
+  - [LFRT, Saint-Brieuc Armor, Saint-Brieuc Armor Airport, SBK]
+  - [LFTZ, Saint-Tropez La Mole, Saint-Tropez La Mole Airport, LTT]
+  - [LFLN, St-Yan, St-Yan Airport, SYT]
+  - [LFST, Strasbourg, Strasbourg Airport, SXB]
+  - [LFBT, Tarbes-Lourdes-Pyrenees, Tarbes-Lourdes-Pyrenees Airport, LDE]
+  - [LFTH, Toulon-Hyeres, Toulon-Hyeres Airport, TLN]
+  - [LFBO, Toulouse Blagnac, Toulouse Blagnac Airport, TLS]
+  - [LFOT, Tours Val de Loire, Tours Val de Loire Airport, TUF]
+  - [LFPN, Toussus-Le-Noble, Toussus-Le-Noble Airport, TNF]
+  - [LFQB, Troyes Barberey, Troyes Barberey Airport, QYT]
+  - [LFLU, Valence Chabeuil, Valence Chabeuil Airport, VAF]
+  - [LFAV, Valenciennes Denain, Valenciennes Denain Airport, QYV]
+  - [LFRV, Vannes Meucon, Vannes Meucon Airport, VNE]
+
+# WeatherInfo Entity
+---
+type: entity
+name: weatherInfo
+values:
+  - wind speed
+  - wind orientation
+  - [weather, weather forecast, metar]
+
+# flightPhase Entity
+---
+type: entity
+name: flightPhase
+values:
+  - taxi
+  - [take-off, takeoff, take off]
+  - [cruise, en route, en-route]
+  - approach
+  - landing
+
+# speedPhase Entity
+---
+type: entity
+name: speedPhase
+values:
+  - approach
+  - landing
+
+# Performance Entity
+---
+type: entity
+name: performance
+values:
+  - landing distance
+  - optimal altitude
+  - remaining fuel
