@@ -34,3 +34,22 @@ En gros pour résumer :
 3. [ Client ] &#8594; `{transcript: "what's the nearest airport"}` &#8594; [ Serveur ]
 4. [ Serveur ] fait du NLP avec ce transcript
 5. [ Serveur ] &#8594; `{success: True}` [ Client ]
+
+
+## Dépendances
+Avant si sur Windows natif : `pip install setuptools-rust`
+```
+snips_nlu==0.20.2
+numpy==1.22.2
+scikit-learn==0.22.0
+```
+
+## Commandes utiles en CLI
+- Générer le dataset de .yaml à .json : `snips-nlu generate-dataset en requests_datasets.yaml > requests_datasets.json`
+- Entraîner le modèle et l'exporter :  `snips-nlu train requests_datasets.json nlu_engine`
+    - En code, c'est `nlu_engine.persist("training_path")`
+    - Ou en bytes : `nlu_engine.to_byte_array()`
+- Parse le modèle en CLI : `snips-nlu parse path/to/persisted_engine`
+    - En code, c'est `SnipsNLUEngine.from_path(training_path)`
+    - Ou en bytes : `SnipsNLUEngine.from_byte_array(engine_bytes)`
+

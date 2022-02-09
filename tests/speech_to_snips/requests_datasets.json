@@ -1,0 +1,1286 @@
+{
+  "entities": {
+    "airport": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [
+            "Agen La Garenne",
+            "Agen La Garenne Airport",
+            "AGF"
+          ],
+          "value": "LFBA"
+        },
+        {
+          "synonyms": [
+            "Aix-en-Provence",
+            "Aix-en-Provence Airport",
+            "QXB"
+          ],
+          "value": "LFMA"
+        },
+        {
+          "synonyms": [
+            "Ajaccio Napoleon Bonaparte",
+            "Ajaccio Napoleon Bonaparte Airport",
+            "AJA"
+          ],
+          "value": "LFKJ"
+        },
+        {
+          "synonyms": [
+            "Albert Picardie",
+            "Albert Picardie Airport",
+            "BYF"
+          ],
+          "value": "LFAQ"
+        },
+        {
+          "synonyms": [
+            "Albi Le Sequestre",
+            "Albi Le Sequestre Airport",
+            "LBI"
+          ],
+          "value": "LFCI"
+        },
+        {
+          "synonyms": [
+            "Angers Loire",
+            "Angers Loire Airport",
+            "ANE"
+          ],
+          "value": "LFJR"
+        },
+        {
+          "synonyms": [
+            "Angouleme Cognac International",
+            "Angouleme Cognac International Airport",
+            "ANG"
+          ],
+          "value": "LFBU"
+        },
+        {
+          "synonyms": [
+            "Annecy Mont Blanc",
+            "Annecy Mont Blanc Airport",
+            "NCY"
+          ],
+          "value": "LFLP"
+        },
+        {
+          "synonyms": [
+            "Annemasse",
+            "Annemasse Airport",
+            "QYA"
+          ],
+          "value": "LFLI"
+        },
+        {
+          "synonyms": [
+            "Arcachon La Teste-de-Buch",
+            "Arcachon La Teste-de-Buch Airport",
+            "XAC"
+          ],
+          "value": "LFCH"
+        },
+        {
+          "synonyms": [
+            "Aurillac Tronquieres",
+            "Aurillac Tronquieres Airport",
+            "AUR"
+          ],
+          "value": "LFLW"
+        },
+        {
+          "synonyms": [
+            "Auxerre Branches",
+            "Auxerre Branches Airport",
+            "AUF"
+          ],
+          "value": "LFLA"
+        },
+        {
+          "synonyms": [
+            "Avignon Caumont",
+            "Avignon Caumont Airport",
+            "AVN"
+          ],
+          "value": "LFMV"
+        },
+        {
+          "synonyms": [
+            "Basel Mulhouse-Freiburg EuroAirport",
+            "Basel Mulhouse-Freiburg EuroAirport",
+            "BSL"
+          ],
+          "value": "LFSB"
+        },
+        {
+          "synonyms": [
+            "Bastia Poretta",
+            "Bastia Poretta Airport",
+            "BIA"
+          ],
+          "value": "LFKB"
+        },
+        {
+          "synonyms": [
+            "Bergerac Dordogne Perigord",
+            "Bergerac Dordogne Perigord Airport",
+            "EGC"
+          ],
+          "value": "LFBE"
+        },
+        {
+          "synonyms": [
+            "Besancon La Veze",
+            "Besancon La Veze Airport",
+            "QYB"
+          ],
+          "value": "LFQM"
+        },
+        {
+          "synonyms": [
+            "Beziers Cap dAgde",
+            "Beziers Cap dAgde Airport",
+            "BZR"
+          ],
+          "value": "LFMU"
+        },
+        {
+          "synonyms": [
+            "Biarritz Pays Basque",
+            "Biarritz Pays Basque Airport",
+            "BIQ"
+          ],
+          "value": "LFBZ"
+        },
+        {
+          "synonyms": [
+            "Bordeaux Merignac",
+            "Bordeaux Merignac Airport",
+            "BOD"
+          ],
+          "value": "LFBD"
+        },
+        {
+          "synonyms": [
+            "Bourges",
+            "Bourges Airport",
+            "BOU"
+          ],
+          "value": "LFLD"
+        },
+        {
+          "synonyms": [
+            "Brest Bretagne",
+            "Brest Bretagne Airport",
+            "BES"
+          ],
+          "value": "LFRB"
+        },
+        {
+          "synonyms": [
+            "Brive Souillac",
+            "Brive Souillac Airport",
+            "BVE"
+          ],
+          "value": "LFSL"
+        },
+        {
+          "synonyms": [
+            "Caen Carpiquet",
+            "Caen Carpiquet Airport",
+            "CFR"
+          ],
+          "value": "LFRK"
+        },
+        {
+          "synonyms": [
+            "Calais Dunkerque",
+            "Calais Dunkerque Airport",
+            "CQF"
+          ],
+          "value": "LFAC"
+        },
+        {
+          "synonyms": [
+            "Calvi Sainte-Catherine",
+            "Calvi Sainte-Catherine Airport",
+            "CLY"
+          ],
+          "value": "LFKC"
+        },
+        {
+          "synonyms": [
+            "Cannes Mandelieu",
+            "Cannes Mandelieu Airport",
+            "CEQ"
+          ],
+          "value": "LFMD"
+        },
+        {
+          "synonyms": [
+            "Carcassonne",
+            "Carcassonne Airport",
+            "CCF"
+          ],
+          "value": "LFMK"
+        },
+        {
+          "synonyms": [
+            "Castres Mazamet",
+            "Castres Mazamet Airport",
+            "DCM"
+          ],
+          "value": "LFCK"
+        },
+        {
+          "synonyms": [
+            "Chambery",
+            "Chambery Airport",
+            "CMF"
+          ],
+          "value": "LFLB"
+        },
+        {
+          "synonyms": [
+            "Chateauroux Centre Marcel Dassault",
+            "Chateauroux Centre Marcel Dassault Airport",
+            "CHR"
+          ],
+          "value": "LFLX"
+        },
+        {
+          "synonyms": [
+            "Cherbourg Maupertus",
+            "Cherbourg Maupertus Airport",
+            "CER"
+          ],
+          "value": "LFRC"
+        },
+        {
+          "synonyms": [
+            "Cholet Le Pontreau",
+            "Cholet Le Pontreau Airport",
+            "CET"
+          ],
+          "value": "LFOU"
+        },
+        {
+          "synonyms": [
+            "Clermont-Ferrand Auvergne",
+            "Clermont-Ferrand Auvergne Airport",
+            "CFE"
+          ],
+          "value": "LFLC"
+        },
+        {
+          "synonyms": [
+            "Colmar Houssen",
+            "Colmar Houssen Airport",
+            "CMR"
+          ],
+          "value": "LFGA"
+        },
+        {
+          "synonyms": [
+            "Courchevel Altiport",
+            "Courchevel Altiport",
+            "CVF"
+          ],
+          "value": "LFLJ"
+        },
+        {
+          "synonyms": [
+            "Deauville Saint Gatien",
+            "Deauville Saint Gatien Airport",
+            "DOL"
+          ],
+          "value": "LFRG"
+        },
+        {
+          "synonyms": [
+            "Dijon Longvic",
+            "Dijon Longvic Airport",
+            "DIJ"
+          ],
+          "value": "LFSD"
+        },
+        {
+          "synonyms": [
+            "Dinard Pleurtuit Saint-Malo",
+            "Dinard Pleurtuit Saint-Malo Airport",
+            "DNR"
+          ],
+          "value": "LFRD"
+        },
+        {
+          "synonyms": [
+            "Dole Jura",
+            "Dole Jura Airport",
+            "DLE"
+          ],
+          "value": "LFGJ"
+        },
+        {
+          "synonyms": [
+            "Epinal Mirecourt",
+            "Epinal Mirecourt Airport",
+            "EPL"
+          ],
+          "value": "LFSG"
+        },
+        {
+          "synonyms": [
+            "Figari Sud-Corse",
+            "Figari Sud-Corse Airport",
+            "FSC"
+          ],
+          "value": "LFKF"
+        },
+        {
+          "synonyms": [
+            "Grenoble Isere",
+            "Grenoble Isere Airport",
+            "GNB"
+          ],
+          "value": "LFLS"
+        },
+        {
+          "synonyms": [
+            "La Roche-sur-Yon Les Ajoncs",
+            "La Roche-sur-Yon Les Ajoncs Airport",
+            "EDM"
+          ],
+          "value": "LFRI"
+        },
+        {
+          "synonyms": [
+            "La Rochelle Ile de Re",
+            "La Rochelle Ile de Re Airport",
+            "LRH"
+          ],
+          "value": "LFBH"
+        },
+        {
+          "synonyms": [
+            "Lannion",
+            "Lannion Airport",
+            "LAI"
+          ],
+          "value": "LFRO"
+        },
+        {
+          "synonyms": [
+            "Laval Entrammes",
+            "Laval Entrammes Airport",
+            "LVA"
+          ],
+          "value": "LFOV"
+        },
+        {
+          "synonyms": [
+            "Le Castellet",
+            "Le Castellet Airport",
+            "CTT"
+          ],
+          "value": "LFMQ"
+        },
+        {
+          "synonyms": [
+            "Le Havre Octeville",
+            "Le Havre Octeville Airport",
+            "LEH"
+          ],
+          "value": "LFOH"
+        },
+        {
+          "synonyms": [
+            "Le Mans Arnage",
+            "Le Mans Arnage Airport",
+            "LME"
+          ],
+          "value": "LFRM"
+        },
+        {
+          "synonyms": [
+            "Le Puy Loudes",
+            "Le Puy Loudes Airport",
+            "LPY"
+          ],
+          "value": "LFHP"
+        },
+        {
+          "synonyms": [
+            "Le Touquet Cote dOpale",
+            "Le Touquet Cote dOpale Airport",
+            "LTQ"
+          ],
+          "value": "LFAT"
+        },
+        {
+          "synonyms": [
+            "Lille",
+            "Lille Airport",
+            "LIL"
+          ],
+          "value": "LFQQ"
+        },
+        {
+          "synonyms": [
+            "Limoges Bellegarde",
+            "Limoges Bellegarde Airport",
+            "LIG"
+          ],
+          "value": "LFBL"
+        },
+        {
+          "synonyms": [
+            "Lorient South Brittany",
+            "Lorient South Brittany Airport",
+            "LRT"
+          ],
+          "value": "LFRH"
+        },
+        {
+          "synonyms": [
+            "Lyon Bron",
+            "Lyon Bron Airport",
+            "LYN"
+          ],
+          "value": "LFLY"
+        },
+        {
+          "synonyms": [
+            "Lyon Saint Exupery",
+            "Lyon Saint Exupery Airport",
+            "LYS"
+          ],
+          "value": "LFLL"
+        },
+        {
+          "synonyms": [
+            "Marseille Provence",
+            "Marseille Provence Airport",
+            "MRS"
+          ],
+          "value": "LFML"
+        },
+        {
+          "synonyms": [
+            "Mende Brenoux",
+            "Mende Brenoux Airport",
+            "MEN"
+          ],
+          "value": "LFNB"
+        },
+        {
+          "synonyms": [
+            "Merville Calonne",
+            "Merville Calonne Airport",
+            "HZB"
+          ],
+          "value": "LFQT"
+        },
+        {
+          "synonyms": [
+            "Metz-Nancy-Lorraine",
+            "Metz-Nancy-Lorraine Airport",
+            "ETZ"
+          ],
+          "value": "LFJL"
+        },
+        {
+          "synonyms": [
+            "Montpellier Mediterranee",
+            "Montpellier Mediterranee Airport",
+            "MPL"
+          ],
+          "value": "LFMT"
+        },
+        {
+          "synonyms": [
+            "Morlaix Ploujean",
+            "Morlaix Ploujean Airport",
+            "MXN"
+          ],
+          "value": "LFRU"
+        },
+        {
+          "synonyms": [
+            "Moulins Montbeugny",
+            "Moulins Montbeugny Airport",
+            "XMU"
+          ],
+          "value": "LFHY"
+        },
+        {
+          "synonyms": [
+            "Nancy Essey",
+            "Nancy Essey Airport",
+            "ENC"
+          ],
+          "value": "LFSN"
+        },
+        {
+          "synonyms": [
+            "Nantes Atlantique",
+            "Nantes Atlantique Airport",
+            "NTE"
+          ],
+          "value": "LFRS"
+        },
+        {
+          "synonyms": [
+            "Nevers Fourchambault",
+            "Nevers Fourchambault Airport",
+            "NVS"
+          ],
+          "value": "LFQG"
+        },
+        {
+          "synonyms": [
+            "Nice Cote dAzur",
+            "Nice Cote dAzur Airport",
+            "NCE"
+          ],
+          "value": "LFMN"
+        },
+        {
+          "synonyms": [
+            "Nimes Ales Camargue Cevennes",
+            "Nimes Ales Camargue Cevennes Airport",
+            "FNI"
+          ],
+          "value": "LFTW"
+        },
+        {
+          "synonyms": [
+            "Niort Souche",
+            "Niort Souche Airport",
+            "NIT"
+          ],
+          "value": "LFBN"
+        },
+        {
+          "synonyms": [
+            "Orleans Saint-Denis-de-lHotel",
+            "Orleans Saint-Denis-de-lHotel Airport",
+            "ORE"
+          ],
+          "value": "LFOZ"
+        },
+        {
+          "synonyms": [
+            "Paris Beauvais-Tille",
+            "Paris Beauvais-Tille Airport",
+            "BVA"
+          ],
+          "value": "LFOB"
+        },
+        {
+          "synonyms": [
+            "Paris Charles de Gaulle",
+            "Paris Charles de Gaulle Airport",
+            "CDG"
+          ],
+          "value": "LFPG"
+        },
+        {
+          "synonyms": [
+            "Paris Le Bourget",
+            "Paris Le Bourget Airport",
+            "LBG"
+          ],
+          "value": "LFPB"
+        },
+        {
+          "synonyms": [
+            "Paris Orly",
+            "Paris Orly Airport",
+            "ORY"
+          ],
+          "value": "LFPO"
+        },
+        {
+          "synonyms": [
+            "Paris Vatry Chalons",
+            "Paris Vatry Chalons Airport",
+            "XCR"
+          ],
+          "value": "LFOK"
+        },
+        {
+          "synonyms": [
+            "Pau Pyrenees",
+            "Pau Pyrenees Airport",
+            "PUF"
+          ],
+          "value": "LFBP"
+        },
+        {
+          "synonyms": [
+            "Perigueux Bassillac",
+            "Perigueux Bassillac Airport",
+            "PGX"
+          ],
+          "value": "LFBX"
+        },
+        {
+          "synonyms": [
+            "Perpignan Rivesaltes",
+            "Perpignan Rivesaltes Airport",
+            "PGF"
+          ],
+          "value": "LFMP"
+        },
+        {
+          "synonyms": [
+            "Poitiers \u2013 Biard",
+            "Poitiers \u2013 Biard Airport",
+            "PIS"
+          ],
+          "value": "LFBI"
+        },
+        {
+          "synonyms": [
+            "Pontoise Cormeilles",
+            "Pontoise Cormeilles Airport",
+            "POX"
+          ],
+          "value": "LFPT"
+        },
+        {
+          "synonyms": [
+            "Quimper Cornouaille",
+            "Quimper Cornouaille Airport",
+            "UIP"
+          ],
+          "value": "LFRQ"
+        },
+        {
+          "synonyms": [
+            "Reims Prunay",
+            "Reims Prunay Airport",
+            "QYR"
+          ],
+          "value": "LFQA"
+        },
+        {
+          "synonyms": [
+            "Rennes Saint-Jacques",
+            "Rennes Saint-Jacques Airport",
+            "RNS"
+          ],
+          "value": "LFRN"
+        },
+        {
+          "synonyms": [
+            "Roanne",
+            "Roanne Airport",
+            "QYO"
+          ],
+          "value": "LFLO"
+        },
+        {
+          "synonyms": [
+            "Rodez Marcillac",
+            "Rodez Marcillac Airport",
+            "RDZ"
+          ],
+          "value": "LFCR"
+        },
+        {
+          "synonyms": [
+            "Rouen",
+            "Rouen Airport",
+            "URO"
+          ],
+          "value": "LFOP"
+        },
+        {
+          "synonyms": [
+            "Saint Etienne Boutheon",
+            "Saint Etienne Boutheon Airport",
+            "EBU"
+          ],
+          "value": "LFMH"
+        },
+        {
+          "synonyms": [
+            "Saint Nazaire Montoir",
+            "Saint Nazaire Montoir Airport",
+            "SNR"
+          ],
+          "value": "LFRZ"
+        },
+        {
+          "synonyms": [
+            "Saint-Brieuc Armor",
+            "Saint-Brieuc Armor Airport",
+            "SBK"
+          ],
+          "value": "LFRT"
+        },
+        {
+          "synonyms": [
+            "Saint-Tropez La Mole",
+            "Saint-Tropez La Mole Airport",
+            "LTT"
+          ],
+          "value": "LFTZ"
+        },
+        {
+          "synonyms": [
+            "St-Yan",
+            "St-Yan Airport",
+            "SYT"
+          ],
+          "value": "LFLN"
+        },
+        {
+          "synonyms": [
+            "Strasbourg",
+            "Strasbourg Airport",
+            "SXB"
+          ],
+          "value": "LFST"
+        },
+        {
+          "synonyms": [
+            "Tarbes-Lourdes-Pyrenees",
+            "Tarbes-Lourdes-Pyrenees Airport",
+            "LDE"
+          ],
+          "value": "LFBT"
+        },
+        {
+          "synonyms": [
+            "Toulon-Hyeres",
+            "Toulon-Hyeres Airport",
+            "TLN"
+          ],
+          "value": "LFTH"
+        },
+        {
+          "synonyms": [
+            "Toulouse Blagnac",
+            "Toulouse Blagnac Airport",
+            "TLS"
+          ],
+          "value": "LFBO"
+        },
+        {
+          "synonyms": [
+            "Tours Val de Loire",
+            "Tours Val de Loire Airport",
+            "TUF"
+          ],
+          "value": "LFOT"
+        },
+        {
+          "synonyms": [
+            "Toussus-Le-Noble",
+            "Toussus-Le-Noble Airport",
+            "TNF"
+          ],
+          "value": "LFPN"
+        },
+        {
+          "synonyms": [
+            "Troyes Barberey",
+            "Troyes Barberey Airport",
+            "QYT"
+          ],
+          "value": "LFQB"
+        },
+        {
+          "synonyms": [
+            "Valence Chabeuil",
+            "Valence Chabeuil Airport",
+            "VAF"
+          ],
+          "value": "LFLU"
+        },
+        {
+          "synonyms": [
+            "Valenciennes Denain",
+            "Valenciennes Denain Airport",
+            "QYV"
+          ],
+          "value": "LFAV"
+        },
+        {
+          "synonyms": [
+            "Vannes Meucon",
+            "Vannes Meucon Airport",
+            "VNE"
+          ],
+          "value": "LFRV"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    },
+    "flightPhase": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [],
+          "value": "taxi"
+        },
+        {
+          "synonyms": [
+            "takeoff",
+            "take off"
+          ],
+          "value": "take-off"
+        },
+        {
+          "synonyms": [
+            "en route",
+            "en-route"
+          ],
+          "value": "cruise"
+        },
+        {
+          "synonyms": [],
+          "value": "approach"
+        },
+        {
+          "synonyms": [],
+          "value": "landing"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    },
+    "performance": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [],
+          "value": "landing distance"
+        },
+        {
+          "synonyms": [],
+          "value": "optimal altitude"
+        },
+        {
+          "synonyms": [],
+          "value": "remaining fuel"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    },
+    "speedPhase": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [],
+          "value": "approach"
+        },
+        {
+          "synonyms": [],
+          "value": "landing"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    },
+    "weatherInfo": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [],
+          "value": "wind speed"
+        },
+        {
+          "synonyms": [],
+          "value": "wind orientation"
+        },
+        {
+          "synonyms": [
+            "weather forecast",
+            "metar"
+          ],
+          "value": "weather"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    }
+  },
+  "intents": {
+    "MAR": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the maximal achievable range"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the maximal distance i can fly"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is my maximal achievable range"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "how far can i go"
+            }
+          ]
+        }
+      ]
+    },
+    "antiicing": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "do i need anti-icing now"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "are there icing conditions"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "should i switch the anti-icing on"
+            }
+          ]
+        }
+      ]
+    },
+    "checklist": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "begin "
+            },
+            {
+              "entity": "flightPhase",
+              "slot_name": "phase",
+              "text": "taxi"
+            },
+            {
+              "text": " checklist"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "start the "
+            },
+            {
+              "entity": "flightPhase",
+              "slot_name": "phase",
+              "text": "take-off"
+            },
+            {
+              "text": " check please"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the "
+            },
+            {
+              "entity": "flightPhase",
+              "slot_name": "phase",
+              "text": "takeoff"
+            },
+            {
+              "text": " checklist"
+            }
+          ]
+        }
+      ]
+    },
+    "fuelRemaining": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "what is the fuel remaining"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "how much fuel do i have"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "how many fuel in my aircraft"
+            }
+          ]
+        }
+      ]
+    },
+    "landingAirport": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the nearest airport i can land on"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "where can i land now ?"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "emergency landing"
+            }
+          ]
+        }
+      ]
+    },
+    "landingDistance": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me my landing distance"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the needed distance to land"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "how many meters are needed to land"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is my landing distance"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "compute the landing distance please"
+            }
+          ]
+        }
+      ]
+    },
+    "nearestAirport": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the nearest airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the nearest airfield"
+            }
+          ]
+        }
+      ]
+    },
+    "speed": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "what is my "
+            },
+            {
+              "entity": "speedPhase",
+              "slot_name": "phase",
+              "text": "approach"
+            },
+            {
+              "text": " speed ?"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "How fast should i do the "
+            },
+            {
+              "entity": "speedPhase",
+              "slot_name": "phase",
+              "text": "landing"
+            },
+            {
+              "text": " ?"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "Give me the "
+            },
+            {
+              "entity": "speedPhase",
+              "slot_name": "phase",
+              "text": "approach"
+            },
+            {
+              "text": " speed"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "Calculate the "
+            },
+            {
+              "entity": "speedPhase",
+              "slot_name": "phase",
+              "text": "landing"
+            },
+            {
+              "text": " speed please"
+            }
+          ]
+        }
+      ]
+    },
+    "weatherAirport": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "wind speed"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "LFBA"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "i need the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "wind orientation"
+            },
+            {
+              "text": " in "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Agen La Garenne"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "weather"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Agen La Garenne Airport"
+            },
+            {
+              "text": " ?"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can i have the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "weather forecast"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "AGF"
+            },
+            {
+              "text": " ?"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "language": "en"
+}
