@@ -28,7 +28,7 @@ app.config['DEBUG'] = True
 
 log = logging.getLogger('werkzeug')
 log.disabled = True
-sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False)
+sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False, cors_allowed_origins="*")
 # ====================================
 
 airspace_worker = None

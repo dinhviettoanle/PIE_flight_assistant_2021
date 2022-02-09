@@ -13,7 +13,7 @@ nlu_engine = None
 
 def load_nlu_engine():
     global nlu_engine
-    fprint("Loading NLU engine...")
+    fprint("Loading NLU engine...", end=" ")
     with open(nlu_engine_filename,'rb') as f:
         engine_bytes = f.read()
     nlu_engine = SnipsNLUEngine.from_byte_array(engine_bytes)
