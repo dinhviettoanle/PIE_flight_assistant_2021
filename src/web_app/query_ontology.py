@@ -229,6 +229,9 @@ def query_map_near_waypoints(s, n, w, e):
     ]
     return df_near_waypoints.to_dict('records')
 
+
+
+
 # ======================================================================================
 # ================ USER QUERIES ========================================================
 # ======================================================================================
@@ -243,8 +246,6 @@ def query_nearest_airport(lat, lng):
 
     df['distance'] = df.apply(lambda x: coord_to_dist(x["lat"], x["lng"], lat, lng), axis=1)
     return df.iloc[df['distance'].idxmin()].to_dict()
-
-
 
 
 

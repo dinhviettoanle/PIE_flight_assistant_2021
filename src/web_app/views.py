@@ -6,16 +6,17 @@ Web app views
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context, request, jsonify
 from random import random
-from time import sleep, perf_counter
 import os
 from threading import Thread, Event
 
 from .flight_data_handler import *
 
 import logging
-from .query_ontology import *
 import traceback
-import functools
+from .log_utils import *
+from .query_ontology import *
+from .nlu import *
+
 
 # =======================================================================
 # ===================== FLASK APP INIT ==================================
@@ -39,40 +40,6 @@ ontology_is_init = False
 
 autocomplete_handler = AutocompleteHandler()
 
-# ================== LOGGING UTILS ===================
-
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-def print_info(*args, **kwargs):
-    # print(args, flush=True)
-    return
-
-def print_error(*args, **kwargs):
-    print(f"{bcolors.FAIL}{args}{bcolors.ENDC}", flush=True)
-
-def print_event(*args, **kwargs):
-    print(f"{bcolors.OKBLUE}{args}{bcolors.ENDC}", flush=True)
-
-
-def timeit(func):
-    @functools.wraps(func)
-    def wrapper_timer(*args, **kwargs):
-        tic = time.perf_counter()
-        value = func(*args, **kwargs)
-        toc = time.perf_counter()
-        elapsed_time = toc - tic
-        print_event(f"Elapsed time: {elapsed_time:0.4f} seconds")
-        return value
-    return wrapper_timer
 
 
 # =======================================================================
@@ -469,33 +436,6 @@ def start_work(sid):
             sio.start_background_task(flight_follower_worker.do_work)
 
 
-def process_transcript(transcript):
-    query = ""
-    print_event("SPEECH RECOGNITION", transcript)
-    # DO STUFF with Snips-NLU
-
-    if transcript.lower() == "what is the nearest airport":
-        query = "NearestAirport"
-
-    elif transcript.lower() == "what are the runways at arrival":
-        query = "RunwaysAtArrival"
-    
-    elif transcript.lower() == "what is the departure airport":
-        query = "DepartureAirport"
-
-    elif transcript.lower() == "what is the temperature at arrival":
-        query = "TemperatureAtArrival"
-
-    elif transcript.lower() in ["what is the wind at LFBO", "what is the wind at toulouse blagnac"]:
-        query = "WindAtAirport?LFBO"
-
-    elif transcript.lower() in ["give me the landing checklist", "landing checklist"]:
-        query = "ChecklistLanding"
-
-    elif transcript.lower() in ["give me the approach checklist", "approach checklist"]:
-        query = "ChecklistApproach"
-
-    return query
 
 
 # =======================================================================
