@@ -26,4 +26,4 @@ EXPOSE 8000
 # CMD ["gunicorn --worker-class eventlet -w 1 app:app -b 0.0.0.0:$PORT"]
 
 ENTRYPOINT ["./gunicorn_starter.sh"]
-CMD ["gunicorn --worker-class eventlet -w 1 app:app -b 0.0.0.0:$PORT"]
+CMD ["gunicorn", "--worker-class", "eventlet" ,"-w", "1", "app:app", "-b" ,"0.0.0.0:${PORT:-5000}"]
