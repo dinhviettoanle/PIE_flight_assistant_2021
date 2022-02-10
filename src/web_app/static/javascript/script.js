@@ -105,11 +105,13 @@ $(document).ready(function(){
                 change_focus(data.lat, data.lon, true);
             }
             $(".DOM-queryButton").attr("disabled", false);
+            $(".DOM-queryArg").attr("disabled", false);
 
         }
         else {
             // Disable query buttons
             $('.DOM-queryButton').attr('disabled', true);
+            $('.DOM-queryArg').attr('disabled', true);
         }
 
         $('#DOM-flightDescription').html(flight_data_str);
@@ -118,3 +120,16 @@ $(document).ready(function(){
 });
 
 
+function dev_mode_checked() {
+    var checkBox = document.getElementById("checkbox_dev");
+    var DOM_devbuttons = document.getElementById("DOM-dev_buttons");
+    var DOM_devdata = document.getElementById("DOM-dev_data");
+  
+    if (checkBox.checked == true){
+        DOM_devbuttons.style.display = "block";
+        DOM_devdata.style.display = "block";
+    } else {
+        DOM_devbuttons.style.display = "none";
+        DOM_devdata.style.display = "none";
+    }
+  }

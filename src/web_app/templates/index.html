@@ -72,7 +72,16 @@
 
 
   <div class="container">
-    <h1>Flight Assistant - PIE 2021</h1>
+    <div class="row">
+      <div class="col-9">
+        <h1>Flight Assistant - PIE 2021</h1>
+      </div>
+      
+      <div class="col-3" style="display: flex; justify-content: right; align-items: center;">
+        <label for="dev" style="margin-right: 1ex;">Developer mode</label>
+        <input type="checkbox" id="checkbox_dev" name="dev" onclick="dev_mode_checked()" checked>
+      </div>
+    </div>
   </div>
 
 
@@ -88,10 +97,10 @@
       <!-- ******************************************* -->
       <!-- ************** RAW DATA ******************* -->
       <!-- ******************************************* -->
-      <div class="accordion-item">
+      <div class="accordion-item" id="DOM-dev_data">
         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-            <b>Surrounding Data</b>
+            <b>[DEV] Surrounding Data</b>
           </button>
         </h2>
 
@@ -174,35 +183,67 @@
         </div>
       </div>
 
+
       <!-- ******************************************* -->
-      <!-- ************** REQUESTS ******************* -->
+      <!-- ************** REQUESTS BUTTON ************ -->
       <!-- ******************************************* -->
-      <div class="accordion-item">
+      <div class="accordion-item" id="DOM-dev_buttons">
         <h2 class="accordion-header" id="panelsStayOpen-headingThree">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-            <b>Query</b>
+            <b>[DEV] Request by button</b>
           </button>
         </h2>
         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingThree">
           <div class="accordion-body">
-
             <!--------------- Request by button ---------------------->
             <div>
-              <b class="entry">Button</b><br>
+              <b class="entry">Trafic static queries</b><br>
               <div class="m-2">
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-departureAirport" disabled>Departure airport</button>
-                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-nearestAirport" disabled>Nearest airport</button>
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-runwaysAtArrival" disabled>Runways at arrival</button>
-                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-temperatureAtArrival" disabled>Temperature at arrival</button>
-                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-windAtAirport?LFBO" disabled>Wind at Toulouse Blagnac</button>
               </div>
+
+              <b class="entry">Trafic dynamic queries</b><br>
+              <div class="m-2">
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-nearestAirport" disabled>Nearest airport</button>
+              </div>
+              
+              <b class="entry">Weather queries</b><br>
+              <div class="m-2">
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-temperatureAtArrival" disabled>Temperature at arrival</button>
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-windAtAirport" disabled>Wind at {arg1}</button>
+              </div>
+
+              <b class="entry">Checklists</b><br>
               <div class="m-2">
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-checklistLanding" disabled>Landing Checklist</button>
                 <button type="button" class="btn btn-secondary DOM-queryButton" id="query-checklistApproach" disabled>Approach Checklist</button>
-                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-clear" disabled>CLEAR</button>
-
               </div>
+              
+              <b class="entry">Arguments</b><br>
+              <div class="m-2" style="display: flex;">
+                <button type="button" class="btn btn-secondary DOM-queryButton" id="query-clear" disabled>CLEAR</button>
+                <input type="text" class="mx-2 form-control DOM-queryArg" name="arg1" id="dev_arg1" placeholder="Argument 1">
+                <input type="text" class="mx-2 form-control DOM-queryArg" name="arg2" id="dev_arg2" placeholder="Argument 2">
+              </div>
+
             </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ******************************************* -->
+      <!-- ************** REQUESTS ******************* -->
+      <!-- ******************************************* -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
+            <b>Query</b>
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFour">
+          <div class="accordion-body">
 
             <!--------------- SpeechRecognition ---------------------->
             <div>
@@ -255,6 +296,7 @@
 <script>
   var myModal = new bootstrap.Modal(document.getElementById('modalWaitingOntolgy'), {backdrop: 'static', keyboard: false});
   myModal.toggle();
+  dev_mode_checked();
 </script>
 
 <script src="static/javascript/map_handler.js"></script>

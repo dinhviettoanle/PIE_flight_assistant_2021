@@ -382,7 +382,10 @@ class FlightFollowerWorker:
 
         elif query_type == "windAtAirport":
             response_dict = query_wind_at_airport(arg)
-            response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
+            if response_dict.get('status'):
+                response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
+            else:
+                response_str = f"This airport is not available."
 
         elif query_type == "checklistLanding":
             response_dict = get_checklist('landing', self.static_info.get('model'))
@@ -401,7 +404,7 @@ class FlightFollowerWorker:
             }
 
         elif query_type == "clear":
-            response_str = "_"
+            response_str = "&nbsp;"
 
         
         return {'response_str' : response_str, 'args': args}
@@ -462,6 +465,12 @@ def autocomplete():
 @app.route('/_query', methods=['GET'])
 def receive_query():
     query_type = request.args.get('q').split('-')[1]
+    
+    if request.args.get('arg1'):
+        query_type += f"?{request.args.get('arg1')}"
+    if request.args.get('arg2'):
+        query_type += f"?{request.args.get('arg2')}"
+
     response_str = flight_follower_worker.handle_query(query_type)
     return jsonify(response=response_str)
 

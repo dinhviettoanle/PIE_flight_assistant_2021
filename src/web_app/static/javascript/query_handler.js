@@ -1,5 +1,9 @@
 $(".DOM-queryButton").click(function(e) {
-    sent_object = {q: e.currentTarget.id};
+    sent_object = {
+        q: e.currentTarget.id,
+        arg1: document.getElementById("dev_arg1").value,
+        arg2: document.getElementById("dev_arg2").value
+    };
 
     $.ajax({
         type: "GET",
@@ -24,7 +28,9 @@ function clean_query_response() {
     $('#interim_span').html('');
 }
 
-/* SPEECH SYNTHESIS */
+/* ******************************************************** */
+/* **************** SPEECH SYNTHESIS ********************** */
+/* ******************************************************** */
 const msg = new SpeechSynthesisUtterance();
 
 // Voices
@@ -48,7 +54,7 @@ function process_response_str(response_str) {
 const abbreviations = {
     " nm" : " nautical miles",
     "N/A" : "not available",
-    "_" : ""
+    "&nbsp;" : ""
 }
 
 String.prototype.allReplace = function(obj) {
@@ -73,6 +79,10 @@ function response_str_to_speak(response_str) {
     return response_speak;
 }
 
+
+/* ******************************************************** */
+/* ********************** CHECKLISTS ********************** */
+/* ******************************************************** */
 
 function set_gui_checklist(checklist_tuple) {
     $("#checklistTable tr").remove(); 

@@ -290,10 +290,10 @@ def query_temperature_at_airport(icao):
 
 def query_wind_at_airport(icao):
     row = df_all_airports.loc[df_all_airports['icao'] == icao]
-    airport_name = row['name'].values[0]
-    
     if len(row) == 0:
         return {"status": False}
+    
+    airport_name = row['name'].values[0]
     
     coord = (float(row['latitude']), float(row['longitude']))
     current_weather = mgr.weather_at_coords(*coord).weather
