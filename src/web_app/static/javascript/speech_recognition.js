@@ -9,6 +9,14 @@ var ignore_onend; // To handle errors
 var down = false; // Is the spacebar down ?
 const DELAY_AFTER_SPEAK = 1000; // Delay after release of the spacebar before stoping the recording
 
+navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function(stream) {
+        console.log('Microphone access OK');
+    })
+    .catch(function(err) {
+        alert('Access for microphone is needed')
+});
+
 
 function init_speech_recognizer() {
     /* Initializes the webkitSpeechRecognition object */
