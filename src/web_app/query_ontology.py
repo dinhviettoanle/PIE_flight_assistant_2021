@@ -351,23 +351,14 @@ def process_query(query_type, arg1, arg2, flight_data):
     response_str = "N/A"
     args = None
 
-
+    # -------------------------------- TRAFIC STATIC ----------------------------------------
     if query_type == "departureAirport":
         response_str = f"The departure airport is {flight_data.get('origin')}."
     
+
     elif query_type == "arrivalAirport":
         response_str = f"The arrival airport is {flight_data.get('destination')}."
-    
-    elif query_type == "nearestAirport":
-        response_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
-        response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
 
-    elif query_type == "currentParam":
-        response_dict = query_current_param(flight_data, arg1)
-        if response_dict.get('status'):
-            response_str = f"You current {response_dict.get('param_name')} is {response_dict.get('param_format')}."
-        else:
-            response_str = f"This flight parameter is not available."
 
     elif query_type == "runwaysAtArrival":
         response_dict = query_runways_at_airport(flight_data.get('destination_icao'))
@@ -377,6 +368,7 @@ def process_query(query_type, arg1, arg2, flight_data):
         else:
             response_str = f"Arrival airport is not available."
 
+
     elif query_type == "runwaysAtAirport":
         response_dict = query_runways_at_airport(arg1)
         if response_dict.get('status'):
@@ -385,6 +377,41 @@ def process_query(query_type, arg1, arg2, flight_data):
         else:
             response_str = f"Runways for this airport are not available."
 
+
+    elif query_type == "frequencyAtArrival":
+        response_dict = query_frequency_at_airport(arg1, flight_data.get('destination_icao'))
+        if response_dict.get('status'):
+            response_str = f"The {response_dict.get('frq_name')} frequency at {response_dict.get('airport_name')} is {response_dict.get('frq_value')}."
+        elif flight_data.get('destination_icao') == "N/A":
+            response_str = f"Arrival airport is not available."
+        else:
+            response_str = f"This frequency is not available."
+
+
+    elif query_type == "frequencyAtAirport":
+        response_dict = query_frequency_at_airport(arg1, arg2)
+        if response_dict.get('status'):
+            response_str = f"The {response_dict.get('frq_name')} frequency at {response_dict.get('airport_name')} is {response_dict.get('frq_value')}."
+        else:
+            response_str = f"This frequency is not available."
+    
+
+    # -------------------------------- TRAFIC DYNAMIC ----------------------------------------
+    elif query_type == "nearestAirport":
+        response_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
+        response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
+
+
+    elif query_type == "currentParam":
+        response_dict = query_current_param(flight_data, arg1)
+        if response_dict.get('status'):
+            response_str = f"Your current {response_dict.get('param_name')} is {response_dict.get('param_format')}."
+        else:
+            response_str = f"This flight parameter is not available."
+
+
+
+    # -------------------------------- WEATHER ----------------------------------------
     elif query_type == "temperatureAtArrival":
         response_dict = query_temperature_at_airport(flight_data.get('destination_icao'))
         if response_dict.get('status'):
@@ -393,6 +420,7 @@ def process_query(query_type, arg1, arg2, flight_data):
         else:
             response_str = f"Arrival airport is not available."
 
+
     elif query_type == "windAtAirport":
         response_dict = query_wind_at_airport(arg1)
         if response_dict.get('status'):
@@ -400,6 +428,9 @@ def process_query(query_type, arg1, arg2, flight_data):
         else:
             response_str = f"This airport is not available."
 
+
+
+    # -------------------------------- CHECKLIST ----------------------------------------
     elif query_type == "checklistLanding":
         response_dict = get_checklist('landing', flight_data.get('model'))
         response_str = "CHECKLIST"
@@ -407,6 +438,7 @@ def process_query(query_type, arg1, arg2, flight_data):
             'name' : 'Landing checklist',
             'checklist' : response_dict.get('checklist')
         }
+
 
     elif query_type == "checklistApproach":
         response_dict = get_checklist('approach', flight_data.get('model'))
@@ -416,6 +448,9 @@ def process_query(query_type, arg1, arg2, flight_data):
             'checklist' : response_dict.get('checklist')
         }
 
+
+    # -----------------------------------------------------------------------------------
+    
     elif query_type == "clear":
         response_str = "&nbsp;"
 
@@ -482,6 +517,34 @@ def query_runways_at_airport(icao):
         "list_runways": list_runways
     }
 
+
+def query_frequency_at_airport(frq_sigle, icao):
+    response = list(owl.default_world.sparql(
+    f"""
+        PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
+        SELECT ?name ?mhz 
+        WHERE {{
+            ?Airport pie:AirportICAOCode ?ICAO .
+            ?Airport pie:AirportName ?name .
+            ?Airport pie:HasFrequency ?Frequency .
+            ?Frequency pie:FrequencyDescription ?desc .
+            ?Frequency pie:FrequencyMHz ?mhz .
+            ?Frequency pie:FrequencyType ?type .
+            FILTER regex(?ICAO, "{icao}", "i")
+            FILTER regex(?type, "{frq_sigle}", "i")
+            
+        }}
+    """))
+    if len(response) == 0:
+        return {"status": False}
+    
+    name_airport, value_mhz = response[0][0], response[0][1]
+    return {
+        "status": True,
+        "frq_name": frq_sigle,
+        "airport_name": name_airport,
+        "frq_value": value_mhz
+    }
 
 
 def query_temperature_at_airport(icao):
