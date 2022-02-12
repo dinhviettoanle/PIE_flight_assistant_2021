@@ -341,6 +341,12 @@ def query_map_near_waypoints(s, n, w, e):
 # ======================================================================================
 
 def process_query(query_type, arg1, arg2, flight_data):
+    """
+    flight_data : {
+        'id', 'registration', 'callsign', 'model', 'model_text', 'origin', 'origin_icao', 'destination', 
+        'lat', 'lon', 'heading', 'speed', 'vertical_speed', 'alt', 'last_contact'
+    }
+    """
     
     response_str = "N/A"
     args = None
@@ -353,7 +359,7 @@ def process_query(query_type, arg1, arg2, flight_data):
         response_str = f"The arrival airport is {flight_data.get('destination')}."
     
     elif query_type == "nearestAirport":
-        response_dict = query_nearest_airport(flight_data.get('lat'), flight_data.get('lon'))
+        response_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
         response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
 
     elif query_type == "runwaysAtArrival":

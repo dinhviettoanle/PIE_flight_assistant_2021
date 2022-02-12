@@ -95,14 +95,14 @@ $(document).ready(function(){
                 <b>Route : </b> ${data.origin} ⟶ ${data.destination} ;
                 <b>Last contact : </b> ${data.last_contact}
                 <br>
-                <b>Position : </b> (${data.lat}, ${data.lon}) ; 
-                <b>Altitude : </b> ${data.alt} ft ; 
+                <b>Position : </b> (${data.latitude}, ${data.longitude}) ; 
+                <b>Altitude : </b> ${data.altitude} ft ; 
                 <b>Vg : </b> ${data.speed} kt ; 
                 <b>Vz : </b> ${data.vertical_speed} ft/min ; 
                 <b>Heading : </b> ${data.heading}`;
 
-            if (center[0] != data.lat || center[1] != data.lon){
-                change_focus(data.lat, data.lon, true);
+            if (center[0] != data.latitude || center[1] != data.longitude){
+                change_focus(data.latitude, data.longitude, true);
             }
             $(".DOM-queryButton").attr("disabled", false);
             $(".DOM-queryArg").attr("disabled", false);

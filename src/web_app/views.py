@@ -190,8 +190,8 @@ class FlightFollowerWorker:
                 if self.is_following:
                     dynamic_data =  self.flight_follower_query.query_dynamic_data(self.latitude, self.longitude, self.flight_id)
                     # Move box around the current followed flight
-                    self.latitude = dynamic_data['lat']
-                    self.longitude = dynamic_data['lon']
+                    self.latitude = dynamic_data['latitude']
+                    self.longitude = dynamic_data['longitude']
 
                     self.flight_data = self.static_info.copy()
                     for k in dynamic_data:
@@ -227,8 +227,8 @@ class FlightFollowerWorker:
         self.is_following = True
         self.flight_id = flight_id
         current_flight_data =  self.flight_follower_query.query_complete_flight(self.flight_id)
-        self.latitude = current_flight_data['lat']
-        self.longitude = current_flight_data['lon']
+        self.latitude = current_flight_data['latitude']
+        self.longitude = current_flight_data['longitude']
 
         for k in self.static_info:
             self.static_info[k] = current_flight_data[k]

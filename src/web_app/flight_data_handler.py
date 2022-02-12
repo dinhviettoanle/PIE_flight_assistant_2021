@@ -157,9 +157,9 @@ class FlightSpecificQueryHandler():
         dynamic_data = self.query_dynamic_data(detail['lat'], detail['lon'], flight_id, RADIUS=300)
         print(dynamic_data)
         return Waypoint(
-            latitude=dynamic_data['lat'], 
-            longitude=dynamic_data['lon'], 
-            altitude=dynamic_data['alt'], 
+            latitude=dynamic_data['latitude'], 
+            longitude=dynamic_data['longitude'], 
+            altitude=dynamic_data['altitude'], 
             speed=dynamic_data['speed'], 
             heading=dynamic_data['heading'], 
             timestamp=dynamic_data['last_contact']
@@ -205,12 +205,12 @@ class FlightSpecificQueryHandler():
             'registration' : flight.registration,
             'model' : flight.model,
             'model_text' : flight.model_text,
-            'lat': last_waypoint.latitude, 
-            'lon': last_waypoint.longitude,
+            'latitude': last_waypoint.latitude, 
+            'longitude': last_waypoint.longitude,
             'heading': last_waypoint.heading, 
             'speed': last_waypoint.speed, 
             'vertical_speed' : int(60*dh/dt),
-            'alt' : last_waypoint.altitude,        
+            'altitude' : last_waypoint.altitude,        
             'last_contact' : last_waypoint.timestamp,
             'origin' : flight.origin, 
             'origin_icao' : flight.origin_icao, 
@@ -246,12 +246,12 @@ class FlightSpecificQueryHandler():
         data = json.loads(data_raw)[flight_id]
 
         return {
-            'lat' : data['lat'],
-            'lon' : data['lon'],
+            'latitude' : data['lat'],
+            'longitude' : data['lon'],
             'heading' : data['track'],
             'speed' : data['speed'],
             'vertical_speed' : data['vertical_speed'],
-            'alt' : data['alt'],
+            'altitude' : data['alt'],
             'last_contact' : datetime.utcfromtimestamp(data['last_contact']).strftime('%H:%M:%S'),
         }
 
