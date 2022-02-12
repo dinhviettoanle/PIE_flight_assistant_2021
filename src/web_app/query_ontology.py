@@ -191,6 +191,110 @@ def init_df_all_checklists():
 # ======================================================================================
 # Queries to update the map on the GUI
 
+
+def get_near_airports(surrounding_data, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with airport data
+
+    Parameters
+    ----------
+    surrounding_data : dict
+        Dictionary sent to the client containing all the data
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        surrounding_data['list_airports'] = query_map_near_airports(s, n, w, e)
+    except Exception as e:
+        print_error("Error querying airports", e)
+        surrounding_data['list_airports'] = []
+
+
+def get_near_runways(surrounding_data, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with runway data
+
+    Parameters
+    ----------
+    surrounding_data : dict
+        Dictionary sent to the client containing all the data
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        surrounding_data['list_runways'] = query_map_near_runways(s, n, w, e)
+    except Exception as e:
+        print_error("Error querying runways", e)
+        surrounding_data['list_runways'] = []
+
+
+def get_near_frequencies(surrounding_data):
+    """ Updates the dictionary message sent to the client with frequency data
+
+    Parameters
+    ----------
+    surrounding_data : dict
+        Dictionary sent to the client containing all the data
+    """    
+    event_bug = ""
+    for airport in surrounding_data['list_airports']:
+        current_icao = airport['icao']
+        try:
+            airport['list_frequencies'] = query_map_near_frequencies(current_icao)
+        except Exception as e:
+            airport['list_frequencies'] = []
+            event_bug = e
+    
+    if event_bug != "":
+        print_error("Error querying frequencies", event_bug)
+
+
+def get_near_navaids(surrounding_data, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with navaid data
+
+    Parameters
+    ----------
+    surrounding_data : dict
+        Dictionary sent to the client containing all the data
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        surrounding_data['list_navaids'] = query_map_near_navaids(s, n, w, e) 
+    except Exception as e:
+        print_error("Error querying navaids", e)
+        surrounding_data['list_navaids'] = []
+
+
+def get_near_waypoints(surrounding_data, center, RADIUS=100):
+    """ Updates the dictionary message sent to the client with waypoint data
+
+    Parameters
+    ----------
+    surrounding_data : dict
+        Dictionary sent to the client containing all the data
+    center : (float, float)
+        Center of the radar
+    RADIUS : float, optional
+        Radius of the radar
+    """    
+    try:
+        s, n, w, e = get_box_from_center(center, RADIUS)
+        surrounding_data['list_waypoints'] = query_map_near_waypoints(s, n, w, e)
+    except Exception as e:
+        print_error("Error querying navaids", e)
+        surrounding_data['list_waypoints'] = []
+
+
+
+
 def query_map_near_airports(s, n, w, e):
     df_near_airports = df_all_airports.loc[
         df_all_airports['longitude'].between(w, e) & \
@@ -236,6 +340,78 @@ def query_map_near_waypoints(s, n, w, e):
 # ================ USER QUERIES ========================================================
 # ======================================================================================
 
+def process_query(query_type, arg1, arg2, flight_data):
+    
+    response_str = "N/A"
+    args = None
+
+
+    if query_type == "departureAirport":
+        response_str = f"The departure airport is {flight_data.get('origin')}."
+    
+    elif query_type == "arrivalAirport":
+        response_str = f"The arrival airport is {flight_data.get('destination')}."
+    
+    elif query_type == "nearestAirport":
+        response_dict = query_nearest_airport(flight_data.get('lat'), flight_data.get('lon'))
+        response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
+
+    elif query_type == "runwaysAtArrival":
+        response_dict = query_runways_at_airport(flight_data.get('destination_icao'))
+        if response_dict.get('status'):
+            list_runways_arrival = response_dict.get('list_runways')
+            response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
+        else:
+            response_str = f"Arrival airport is not available."
+
+    elif query_type == "runwaysAtAirport":
+        response_dict = query_runways_at_airport(arg1)
+        if response_dict.get('status'):
+            list_runways_arrival = response_dict.get('list_runways')
+            response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
+        else:
+            response_str = f"Runways for this airport are not available."
+
+    elif query_type == "temperatureAtArrival":
+        response_dict = query_temperature_at_airport(flight_data.get('destination_icao'))
+        if response_dict.get('status'):
+            list_runways_arrival = response_dict.get('list_runways')
+            response_str = f"The temperature at {response_dict.get('airport_name')} is {response_dict.get('temperature')} celsius."
+        else:
+            response_str = f"Arrival airport is not available."
+
+    elif query_type == "windAtAirport":
+        response_dict = query_wind_at_airport(arg1)
+        if response_dict.get('status'):
+            response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
+        else:
+            response_str = f"This airport is not available."
+
+    elif query_type == "checklistLanding":
+        response_dict = get_checklist('landing', flight_data.get('model'))
+        response_str = "CHECKLIST"
+        args = {
+            'name' : 'Landing checklist',
+            'checklist' : response_dict.get('checklist')
+        }
+
+    elif query_type == "checklistApproach":
+        response_dict = get_checklist('approach', flight_data.get('model'))
+        response_str = "CHECKLIST"
+        args = {
+            'name' : 'Approach checklist',
+            'checklist' : response_dict.get('checklist')
+        }
+
+    elif query_type == "clear":
+        response_str = "&nbsp;"
+
+    return {'response_str' : response_str, 'args': args}
+
+
+
+# ======================================================================================
+
 def query_nearest_airport(lat, lng):
     df=  pd.DataFrame({
         'name': df_all_airports['name'],
@@ -249,16 +425,17 @@ def query_nearest_airport(lat, lng):
 
 
 
-def query_runways_at_arrival(icao_arrival):
+def query_runways_at_airport(icao):
     response = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
-            SELECT ?rw_id
+            SELECT ?rw_id ?name
             WHERE {{
                 ?Airport pie:AirportICAOCode ?airport_icao .
+                ?Airport pie:AirportName ?name .
                 ?Airport pie:HasRunway ?Runway .
                 ?Runway pie:RunwayIdentifier ?rw_id .
-                FILTER regex(?airport_icao, "{icao_arrival}", "i")
+                FILTER regex(?airport_icao, "{icao}", "i")
             }}
         """))
 
@@ -266,16 +443,17 @@ def query_runways_at_arrival(icao_arrival):
         return {"status": False}
 
     list_runways = [i[0] for i in response]
-    return {"status": True, "icao": icao_arrival, "list_runways": list_runways}
+    name = response[0][1]
+    return {"status": True, "icao": icao, "name": name, "list_runways": list_runways}
 
 
 
 def query_temperature_at_airport(icao):
     row = df_all_airports.loc[df_all_airports['icao'] == icao]
-    airport_name = row['name'].values[0]
-    
     if len(row) == 0:
         return {"status": False}
+    
+    airport_name = row['name'].values[0]
     
     coord = (float(row['latitude']), float(row['longitude']))
     current_weather = mgr.weather_at_coords(*coord).weather

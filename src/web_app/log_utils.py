@@ -1,5 +1,6 @@
 import time
 import functools
+from datetime import datetime
 
 # ================== LOGGING UTILS ===================
 
@@ -22,7 +23,7 @@ def fprint(*args, **kwargs):
     print(args, flush=True, **kwargs)
 
 def print_error(*args, **kwargs):
-    print(f"{bcolors.FAIL}{args}{bcolors.ENDC}", flush=True)
+    print(f"{bcolors.FAIL}[{datetime.now()}]: {args}{bcolors.ENDC}", flush=True)
 
 def print_event(*args, **kwargs):
     print(f"{bcolors.OKBLUE}{args}{bcolors.ENDC}", flush=True)

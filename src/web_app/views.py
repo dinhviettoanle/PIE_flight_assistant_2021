@@ -8,7 +8,6 @@ from flask import Flask, render_template, url_for, copy_current_request_context,
 from random import random
 import os
 from threading import Thread, Event
-
 from .flight_data_handler import *
 
 import logging
@@ -45,109 +44,6 @@ autocomplete_handler = AutocompleteHandler()
 # =======================================================================
 # ===================== BACKGROUND TASKS ================================
 # =======================================================================
-
-def get_near_airports(surrounding_data, center, RADIUS=100):
-    """ Updates the dictionary message sent to the client with airport data
-
-    Parameters
-    ----------
-    surrounding_data : dict
-        Dictionary sent to the client containing all the data
-    center : (float, float)
-        Center of the radar
-    RADIUS : float, optional
-        Radius of the radar
-    """    
-    try:
-        s, n, w, e = get_box_from_center(center, RADIUS)
-        surrounding_data['list_airports'] = query_map_near_airports(s, n, w, e)
-    except Exception as e:
-        print_error("Error querying airports", e)
-        surrounding_data['list_airports'] = []
-
-
-def get_near_runways(surrounding_data, center, RADIUS=100):
-    """ Updates the dictionary message sent to the client with runway data
-
-    Parameters
-    ----------
-    surrounding_data : dict
-        Dictionary sent to the client containing all the data
-    center : (float, float)
-        Center of the radar
-    RADIUS : float, optional
-        Radius of the radar
-    """    
-    try:
-        s, n, w, e = get_box_from_center(center, RADIUS)
-        surrounding_data['list_runways'] = query_map_near_runways(s, n, w, e)
-    except Exception as e:
-        print_error("Error querying runways", e)
-        surrounding_data['list_runways'] = []
-
-
-def get_near_frequencies(surrounding_data):
-    """ Updates the dictionary message sent to the client with frequency data
-
-    Parameters
-    ----------
-    surrounding_data : dict
-        Dictionary sent to the client containing all the data
-    """    
-    event_bug = ""
-    for airport in surrounding_data['list_airports']:
-        current_icao = airport['icao']
-        try:
-            airport['list_frequencies'] = query_map_near_frequencies(current_icao)
-        except Exception as e:
-            airport['list_frequencies'] = []
-            event_bug = e
-    
-    if event_bug != "":
-        print_error("Error querying frequencies", event_bug)
-
-
-def get_near_navaids(surrounding_data, center, RADIUS=100):
-    """ Updates the dictionary message sent to the client with navaid data
-
-    Parameters
-    ----------
-    surrounding_data : dict
-        Dictionary sent to the client containing all the data
-    center : (float, float)
-        Center of the radar
-    RADIUS : float, optional
-        Radius of the radar
-    """    
-    try:
-        s, n, w, e = get_box_from_center(center, RADIUS)
-        surrounding_data['list_navaids'] = query_map_near_navaids(s, n, w, e) 
-    except Exception as e:
-        print_error("Error querying navaids", e)
-        surrounding_data['list_navaids'] = []
-
-
-def get_near_waypoints(surrounding_data, center, RADIUS=100):
-    """ Updates the dictionary message sent to the client with waypoint data
-
-    Parameters
-    ----------
-    surrounding_data : dict
-        Dictionary sent to the client containing all the data
-    center : (float, float)
-        Center of the radar
-    RADIUS : float, optional
-        Radius of the radar
-    """    
-    try:
-        s, n, w, e = get_box_from_center(center, RADIUS)
-        surrounding_data['list_waypoints'] = query_map_near_waypoints(s, n, w, e)
-    except Exception as e:
-        print_error("Error querying navaids", e)
-        surrounding_data['list_waypoints'] = []
-
-
-
 
 
 class AirspaceBackgroundWorker:
@@ -269,6 +165,7 @@ class FlightFollowerWorker:
         # To search near this position
         self.latitude = 0
         self.longitude = 0
+        self.flight_data = {}
         self.static_info = {
             'id' : "",
             'registration' : "",
@@ -282,6 +179,7 @@ class FlightFollowerWorker:
         }
 
         self.airspace_worker = airspace_worker
+        self.previous_error = ""
 
 
     def do_work(self):
@@ -295,9 +193,9 @@ class FlightFollowerWorker:
                     self.latitude = dynamic_data['lat']
                     self.longitude = dynamic_data['lon']
 
-                    flight_data = self.static_info.copy()
+                    self.flight_data = self.static_info.copy()
                     for k in dynamic_data:
-                        flight_data[k] = dynamic_data[k]
+                        self.flight_data[k] = dynamic_data[k]
 
                     print_info(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
                         f"Following {self.flight_id}")
@@ -306,14 +204,16 @@ class FlightFollowerWorker:
                     print_info(datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
                         f"Not following")
 
-                flight_data['is_following'] = self.is_following
+                self.flight_data['is_following'] = self.is_following
                 
-                self.sio.emit('follow_flight_info', flight_data)
+                self.sio.emit('follow_flight_info', self.flight_data)
                 self.sio.sleep(SLEEP_TIME)
-
+            
             except Exception as e:
                 # print_error(traceback.format_exc())
-                print_error(f"Error following flight : {type(e).__name__} {str(e)}")
+                if str(e) != self.previous_error:
+                    print_error(f"Error following flight : {type(e).__name__} {str(e)}")
+                    self.previous_error = str(e)
 
 
     def update_flight_static_info(self, flight_id):
@@ -348,66 +248,20 @@ class FlightFollowerWorker:
         query_type : str
             ID of the Query
         """
-        response_str = "N/A"
-        args = None
-
+        
         if "?" in query_type:
-            query_type, arg = query_type.split("?")
-            print_event(f"Query for {query_type}. Argument : {arg}")
+            query_args = query_type.split("?")
+            query_type, args_list = query_args[0], query_args[1:]
+            arg1 = args_list[0]
+            arg2 = args_list[1] if len(args_list) > 1 else None
+            print_event(f"Query: <{query_type}>. Argument 1: <{arg1}>. Argument 2: <{arg2}>")
         else:
-            print_event(f"Query for {query_type}")
+            arg1, arg2 = None, None
+            print_event(f"Query: <{query_type}>")
 
-        if query_type == "departureAirport":
-            response_str = f"The departure airport is {self.static_info.get('origin')}."
-        
-        elif query_type == "nearestAirport":
-            response_dict = query_nearest_airport(self.latitude, self.longitude)
-            response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
 
-        elif query_type == "runwaysAtArrival":
-            response_dict = query_runways_at_arrival(self.static_info.get('destination_icao'))
-            if response_dict.get('status'):
-                list_runways_arrival = response_dict.get('list_runways')
-                response_str = f"""Runways at {self.static_info.get('destination')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
-            else:
-                response_str = f"Arrival airport is not available."
-
-        elif query_type == "temperatureAtArrival":
-            response_dict = query_temperature_at_airport(self.static_info.get('destination_icao'))
-            if response_dict.get('status'):
-                list_runways_arrival = response_dict.get('list_runways')
-                response_str = f"The temperature at {response_dict.get('airport_name')} is {response_dict.get('temperature')} celsius."
-            else:
-                response_str = f"Arrival airport is not available."
-
-        elif query_type == "windAtAirport":
-            response_dict = query_wind_at_airport(arg)
-            if response_dict.get('status'):
-                response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
-            else:
-                response_str = f"This airport is not available."
-
-        elif query_type == "checklistLanding":
-            response_dict = get_checklist('landing', self.static_info.get('model'))
-            response_str = "CHECKLIST"
-            args = {
-                'name' : 'Landing checklist',
-                'checklist' : response_dict.get('checklist')
-            }
-
-        elif query_type == "checklistApproach":
-            response_dict = get_checklist('approach', self.static_info.get('model'))
-            response_str = "CHECKLIST"
-            args = {
-                'name' : 'Approach checklist',
-                'checklist' : response_dict.get('checklist')
-            }
-
-        elif query_type == "clear":
-            response_str = "&nbsp;"
-
-        
-        return {'response_str' : response_str, 'args': args}
+        response_dict = process_query(query_type, arg1, arg2, self.flight_data)
+        return response_dict
 
 
 
