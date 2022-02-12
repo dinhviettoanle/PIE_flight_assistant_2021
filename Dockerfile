@@ -11,7 +11,6 @@ COPY src ./
 COPY ./gunicorn_starter.sh ./
 
 EXPOSE 5000
-EXPOSE 8000
 
 # OK
 # ENTRYPOINT ["python"]
