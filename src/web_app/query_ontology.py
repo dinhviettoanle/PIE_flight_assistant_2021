@@ -344,7 +344,7 @@ def process_query(query_type, arg1, arg2, flight_data):
     """
     flight_data : {
         'id', 'registration', 'callsign', 'model', 'model_text', 'origin', 'origin_icao', 'destination', 
-        'lat', 'lon', 'heading', 'speed', 'vertical_speed', 'alt', 'last_contact'
+        'latitude', 'longitude', 'heading', 'speed', 'vertical_speed', 'altitude', 'last_contact'
     }
     """
     
@@ -361,6 +361,13 @@ def process_query(query_type, arg1, arg2, flight_data):
     elif query_type == "nearestAirport":
         response_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
         response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
+
+    elif query_type == "currentParam":
+        response_dict = query_current_param(flight_data, arg1)
+        if response_dict.get('status'):
+            response_str = f"You current {response_dict.get('param_name')} is {response_dict.get('param_format')}."
+        else:
+            response_str = f"This flight parameter is not available."
 
     elif query_type == "runwaysAtArrival":
         response_dict = query_runways_at_airport(flight_data.get('destination_icao'))
@@ -430,6 +437,24 @@ def query_nearest_airport(lat, lng):
     return df.iloc[df['distance'].idxmin()].to_dict()
 
 
+def query_current_param(flight_data, param):
+    param_value = flight_data.get(param)
+    if param_value is None:
+        return {"status": False}
+    
+    units = {
+        'heading' : "°", 
+        'speed' : " kt", 
+        'vertical_speed' : " ft/min", 
+        'altitude' : " ft"
+    }
+    return {
+        'status' : True,
+        'param_name' : param.replace("_", " "),
+        'param_format' : f"{param_value}{units.get(param,'')}"
+    }
+
+
 
 def query_runways_at_airport(icao):
     response = list(owl.default_world.sparql(
@@ -450,7 +475,12 @@ def query_runways_at_airport(icao):
 
     list_runways = [i[0] for i in response]
     name = response[0][1]
-    return {"status": True, "icao": icao, "name": name, "list_runways": list_runways}
+    return {
+        "status": True, 
+        "icao": icao, 
+        "name": name, 
+        "list_runways": list_runways
+    }
 
 
 
