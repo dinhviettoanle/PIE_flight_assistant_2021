@@ -175,7 +175,9 @@ class FlightFollowerWorker:
             'origin' : "",
             'origin_icao' : "",
             'destination' : "",
-            'destination_icao' : ""
+            'destination_icao' : "",
+            'time_scheduled' : {},
+            'time_estimated' : {},
         }
 
         self.airspace_worker = airspace_worker

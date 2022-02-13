@@ -180,8 +180,8 @@ class FlightSpecificQueryHandler():
         dict
             Dictionary containing multiple static stuff
         """
-        flight = self.api.get_flight(flight_id, RAW=False)
-        self.api.get_flight(flight_id, RAW=True)
+        flight = self.api.get_flight(flight_id, RAW=False, LINK=True)
+        # self.api.get_flight(flight_id, RAW=True)
         
         if len(flight.trail) == 0:
             last_waypoint = self.get_last_position(flight, flight_id)
@@ -215,7 +215,9 @@ class FlightSpecificQueryHandler():
             'origin' : flight.origin, 
             'origin_icao' : flight.origin_icao, 
             'destination' : flight.destination,
-            'destination_icao' : flight.destination_icao
+            'destination_icao' : flight.destination_icao,
+            'time_scheduled' : flight.time_scheduled,
+            'time_estimated' : flight.time_estimated,
         }
 
 

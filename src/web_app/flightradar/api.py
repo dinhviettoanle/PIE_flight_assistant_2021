@@ -57,11 +57,13 @@ class API:
         return result
 
 
-    def get_flight(self, flight_id: str, RAW=False) -> DetailedFlight:
+    def get_flight(self, flight_id: str, RAW=False, LINK=False) -> DetailedFlight:
         """Gets more detailed info about the specified flight."""
         self.logger.info('Getting info for flight {}'.format(flight_id))
         req = Request(FLIGHT_API_PATTERN.format(flight_id),
                       headers=HEADERS)
+        if LINK:
+            print(FLIGHT_API_PATTERN.format(flight_id))
         if RAW:
             print(FLIGHT_API_PATTERN.format(flight_id))
             return json.loads(urlopen(req).read().decode())

@@ -81,7 +81,8 @@ class DetailedFlight:
     """Class for storing info of selected flight.
     Must be displayed separately."""
     def __init__(self, flight_id, flight, status, model, model_text, registration, airline,
-                 origin, destination, trail, iata, icao, origin_icao, destination_icao):
+                 origin, destination, trail, iata, icao, origin_icao, destination_icao,
+                 time_scheduled, time_estimated):
         self.id = flight_id
         self.flight = flight
         self.status = status
@@ -96,6 +97,8 @@ class DetailedFlight:
         self.destination = destination
         self.destination_icao = destination_icao
         self.trail = self.collect_trail(trail)
+        self.time_scheduled = time_scheduled
+        self.time_estimated = time_estimated
 
     @staticmethod
     def collect_trail(waypoints: list) -> List[Waypoint]:
@@ -138,7 +141,9 @@ class DetailedFlight:
             origin_icao=data['airport']['origin']['code']['icao'] if data['airport']['origin'] else 'N/A',
             destination=data['airport']['destination']['name'] if data['airport']['destination'] else 'N/A',
             destination_icao=data['airport']['destination']['code']['icao'] if data['airport']['destination'] else 'N/A',
-            trail=data['trail']
+            trail=data['trail'],
+            time_scheduled=get_time(data['time']['scheduled']),
+            time_estimated=get_time(data['time']['estimated']),
         )
 
     def __str__(self) -> str:
@@ -172,3 +177,11 @@ def get_airline_prop(data, prop):
         return data['airline']['code'][prop]
     except:
         return 'N/A'
+
+def get_time(data):
+    if data['arrival'] is None or data['arrival'] == 0:
+        data['arrival'] = "N/A"
+    if data['departure'] is None or data['departure'] == 0:
+        data['departure'] = "N/A"
+    return data
+       
