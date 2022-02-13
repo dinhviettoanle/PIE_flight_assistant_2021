@@ -12,9 +12,17 @@ const DELAY_AFTER_SPEAK = 1000; // Delay after release of the spacebar before st
 navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function(stream) {
         console.log('Microphone access OK');
+        navigator.mediaDevices.enumerateDevices().then(function(devices) {
+            devices.forEach(function(device) {
+                if (device.kind == 'audioinput' && device.deviceId == 'default') {
+                    $('#micInfo').html(device.label);
+                }
+            });
+        })
     })
     .catch(function(err) {
-        alert('Access for microphone is needed')
+        alert('Access for microphone is needed');
+        $('#micInfo').html("Not allowed ! Access for microphone is needed");
 });
 
 
