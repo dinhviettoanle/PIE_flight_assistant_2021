@@ -50,7 +50,7 @@ body {
 .visualizer {
     display: block;
     margin: 0 auto;
-    margin-left: 1pt;
+    margin-left: 2pt;
 }
 
 .DOM-queryButton {

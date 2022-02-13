@@ -31,7 +31,7 @@ function init_speech_recognizer() {
 
         set_status("Speak now");
         console.log("Recognizer started");
-        $('#start_button').html("STOP and SEND to server");
+        $('#start_button').html("STOP");
     };
 
     // When the recognizer encounters an error
