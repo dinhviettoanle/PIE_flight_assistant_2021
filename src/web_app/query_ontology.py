@@ -431,21 +431,23 @@ def process_query(query_type, arg1, arg2, flight_data):
 
 
     # -------------------------------- WEATHER ----------------------------------------
-    elif query_type == "temperatureAtArrival":
-        response_dict = query_temperature_at_airport(flight_data.get('destination_icao'))
-        if response_dict.get('status'):
-            list_runways_arrival = response_dict.get('list_runways')
-            response_str = f"The temperature at {response_dict.get('airport_name')} is {response_dict.get('temperature')} celsius."
-        else:
-            response_str = f"Arrival airport is not available."
 
-
-    elif query_type == "windAtAirport":
-        response_dict = query_wind_at_airport(arg1)
+    elif query_type == "weatherAtAirport":
+        response_dict = query_specific_weather_at_airport('weather', arg1)
         if response_dict.get('status'):
-            response_str = f"The wind at {response_dict.get('airport_name')} is {response_dict.get('wind_orientation')}° {response_dict.get('wind_speed')} kt."
+            response_str = f"The weather at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
         else:
             response_str = f"This airport is not available."
+
+
+    elif query_type == "weatherSpecificAtAirport":
+        response_dict = query_specific_weather_at_airport(arg1, arg2)
+        if response_dict.get('status'):
+            response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
+        else:
+            response_str = f"This airport is not available."
+
+    
 
 
 
@@ -537,9 +539,16 @@ def query_frequency_at_airport(frq_sigle, icao):
     }
 
 # ============================== TRAFIC DYNAMIC ========================================
+units = {
+    'heading' : "°", 
+    'speed' : " kt", 
+    'vertical_speed' : " ft/min", 
+    'altitude' : " ft"
+}
+
 
 def query_nearest_airport(lat, lng):
-    df=  pd.DataFrame({
+    df = pd.DataFrame({
         'name': df_all_airports['name'],
         'ICAO': df_all_airports['icao'],
         'lat': df_all_airports['latitude'],
@@ -555,12 +564,6 @@ def query_current_param(flight_data, param):
     if param_value is None:
         return {"status": False}
     
-    units = {
-        'heading' : "°", 
-        'speed' : " kt", 
-        'vertical_speed' : " ft/min", 
-        'altitude' : " ft"
-    }
     return {
         'status' : True,
         'param_name' : param.replace("_", " "),
@@ -592,39 +595,64 @@ def query_nearest_flight(list_flights, latitude, longitude, callsign):
 
 # ============================== WEATHER ========================================
 
-def query_temperature_at_airport(icao):
+def get_weather_at_place(weather_sigle, coord):
+    weather_value_format = ""
+    current_weather = mgr.weather_at_coords(*coord).weather
+
+    if weather_sigle == 'weather':
+        weather_value_format = current_weather.detailed_status
+
+    if weather_sigle == 'wind':
+        wind_object = current_weather.wind()
+        wind_speed = wind_object.get('speed')
+        wind_orientation = wind_object.get('deg')
+        weather_value_format = f"{wind_orientation}° {wind_speed} kt"
+
+        if wind_object.get('gust'):
+            weather_value_format += f"with gust at {wind_object.get('gust')} kt"
+
+    elif weather_sigle == 'gust':
+        gust = current_weather.wind().get('gust', 0)
+        weather_value_format = f"{gust} kt"
+
+    elif weather_sigle == 'temperature':
+        temperature = current_weather.temperature('celsius')['temp']
+        weather_value_format = f"{temperature} celsius"
+
+    elif weather_sigle == "pressure":
+        pressure = current_weather.pressure.get('press')
+        weather_value_format = f"{pressure} HPa"
+
+    elif weather_sigle == "visibility":
+        visibility = current_weather.visibility_distance
+        weather_value_format = f"{visibility} m"
+
+    elif weather_sigle == "clouds":
+        clouds = current_weather.clouds
+        weather_value_format = f"{clouds} % coverage"
+
+    elif weather_sigle == "rain":
+        amount = 0 if len(current_weather.rain) == 0 else current_weather.rain.get('1h')
+        weather_value_format = f"{amount} mm"
+
+    return weather_value_format
+
+
+def query_specific_weather_at_airport(weather_sigle, icao):
     row = df_all_airports.loc[df_all_airports['icao'] == icao]
     if len(row) == 0:
         return {"status": False}
     
     airport_name = row['name'].values[0]
-    
     coord = (float(row['latitude']), float(row['longitude']))
-    current_weather = mgr.weather_at_coords(*coord).weather
-    temperature = current_weather.temperature('celsius')['temp']
-    return {
-        "status": True, 
-        "temperature": temperature, 
-        "airport_name" : airport_name
-    }
 
+    weather_value_format = get_weather_at_place(weather_sigle, coord)
 
-def query_wind_at_airport(icao):
-    row = df_all_airports.loc[df_all_airports['icao'] == icao]
-    if len(row) == 0:
-        return {"status": False}
-    
-    airport_name = row['name'].values[0]
-    
-    coord = (float(row['latitude']), float(row['longitude']))
-    current_weather = mgr.weather_at_coords(*coord).weather
-    wind_speed = current_weather.wind().get('speed')
-    wind_orientation = current_weather.wind().get('deg')
     return {
-        "status": True, 
-        "wind_speed": wind_speed, 
-        "wind_orientation": wind_orientation,
-        "airport_name": airport_name
+        "status": True,
+        "weather_name" : weather_sigle,
+        "airport_name" : airport_name,
+        "weather_value_format" : weather_value_format
     }
 
 
