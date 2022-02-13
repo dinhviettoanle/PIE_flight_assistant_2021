@@ -211,9 +211,9 @@ class FlightFollowerWorker:
             
             except Exception as e:
                 # print_error(traceback.format_exc())
-                if str(e) != self.previous_error:
-                    print_error(f"Error following flight : {type(e).__name__} {str(e)}")
-                    self.previous_error = str(e)
+                # if str(e) != self.previous_error:
+                print_error(f"Error following flight : {type(e).__name__} {str(e)}")
+                self.previous_error = str(e)
 
 
     def update_flight_static_info(self, flight_id):
@@ -258,6 +258,10 @@ class FlightFollowerWorker:
         else:
             arg1, arg2 = None, None
             print_event(f"Query: <{query_type}>")
+
+        
+        if query_type == 'nearestTrafic':
+            arg1 = airspace_worker.surrounding_data['list_flights']
 
 
         response_dict = process_query(query_type, arg1, arg2, self.flight_data)

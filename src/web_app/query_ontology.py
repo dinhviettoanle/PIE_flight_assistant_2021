@@ -410,6 +410,25 @@ def process_query(query_type, arg1, arg2, flight_data):
             response_str = f"This flight parameter is not available."
 
 
+    elif query_type == "runwaysAtNearestAirport":
+        nearest_airport_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
+        icao_nearest_airport = nearest_airport_dict.get('ICAO')
+        response_dict = query_runways_at_airport(icao_nearest_airport)
+        if response_dict.get('status'):
+            list_runways_arrival = response_dict.get('list_runways')
+            response_str = f"""Runways at {response_dict.get('name')} at {nearest_airport_dict.get('distance'):.2f} nm are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
+        else:
+            response_str = f"Runways for {response_dict.get('name')} are not available."
+
+    
+    elif query_type == "nearestTrafic":
+        response_dict = query_nearest_flight(arg1, flight_data.get('latitude'), flight_data.get('longitude'), flight_data.get('callsign'))
+        if response_dict.get('status'):
+            response_str = f"The nearest trafic is {response_dict.get('nearest_callsign')} at {response_dict.get('distance_nearest'):.2f} nm."
+        else:
+            response_str = f"There is no trafic around you."
+
+
 
     # -------------------------------- WEATHER ----------------------------------------
     elif query_type == "temperatureAtArrival":
@@ -460,36 +479,7 @@ def process_query(query_type, arg1, arg2, flight_data):
 
 # ======================================================================================
 
-def query_nearest_airport(lat, lng):
-    df=  pd.DataFrame({
-        'name': df_all_airports['name'],
-        'ICAO': df_all_airports['icao'],
-        'lat': df_all_airports['latitude'],
-        'lng': df_all_airports['longitude'],
-    })
-
-    df['distance'] = df.apply(lambda x: coord_to_dist(x["lat"], x["lng"], lat, lng), axis=1)
-    return df.iloc[df['distance'].idxmin()].to_dict()
-
-
-def query_current_param(flight_data, param):
-    param_value = flight_data.get(param)
-    if param_value is None:
-        return {"status": False}
-    
-    units = {
-        'heading' : "°", 
-        'speed' : " kt", 
-        'vertical_speed' : " ft/min", 
-        'altitude' : " ft"
-    }
-    return {
-        'status' : True,
-        'param_name' : param.replace("_", " "),
-        'param_format' : f"{param_value}{units.get(param,'')}"
-    }
-
-
+# ============================== TRAFIC STATIC ========================================
 
 def query_runways_at_airport(icao):
     response = list(owl.default_world.sparql(
@@ -546,6 +536,61 @@ def query_frequency_at_airport(frq_sigle, icao):
         "frq_value": value_mhz
     }
 
+# ============================== TRAFIC DYNAMIC ========================================
+
+def query_nearest_airport(lat, lng):
+    df=  pd.DataFrame({
+        'name': df_all_airports['name'],
+        'ICAO': df_all_airports['icao'],
+        'lat': df_all_airports['latitude'],
+        'lng': df_all_airports['longitude'],
+    })
+
+    df['distance'] = df.apply(lambda x: coord_to_dist(x["lat"], x["lng"], lat, lng), axis=1)
+    return df.iloc[df['distance'].idxmin()].to_dict()
+
+
+def query_current_param(flight_data, param):
+    param_value = flight_data.get(param)
+    if param_value is None:
+        return {"status": False}
+    
+    units = {
+        'heading' : "°", 
+        'speed' : " kt", 
+        'vertical_speed' : " ft/min", 
+        'altitude' : " ft"
+    }
+    return {
+        'status' : True,
+        'param_name' : param.replace("_", " "),
+        'param_format' : f"{param_value}{units.get(param,'')}"
+    }
+
+
+
+def compute_dist(dict_flight, latitude, longitude):
+    return dict_flight['icao24'], coord_to_dist(latitude, longitude, dict_flight['latitude'], dict_flight['longitude'])
+
+def query_nearest_flight(list_flights, latitude, longitude, callsign):
+    if len(list_flights) == 1:
+        return {"status": False}
+
+    # Compute distance for each flight
+    flight_to_dist = dict(map(lambda x: compute_dist(x, latitude, longitude), list_flights))
+    flight_to_dist.pop(callsign, None)
+
+    # Get the key of the minimum distance
+    nearest_callsign = min(flight_to_dist, key=flight_to_dist.get)
+    distance_nearest = flight_to_dist[nearest_callsign]
+    
+    return {
+        "status" : True,
+        "nearest_callsign" : nearest_callsign,
+        "distance_nearest" : distance_nearest
+    }
+
+# ============================== WEATHER ========================================
 
 def query_temperature_at_airport(icao):
     row = df_all_airports.loc[df_all_airports['icao'] == icao]
@@ -562,7 +607,6 @@ def query_temperature_at_airport(icao):
         "temperature": temperature, 
         "airport_name" : airport_name
     }
-
 
 
 def query_wind_at_airport(icao):
@@ -584,6 +628,8 @@ def query_wind_at_airport(icao):
     }
 
 
+# ============================== CHECKLIST ========================================
+
 # (Item, Response, ID) -- ID used for DOM, for example if there are many "ON" responses
 def get_checklist(type_checklist, model):
     model = 'a320' #### TO DELETE in the future
@@ -597,3 +643,7 @@ def get_checklist(type_checklist, model):
 
     checklist = [(item, response, i+1) for i, (item, response) in enumerate(list_of_rows)]
     return {"status": True, "checklist": checklist}
+
+
+# ======================================================================================
+
