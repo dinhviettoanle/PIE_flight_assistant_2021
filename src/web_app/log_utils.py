@@ -26,7 +26,7 @@ def print_error(*args, **kwargs):
     print(f"{bcolors.FAIL}[{datetime.now()}]: {args}{bcolors.ENDC}", flush=True)
 
 def print_event(*args, **kwargs):
-    print(f"{bcolors.OKBLUE}{args}{bcolors.ENDC}", flush=True)
+    print(f"{bcolors.OKBLUE}[{datetime.now()}]:{args}{bcolors.ENDC}", flush=True)
 
 
 def timeit(func):
