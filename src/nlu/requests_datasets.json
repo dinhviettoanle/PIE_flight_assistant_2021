@@ -818,6 +818,758 @@
             "VNE"
           ],
           "value": "LFRV"
+        },
+        {
+          "synonyms": [
+            "Aberdeen International",
+            "Aberdeen International Airport",
+            "ABZ"
+          ],
+          "value": "EGPD"
+        },
+        {
+          "synonyms": [
+            "Alderney",
+            "Alderney Airport",
+            "ACI"
+          ],
+          "value": "EGJA"
+        },
+        {
+          "synonyms": [
+            "Anglesey",
+            "Anglesey Airport",
+            "VLY"
+          ],
+          "value": "EGOV"
+        },
+        {
+          "synonyms": [
+            "Barra",
+            "Barra Airport",
+            "BRR"
+          ],
+          "value": "EGPR"
+        },
+        {
+          "synonyms": [
+            "Barrow-in-Furness Walney Island",
+            "Barrow-in-Furness Walney Island Airport",
+            "BWF"
+          ],
+          "value": "EGNL"
+        },
+        {
+          "synonyms": [
+            "Belfast City George Best",
+            "Belfast City George Best  Airport",
+            "BHD"
+          ],
+          "value": "EGAC"
+        },
+        {
+          "synonyms": [
+            "Belfast International",
+            "Belfast International Airport",
+            "BFS"
+          ],
+          "value": "EGAA"
+        },
+        {
+          "synonyms": [
+            "Bembridge",
+            "Bembridge Airport",
+            "BBP"
+          ],
+          "value": "EGHJ"
+        },
+        {
+          "synonyms": [
+            "Benbecula",
+            "Benbecula Airport",
+            "BEB"
+          ],
+          "value": "EGPL"
+        },
+        {
+          "synonyms": [
+            "Birmingham",
+            "Birmingham Airport",
+            "BHX"
+          ],
+          "value": "EGBB"
+        },
+        {
+          "synonyms": [
+            "Blackbushe",
+            "Blackbushe Airport",
+            "BBS"
+          ],
+          "value": "EGLK"
+        },
+        {
+          "synonyms": [
+            "Blackpool International",
+            "Blackpool International Airport",
+            "BLK"
+          ],
+          "value": "EGNH"
+        },
+        {
+          "synonyms": [
+            "Bournemouth",
+            "Bournemouth Airport",
+            "BOH"
+          ],
+          "value": "EGHH"
+        },
+        {
+          "synonyms": [
+            "Brighton City Shoreham",
+            "Brighton City Shoreham Airport",
+            "ESH"
+          ],
+          "value": "EGKA"
+        },
+        {
+          "synonyms": [
+            "Bristol",
+            "Bristol Airport",
+            "BRS"
+          ],
+          "value": "EGGD"
+        },
+        {
+          "synonyms": [
+            "Cambridge",
+            "Cambridge Airport",
+            "CBG"
+          ],
+          "value": "EGSC"
+        },
+        {
+          "synonyms": [
+            "Campbeltown",
+            "Campbeltown Airport",
+            "CAL"
+          ],
+          "value": "EGEC"
+        },
+        {
+          "synonyms": [
+            "Cardiff",
+            "Cardiff Airport",
+            "CWL"
+          ],
+          "value": "EGFF"
+        },
+        {
+          "synonyms": [
+            "Carlisle Lake District",
+            "Carlisle Lake District Airport",
+            "CAX"
+          ],
+          "value": "EGNC"
+        },
+        {
+          "synonyms": [
+            "Chester Hawarden",
+            "Chester Hawarden Airport",
+            "CEG"
+          ],
+          "value": "EGNR"
+        },
+        {
+          "synonyms": [
+            "Chichester Goodwood",
+            "Chichester Goodwood Airport",
+            "QUG"
+          ],
+          "value": "EGHR"
+        },
+        {
+          "synonyms": [
+            "City of Derry",
+            "City of Derry Airport",
+            "LDY"
+          ],
+          "value": "EGAE"
+        },
+        {
+          "synonyms": [
+            "Coll",
+            "Coll Airport",
+            "COL"
+          ],
+          "value": "EGEL"
+        },
+        {
+          "synonyms": [
+            "Colonsay",
+            "Colonsay Airport",
+            "CSA"
+          ],
+          "value": "EGEY"
+        },
+        {
+          "synonyms": [
+            "Coventry",
+            "Coventry Airport",
+            "CVT"
+          ],
+          "value": "EGBE"
+        },
+        {
+          "synonyms": [
+            "Doncaster Sheffield",
+            "Doncaster Sheffield Airport",
+            "DSA"
+          ],
+          "value": "EGCN"
+        },
+        {
+          "synonyms": [
+            "Dundee",
+            "Dundee Airport",
+            "DND"
+          ],
+          "value": "EGPN"
+        },
+        {
+          "synonyms": [
+            "East Midlands",
+            "East Midlands Airport",
+            "EMA"
+          ],
+          "value": "EGNX"
+        },
+        {
+          "synonyms": [
+            "Eday",
+            "Eday Airport",
+            "EOI"
+          ],
+          "value": "EGED"
+        },
+        {
+          "synonyms": [
+            "Edinburgh",
+            "Edinburgh Airport",
+            "EDI"
+          ],
+          "value": "EGPH"
+        },
+        {
+          "synonyms": [
+            "Exeter",
+            "Exeter Airport",
+            "EXT"
+          ],
+          "value": "EGTE"
+        },
+        {
+          "synonyms": [
+            "Fair Isle",
+            "Fair Isle Airport",
+            "FIE"
+          ],
+          "value": "EGEF"
+        },
+        {
+          "synonyms": [
+            "Farnborough",
+            "Farnborough Airport",
+            "FAB"
+          ],
+          "value": "EGLF"
+        },
+        {
+          "synonyms": [
+            "Glasgow International",
+            "Glasgow International Airport",
+            "GLA"
+          ],
+          "value": "EGPF"
+        },
+        {
+          "synonyms": [
+            "Glasgow Prestwick",
+            "Glasgow Prestwick Airport",
+            "PIK"
+          ],
+          "value": "EGPK"
+        },
+        {
+          "synonyms": [
+            "Gloucester Gloucestershire",
+            "Gloucester Gloucestershire Airport",
+            "GLO"
+          ],
+          "value": "EGBJ"
+        },
+        {
+          "synonyms": [
+            "Haverfordwest",
+            "Haverfordwest Airport",
+            "HAW"
+          ],
+          "value": "EGFE"
+        },
+        {
+          "synonyms": [
+            "High Wycombe Booker Airfield",
+            "High Wycombe Booker Airfield",
+            "HYC"
+          ],
+          "value": "EGTB"
+        },
+        {
+          "synonyms": [
+            "Humberside",
+            "Humberside Airport",
+            "HUY"
+          ],
+          "value": "EGNJ"
+        },
+        {
+          "synonyms": [
+            "Inverness",
+            "Inverness Airport",
+            "INV"
+          ],
+          "value": "EGPE"
+        },
+        {
+          "synonyms": [
+            "Islay",
+            "Islay Airport",
+            "ILY"
+          ],
+          "value": "EGPI"
+        },
+        {
+          "synonyms": [
+            "Isle of Man",
+            "Isle of Man Airport",
+            "IOM"
+          ],
+          "value": "EGNS"
+        },
+        {
+          "synonyms": [
+            "Isles of Scilly St Marys",
+            "Isles of Scilly St Marys Airport",
+            "ISC"
+          ],
+          "value": "EGHE"
+        },
+        {
+          "synonyms": [
+            "Kemble Cotswold",
+            "Kemble Cotswold Airport",
+            "GBA"
+          ],
+          "value": "EGBP"
+        },
+        {
+          "synonyms": [
+            "Kirkwall",
+            "Kirkwall Airport",
+            "KOI"
+          ],
+          "value": "EGPA"
+        },
+        {
+          "synonyms": [
+            "Lands End",
+            "Lands End Airport",
+            "LEQ"
+          ],
+          "value": "EGHC"
+        },
+        {
+          "synonyms": [
+            "Lasham",
+            "Lasham Airport",
+            "QLA"
+          ],
+          "value": "EGHL"
+        },
+        {
+          "synonyms": [
+            "Leeds Bradford",
+            "Leeds Bradford Airport",
+            "LBA"
+          ],
+          "value": "EGNM"
+        },
+        {
+          "synonyms": [
+            "Lerwick Tingwall",
+            "Lerwick Tingwall Airport",
+            "LWK"
+          ],
+          "value": "EGET"
+        },
+        {
+          "synonyms": [
+            "Liverpool John Lennon",
+            "Liverpool John Lennon Airport",
+            "LPL"
+          ],
+          "value": "EGGP"
+        },
+        {
+          "synonyms": [
+            "London Biggin Hill",
+            "London Biggin Hill Airport",
+            "BQH"
+          ],
+          "value": "EGKB"
+        },
+        {
+          "synonyms": [
+            "London City",
+            "London City Airport",
+            "LCY"
+          ],
+          "value": "EGLC"
+        },
+        {
+          "synonyms": [
+            "London Elstree Aerodrome",
+            "London Elstree Aerodrome",
+            "QEE"
+          ],
+          "value": "EGTR"
+        },
+        {
+          "synonyms": [
+            "London Gatwick",
+            "London Gatwick Airport",
+            "LGW"
+          ],
+          "value": "EGKK"
+        },
+        {
+          "synonyms": [
+            "London Heathrow",
+            "London Heathrow Airport",
+            "LHR"
+          ],
+          "value": "EGLL"
+        },
+        {
+          "synonyms": [
+            "London Luton",
+            "London Luton Airport",
+            "LTN"
+          ],
+          "value": "EGGW"
+        },
+        {
+          "synonyms": [
+            "London Oxford",
+            "London Oxford Airport",
+            "OXF"
+          ],
+          "value": "EGTK"
+        },
+        {
+          "synonyms": [
+            "London Southend",
+            "London Southend Airport",
+            "SEN"
+          ],
+          "value": "EGMC"
+        },
+        {
+          "synonyms": [
+            "London Stansted",
+            "London Stansted Airport",
+            "STN"
+          ],
+          "value": "EGSS"
+        },
+        {
+          "synonyms": [
+            "Lydd Ashford",
+            "Lydd Ashford Airport",
+            "LYX"
+          ],
+          "value": "EGMD"
+        },
+        {
+          "synonyms": [
+            "Manchester",
+            "Manchester Airport",
+            "MAN"
+          ],
+          "value": "EGCC"
+        },
+        {
+          "synonyms": [
+            "Newcastle",
+            "Newcastle Airport",
+            "NCL"
+          ],
+          "value": "EGNT"
+        },
+        {
+          "synonyms": [
+            "Newquay Cornwall",
+            "Newquay Cornwall Airport",
+            "NQY"
+          ],
+          "value": "EGHQ"
+        },
+        {
+          "synonyms": [
+            "North Connel Oban",
+            "North Connel Oban Airport",
+            "OBN"
+          ],
+          "value": "EGEO"
+        },
+        {
+          "synonyms": [
+            "North Ronaldsay",
+            "North Ronaldsay Airport",
+            "NRL"
+          ],
+          "value": "EGEN"
+        },
+        {
+          "synonyms": [
+            "Northampton Sywell",
+            "Northampton Sywell Airport",
+            "ORM"
+          ],
+          "value": "EGBK"
+        },
+        {
+          "synonyms": [
+            "Norwich International",
+            "Norwich International Airport",
+            "NWI"
+          ],
+          "value": "EGSH"
+        },
+        {
+          "synonyms": [
+            "Nottingham",
+            "Nottingham Airport",
+            "NQT"
+          ],
+          "value": "EGBN"
+        },
+        {
+          "synonyms": [
+            "Papa Westray",
+            "Papa Westray Airport",
+            "PPW"
+          ],
+          "value": "EGEP"
+        },
+        {
+          "synonyms": [
+            "Perth Scone",
+            "Perth Scone Airport",
+            "PSL"
+          ],
+          "value": "EGPT"
+        },
+        {
+          "synonyms": [
+            "RAF Benson",
+            "RAF Benson",
+            "BEX"
+          ],
+          "value": "EGUB"
+        },
+        {
+          "synonyms": [
+            "RAF Brize Norton",
+            "RAF Brize Norton",
+            "BZZ"
+          ],
+          "value": "EGVN"
+        },
+        {
+          "synonyms": [
+            "RAF Coningsby",
+            "RAF Coningsby",
+            "QCY"
+          ],
+          "value": "EGXC"
+        },
+        {
+          "synonyms": [
+            "RAF Lakenheath",
+            "RAF Lakenheath",
+            "LKZ"
+          ],
+          "value": "EGUL"
+        },
+        {
+          "synonyms": [
+            "RAF Lossiemouth",
+            "RAF Lossiemouth",
+            "LMO"
+          ],
+          "value": "EGQS"
+        },
+        {
+          "synonyms": [
+            "RAF Mildenhall",
+            "RAF Mildenhall",
+            "MHZ"
+          ],
+          "value": "EGUN"
+        },
+        {
+          "synonyms": [
+            "RAF Northolt",
+            "RAF Northolt",
+            "NHT"
+          ],
+          "value": "EGWU"
+        },
+        {
+          "synonyms": [
+            "RAF Scampton",
+            "RAF Scampton",
+            "SQZ"
+          ],
+          "value": "EGXP"
+        },
+        {
+          "synonyms": [
+            "RAF Waddington",
+            "RAF Waddington",
+            "WTN"
+          ],
+          "value": "EGXW"
+        },
+        {
+          "synonyms": [
+            "Redhill Aerodrome",
+            "Redhill Aerodrome",
+            "KRH"
+          ],
+          "value": "EGKR"
+        },
+        {
+          "synonyms": [
+            "Rochester",
+            "Rochester Airport",
+            "RCS"
+          ],
+          "value": "EGTO"
+        },
+        {
+          "synonyms": [
+            "Sanday",
+            "Sanday Airport",
+            "NDY"
+          ],
+          "value": "EGES"
+        },
+        {
+          "synonyms": [
+            "Scatsta",
+            "Scatsta Airport",
+            "SCS"
+          ],
+          "value": "EGPM"
+        },
+        {
+          "synonyms": [
+            "Southampton",
+            "Southampton Airport",
+            "SOU"
+          ],
+          "value": "EGHI"
+        },
+        {
+          "synonyms": [
+            "St. Athan",
+            "St. Athan Airport",
+            "DGX"
+          ],
+          "value": "EGSY"
+        },
+        {
+          "synonyms": [
+            "Stornoway",
+            "Stornoway Airport",
+            "SYY"
+          ],
+          "value": "EGPO"
+        },
+        {
+          "synonyms": [
+            "Stronsay",
+            "Stronsay Airport",
+            "SOY"
+          ],
+          "value": "EGER"
+        },
+        {
+          "synonyms": [
+            "Sumburgh",
+            "Sumburgh Airport",
+            "LSI"
+          ],
+          "value": "EGPB"
+        },
+        {
+          "synonyms": [
+            "Swansea",
+            "Swansea Airport",
+            "SWS"
+          ],
+          "value": "EGFH"
+        },
+        {
+          "synonyms": [
+            "Teesside International",
+            "Teesside International Airport",
+            "MME"
+          ],
+          "value": "EGNV"
+        },
+        {
+          "synonyms": [
+            "Tiree",
+            "Tiree Airport",
+            "TRE"
+          ],
+          "value": "EGPU"
+        },
+        {
+          "synonyms": [
+            "Warton",
+            "Warton Airport",
+            "WRT"
+          ],
+          "value": "EGNO"
+        },
+        {
+          "synonyms": [
+            "Westray",
+            "Westray Airport",
+            "WRY"
+          ],
+          "value": "EGEW"
+        },
+        {
+          "synonyms": [
+            "Wick",
+            "Wick Airport",
+            "WIC"
+          ],
+          "value": "EGPC"
         }
       ],
       "matching_strictness": 1.0,
@@ -856,55 +1608,40 @@
       "matching_strictness": 1.0,
       "use_synonyms": true
     },
-    "performance": {
-      "automatically_extensible": true,
-      "data": [
-        {
-          "synonyms": [],
-          "value": "landing distance"
-        },
-        {
-          "synonyms": [],
-          "value": "optimal altitude"
-        },
-        {
-          "synonyms": [],
-          "value": "remaining fuel"
-        }
-      ],
-      "matching_strictness": 1.0,
-      "use_synonyms": true
-    },
-    "speedPhase": {
-      "automatically_extensible": true,
-      "data": [
-        {
-          "synonyms": [],
-          "value": "approach"
-        },
-        {
-          "synonyms": [],
-          "value": "landing"
-        }
-      ],
-      "matching_strictness": 1.0,
-      "use_synonyms": true
-    },
     "weatherInfo": {
       "automatically_extensible": true,
       "data": [
         {
           "synonyms": [],
-          "value": "wind speed"
+          "value": "wind"
         },
         {
           "synonyms": [],
-          "value": "wind orientation"
+          "value": "visibility"
+        },
+        {
+          "synonyms": [],
+          "value": "temperature"
+        },
+        {
+          "synonyms": [],
+          "value": "pressure"
+        },
+        {
+          "synonyms": [],
+          "value": "clouds"
+        },
+        {
+          "synonyms": [],
+          "value": "rain"
+        },
+        {
+          "synonyms": [],
+          "value": "gust"
         },
         {
           "synonyms": [
-            "weather forecast",
-            "metar"
+            "weather forecast"
           ],
           "value": "weather"
         }
@@ -914,63 +1651,6 @@
     }
   },
   "intents": {
-    "MAR": {
-      "utterances": [
-        {
-          "data": [
-            {
-              "text": "give me the maximal achievable range"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "what is the maximal distance i can fly"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "what is my maximal achievable range"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "how far can i go"
-            }
-          ]
-        }
-      ]
-    },
-    "antiicing": {
-      "utterances": [
-        {
-          "data": [
-            {
-              "text": "do i need anti-icing now"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "are there icing conditions"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "should i switch the anti-icing on"
-            }
-          ]
-        }
-      ]
-    },
     "checklist": {
       "utterances": [
         {
@@ -1020,90 +1700,65 @@
         }
       ]
     },
-    "fuelRemaining": {
+    "metarAtAirport": {
       "utterances": [
         {
           "data": [
             {
-              "text": "what is the fuel remaining"
+              "text": "give me the metar at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Aix-en-Provence Airport"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "how much fuel do i have"
+              "text": "i need the metar in "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "QXB"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "how many fuel in my aircraft"
-            }
-          ]
-        }
-      ]
-    },
-    "landingAirport": {
-      "utterances": [
-        {
-          "data": [
+              "text": "what is the metar at "
+            },
             {
-              "text": "give me the nearest airport i can land on"
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "LFKJ"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "where can i land now ?"
+              "text": "can i have the metar at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Ajaccio Napoleon Bonaparte"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "emergency landing"
-            }
-          ]
-        }
-      ]
-    },
-    "landingDistance": {
-      "utterances": [
-        {
-          "data": [
+              "text": "metar at "
+            },
             {
-              "text": "give me my landing distance"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "what is the needed distance to land"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "how many meters are needed to land"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "what is my landing distance"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "compute the landing distance please"
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Ajaccio Napoleon Bonaparte Airport"
             }
           ]
         }
@@ -1134,71 +1789,7 @@
         }
       ]
     },
-    "speed": {
-      "utterances": [
-        {
-          "data": [
-            {
-              "text": "what is my "
-            },
-            {
-              "entity": "speedPhase",
-              "slot_name": "phase",
-              "text": "approach"
-            },
-            {
-              "text": " speed ?"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "How fast should i do the "
-            },
-            {
-              "entity": "speedPhase",
-              "slot_name": "phase",
-              "text": "landing"
-            },
-            {
-              "text": " ?"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "Give me the "
-            },
-            {
-              "entity": "speedPhase",
-              "slot_name": "phase",
-              "text": "approach"
-            },
-            {
-              "text": " speed"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "Calculate the "
-            },
-            {
-              "entity": "speedPhase",
-              "slot_name": "phase",
-              "text": "landing"
-            },
-            {
-              "text": " speed please"
-            }
-          ]
-        }
-      ]
-    },
-    "weatherAirport": {
+    "weatherAtAirport": {
       "utterances": [
         {
           "data": [
@@ -1208,7 +1799,7 @@
             {
               "entity": "weatherInfo",
               "slot_name": "info",
-              "text": "wind speed"
+              "text": "wind"
             },
             {
               "text": " at "
@@ -1228,7 +1819,7 @@
             {
               "entity": "weatherInfo",
               "slot_name": "info",
-              "text": "wind orientation"
+              "text": "visibility"
             },
             {
               "text": " in "
@@ -1248,7 +1839,7 @@
             {
               "entity": "weatherInfo",
               "slot_name": "info",
-              "text": "weather"
+              "text": "temperature"
             },
             {
               "text": " at "
@@ -1257,9 +1848,6 @@
               "entity": "airport",
               "slot_name": "place",
               "text": "Agen La Garenne Airport"
-            },
-            {
-              "text": " ?"
             }
           ]
         },
@@ -1271,7 +1859,7 @@
             {
               "entity": "weatherInfo",
               "slot_name": "info",
-              "text": "weather forecast"
+              "text": "pressure"
             },
             {
               "text": " at "
@@ -1280,9 +1868,140 @@
               "entity": "airport",
               "slot_name": "place",
               "text": "AGF"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
             },
             {
-              "text": " ?"
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "clouds"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "LFMA"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "is there "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "rain"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Aix-en-Provence"
+            }
+          ]
+        }
+      ]
+    },
+    "weatherAtArrival": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "gust"
+            },
+            {
+              "text": " at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "i need the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "weather"
+            },
+            {
+              "text": " in arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "weather forecast"
+            },
+            {
+              "text": " at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can i have the "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "wind"
+            },
+            {
+              "text": " at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "visibility"
+            },
+            {
+              "text": " at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "is there "
+            },
+            {
+              "entity": "weatherInfo",
+              "slot_name": "info",
+              "text": "temperature"
+            },
+            {
+              "text": " at arrival"
             }
           ]
         }

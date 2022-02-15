@@ -471,7 +471,7 @@ def process_query(query_type, arg1, arg2, flight_data):
         if response_dict.get('status'):
             response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
         else:
-            response_str = f"This airport is not available."
+            response_str = f"N/A"
 
     
     elif query_type == "weatherAtLocation":
@@ -733,12 +733,15 @@ def query_specific_weather_at_airport(weather_sigle, icao):
 
     weather_value_format = get_weather_at_place(weather_sigle, current_weather)
 
-    return {
-        "status": True,
-        "weather_name" : weather_sigle,
-        "airport_name" : airport_name,
-        "weather_value_format" : weather_value_format
-    }
+    if len(weather_value_format) == 0:
+        return {"status": False}
+    else:
+        return {
+            "status": True,
+            "weather_name" : weather_sigle,
+            "airport_name" : airport_name,
+            "weather_value_format" : weather_value_format
+        }
 
 
 def query_specific_weather_at_location(weather_sigle, location):

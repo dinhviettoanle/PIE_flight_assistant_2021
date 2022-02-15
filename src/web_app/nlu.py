@@ -30,32 +30,16 @@ def process_transcript(transcript):
     question = transcript.lower()
     parsing = nlu_engine.parse(question)
     intent_name = parsing['intent']['intentName']
+    proba = parsing['intent']['probability']
+    slots = parsing['slots']
 
     if intent_name is not None:
         query = intent_name
+        # Add arguments
+        for i, arg in enumerate(slots):
+            query += f"?{arg['value']['value']}"
     
-    print_event("NLU", parsing['intent'], parsing['slots'])
-
-    # if transcript.lower() == "what is the nearest airport":
-    #     query = "NearestAirport"
-
-    # elif transcript.lower() == "what are the runways at arrival":
-    #     query = "RunwaysAtArrival"
-    
-    # elif transcript.lower() == "what is the departure airport":
-    #     query = "DepartureAirport"
-
-    # elif transcript.lower() == "what is the temperature at arrival":
-    #     query = "TemperatureAtArrival"
-
-    # elif transcript.lower() in ["what is the wind at LFBO", "what is the wind at toulouse blagnac"]:
-    #     query = "WindAtAirport?LFBO"
-
-    # elif transcript.lower() in ["give me the landing checklist", "landing checklist"]:
-    #     query = "ChecklistLanding"
-
-    # elif transcript.lower() in ["give me the approach checklist", "approach checklist"]:
-    #     query = "ChecklistApproach"
+    print_event("NLU", intent_name, proba, query)
 
     return query
 
