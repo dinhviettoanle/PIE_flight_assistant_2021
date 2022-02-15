@@ -4,12 +4,15 @@ import numpy as np
 import pandas as pd
 from csv import reader
 from .geo_utils import *
+from geopy.geocoders import Nominatim
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
 OWM_APIKEY = 'a39692b70ec17cf580fbd700f2e4416e'
 owm = pyowm.OWM(OWM_APIKEY)
 mgr = owm.weather_manager()
+
+location_manager = Nominatim(user_agent="GetLoc")
 
 def fprint(*args, **kwargs):
     print(args, flush=True, **kwargs)
@@ -448,6 +451,21 @@ def process_query(query_type, arg1, arg2, flight_data):
             response_str = f"This airport is not available."
 
     
+    elif query_type == "weatherAtLocation":
+        response_dict = query_specific_weather_at_location('weather', arg1)
+        if response_dict.get('status'):
+            response_str = f"The weather at {response_dict.get('location')} is {response_dict.get('weather_value_format')}."
+        else:
+            response_str = f"This location is not available."
+
+    
+    elif query_type == "weatherSpecificAtLocation":
+        response_dict = query_specific_weather_at_location(arg1, arg2)
+        if response_dict.get('status'):
+            response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('location')} is {response_dict.get('weather_value_format')}."
+        else:
+            response_str = f"This location is not available."
+
 
 
 
@@ -595,9 +613,8 @@ def query_nearest_flight(list_flights, latitude, longitude, callsign):
 
 # ============================== WEATHER ========================================
 
-def get_weather_at_place(weather_sigle, coord):
+def get_weather_at_place(weather_sigle, current_weather):
     weather_value_format = ""
-    current_weather = mgr.weather_at_coords(*coord).weather
 
     if weather_sigle == 'weather':
         weather_value_format = current_weather.detailed_status
@@ -609,7 +626,7 @@ def get_weather_at_place(weather_sigle, coord):
         weather_value_format = f"{wind_orientation}° {wind_speed} kt"
 
         if wind_object.get('gust'):
-            weather_value_format += f"with gust at {wind_object.get('gust')} kt"
+            weather_value_format += f" with gusts at {wind_object.get('gust')} kt"
 
     elif weather_sigle == 'gust':
         gust = current_weather.wind().get('gust', 0)
@@ -645,13 +662,34 @@ def query_specific_weather_at_airport(weather_sigle, icao):
     
     airport_name = row['name'].values[0]
     coord = (float(row['latitude']), float(row['longitude']))
+    current_weather = mgr.weather_at_coords(*coord).weather
 
-    weather_value_format = get_weather_at_place(weather_sigle, coord)
+    weather_value_format = get_weather_at_place(weather_sigle, current_weather)
 
     return {
         "status": True,
         "weather_name" : weather_sigle,
         "airport_name" : airport_name,
+        "weather_value_format" : weather_value_format
+    }
+
+
+def query_specific_weather_at_location(weather_sigle, location):
+    try: # if it PYOWM finds the location by itself
+        current_weather = mgr.weather_at_place(location).weather
+    except pyowm.commons.exceptions.NotFoundError: # Else, ask openstreetmap
+        getLoc = location_manager.geocode(location)
+        coord = (getLoc.latitude, getLoc.longitude)
+        current_weather = mgr.weather_at_coords(*coord).weather
+    except Exception:
+        return {"status": False}
+    
+    weather_value_format = get_weather_at_place(weather_sigle, current_weather)
+
+    return {
+        "status": True,
+        "weather_name" : weather_sigle,
+        "location" : location,
         "weather_value_format" : weather_value_format
     }
 

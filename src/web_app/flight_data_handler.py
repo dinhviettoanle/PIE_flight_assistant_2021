@@ -247,6 +247,8 @@ class FlightSpecificQueryHandler():
         data_raw = self.api.get_area(area, VERBOSE=False)
         data = json.loads(data_raw)[flight_id]
 
+        # TODO : Y a un truc pas très fin ici. Si le vol n'existe plus, alors ça crashe
+
         return {
             'latitude' : data['lat'],
             'longitude' : data['lon'],

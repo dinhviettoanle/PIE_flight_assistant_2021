@@ -212,10 +212,11 @@ class FlightFollowerWorker:
                 self.sio.sleep(SLEEP_TIME)
             
             except Exception as e:
-                # print_error(traceback.format_exc())
-                # if str(e) != self.previous_error:
-                print_error(f"Error following flight : {type(e).__name__} {str(e)}")
-                self.previous_error = str(e)
+                if str(e) != self.previous_error:
+                    print_error(f"Error following flight : {type(e).__name__} {str(e)}")
+                    print_error(traceback.format_exc())
+                    print_error("------------------------------------------------------------")
+                    self.previous_error = str(e)
 
 
     def update_flight_static_info(self, flight_id):
