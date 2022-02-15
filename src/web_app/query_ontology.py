@@ -471,6 +471,12 @@ def process_query(query_type, arg1, arg2, flight_data):
             response_str = response_dict.get('error')
 
 
+    elif query_type == "weatherAtArrival":
+        response_dict = query_specific_weather_at_airport(arg1, flight_data.get('destination_icao'))
+        if response_dict.get('status'):
+            response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
+        else:
+            response_str = f"Arrival airport is not available."
 
 
     # -------------------------------- CHECKLIST ----------------------------------------
