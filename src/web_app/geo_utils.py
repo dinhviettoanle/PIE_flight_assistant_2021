@@ -13,6 +13,17 @@ def coord_to_dist(cur_lat, cur_long, dest_lat, dest_long):
     return 60*180/np.pi*np.arccos(np.sin(cur_lat)*np.sin(dest_lat)+np.cos(cur_lat)*np.cos(dest_lat)*np.cos(dest_long-cur_long))
 
 
+def heading_to_point(lat, lng, point_lat, point_lng):
+    # https://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/
+    X = cos(point_lat) * sin(point_lng - lng)
+    Y = cos(lat)*sin(point_lat) - sin(lat)*cos(point_lat)*cos(point_lng - lng)
+
+    beta = atan2(X, Y) / math.pi * 180
+    if beta < 0:
+        beta += 360
+    print(beta)
+    return beta
+
 
 
 def dist_flight_center(center_lat, center_lng, flight_lat, flight_lng):

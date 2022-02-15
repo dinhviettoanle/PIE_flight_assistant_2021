@@ -5,6 +5,7 @@ import pandas as pd
 from csv import reader
 from .geo_utils import *
 from geopy.geocoders import Nominatim
+import operator
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
@@ -402,7 +403,7 @@ def process_query(query_type, arg1, arg2, flight_data):
     # -------------------------------- TRAFIC DYNAMIC ----------------------------------------
     elif query_type == "nearestAirport":
         response_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
-        response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm."
+        response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm, heading {response_dict.get('heading'):.0f}°."
 
 
     elif query_type == "currentParam":
@@ -427,7 +428,7 @@ def process_query(query_type, arg1, arg2, flight_data):
     elif query_type == "nearestTrafic":
         response_dict = query_nearest_flight(arg1, flight_data.get('latitude'), flight_data.get('longitude'), flight_data.get('callsign'))
         if response_dict.get('status'):
-            response_str = f"The nearest trafic is {response_dict.get('nearest_callsign')} at {response_dict.get('distance_nearest'):.2f} nm."
+            response_str = f"The nearest trafic is {response_dict.get('nearest_callsign')} at {response_dict.get('distance_nearest'):.2f} nm, heading {response_dict.get('heading_nearest'):.0f}°."
         else:
             response_str = f"There is no trafic around you."
 
@@ -590,7 +591,10 @@ def query_nearest_airport(lat, lng):
     })
 
     df['distance'] = df.apply(lambda x: coord_to_dist(x["lat"], x["lng"], lat, lng), axis=1)
-    return df.iloc[df['distance'].idxmin()].to_dict()
+
+    response_dict = df.iloc[df['distance'].idxmin()].to_dict() # Contains ?name ?iata ?icao ?latitude ?longitude ?altitude ?country
+    response_dict['heading'] = heading_to_point(lat, lng, response_dict['lat'], response_dict['lng'])
+    return response_dict
 
 
 def query_current_param(flight_data, param):
@@ -607,7 +611,12 @@ def query_current_param(flight_data, param):
 
 
 def compute_dist(dict_flight, latitude, longitude):
-    return dict_flight['icao24'], coord_to_dist(latitude, longitude, dict_flight['latitude'], dict_flight['longitude'])
+    return dict_flight['icao24'], {
+        "distance": coord_to_dist(latitude, longitude, dict_flight['latitude'], dict_flight['longitude']),
+        "latitude": dict_flight['latitude'],
+        "longitude": dict_flight['longitude'],
+        "callsign" : dict_flight['icao24']
+    }
 
 def query_nearest_flight(list_flights, latitude, longitude, callsign):
     if len(list_flights) == 1:
@@ -617,14 +626,18 @@ def query_nearest_flight(list_flights, latitude, longitude, callsign):
     flight_to_dist = dict(map(lambda x: compute_dist(x, latitude, longitude), list_flights))
     flight_to_dist.pop(callsign, None)
 
+
     # Get the key of the minimum distance
-    nearest_callsign = min(flight_to_dist, key=flight_to_dist.get)
-    distance_nearest = flight_to_dist[nearest_callsign]
+    nearest_data = min(flight_to_dist.values(), key=operator.itemgetter('distance'))
+    nearest_callsign = nearest_data['callsign']
+    distance_nearest = nearest_data['distance']
+    heading_nearest = heading_to_point(latitude, longitude, nearest_data['latitude'], nearest_data['longitude'])
     
     return {
         "status" : True,
         "nearest_callsign" : nearest_callsign,
-        "distance_nearest" : distance_nearest
+        "distance_nearest" : distance_nearest,
+        "heading_nearest" : heading_nearest
     }
 
 # ============================== WEATHER ========================================
