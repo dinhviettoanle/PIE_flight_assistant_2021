@@ -454,6 +454,15 @@ def process_query(query_type, arg1, arg2, flight_data):
         else:
             response_str = f"Runways for {response_dict.get('airport_name')} are not available."
 
+    
+    elif query_type == "eta":
+        eta = arg1.get('arrival')
+        if isinstance(eta, int):
+            eta_str = datetime.utcfromtimestamp(eta).strftime('%H:%M')
+        else:
+            eta_str = 'N/A'
+        response_str = f"Your estimated time of arrival is {eta_str}."
+
 
     # -------------------------------- WEATHER ----------------------------------------
 

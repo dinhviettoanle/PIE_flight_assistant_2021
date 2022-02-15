@@ -263,8 +263,14 @@ class FlightFollowerWorker:
             print_event(f"Query: <{query_type}>")
 
         
+        # Special requests that need other stuff
         if query_type == 'nearestTrafic':
             arg1 = airspace_worker.surrounding_data['list_flights']
+            
+        elif query_type == 'eta':
+            self.update_flight_static_info(self.flight_id)
+            arg1 = self.static_info.get('time_estimated')
+        # End special requests
 
 
         response_dict = process_query(query_type, arg1, arg2, self.flight_data)
