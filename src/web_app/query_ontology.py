@@ -467,6 +467,22 @@ def process_query(query_type, arg1, arg2, flight_data):
             response_str = f"This location is not available."
 
 
+    elif query_type == "weatherAtWaypoint":
+        response_dict = query_specific_weather_at_waypoint('weather', arg1)
+        if response_dict.get('status'):
+            response_str = f"The weather at {response_dict.get('waypoint_name')} is {response_dict.get('weather_value_format')}."
+        else:
+            response_str = f"This waypoint is not available."
+
+    
+    elif query_type == "weatherSpecificAtWaypoint":
+        response_dict = query_specific_weather_at_waypoint(arg1, arg2)
+        if response_dict.get('status'):
+            response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('waypoint_name')} is {response_dict.get('weather_value_format')}."
+        else:
+            response_str = f"This waypoint is not available."
+
+
 
 
     # -------------------------------- CHECKLIST ----------------------------------------
@@ -690,6 +706,25 @@ def query_specific_weather_at_location(weather_sigle, location):
         "status": True,
         "weather_name" : weather_sigle,
         "location" : location,
+        "weather_value_format" : weather_value_format
+    }
+
+
+def query_specific_weather_at_waypoint(weather_sigle, waypoint_ident):
+    row = df_all_waypoints.loc[df_all_waypoints['ident'] == waypoint_ident.upper()]
+    if len(row) == 0:
+        return {"status": False}
+    
+    waypoint_name = row['ident'].values[0]
+    coord = (float(row['latitude']), float(row['longitude']))
+    current_weather = mgr.weather_at_coords(*coord).weather
+
+    weather_value_format = get_weather_at_place(weather_sigle, current_weather)
+
+    return {
+        "status": True,
+        "weather_name" : weather_sigle,
+        "waypoint_name" : waypoint_name,
         "weather_value_format" : weather_value_format
     }
 
