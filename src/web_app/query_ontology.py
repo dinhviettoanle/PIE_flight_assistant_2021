@@ -6,6 +6,9 @@ from csv import reader
 from .geo_utils import *
 from geopy.geocoders import Nominatim
 import operator
+import requests
+from datetime import datetime
+
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
@@ -437,14 +440,6 @@ def process_query(query_type, arg1, arg2, flight_data):
     # -------------------------------- WEATHER ----------------------------------------
 
     elif query_type == "weatherAtAirport":
-        response_dict = query_specific_weather_at_airport('weather', arg1)
-        if response_dict.get('status'):
-            response_str = f"The weather at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
-        else:
-            response_str = f"This airport is not available."
-
-
-    elif query_type == "weatherSpecificAtAirport":
         response_dict = query_specific_weather_at_airport(arg1, arg2)
         if response_dict.get('status'):
             response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
@@ -453,14 +448,6 @@ def process_query(query_type, arg1, arg2, flight_data):
 
     
     elif query_type == "weatherAtLocation":
-        response_dict = query_specific_weather_at_location('weather', arg1)
-        if response_dict.get('status'):
-            response_str = f"The weather at {response_dict.get('location')} is {response_dict.get('weather_value_format')}."
-        else:
-            response_str = f"This location is not available."
-
-    
-    elif query_type == "weatherSpecificAtLocation":
         response_dict = query_specific_weather_at_location(arg1, arg2)
         if response_dict.get('status'):
             response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('location')} is {response_dict.get('weather_value_format')}."
@@ -469,19 +456,19 @@ def process_query(query_type, arg1, arg2, flight_data):
 
 
     elif query_type == "weatherAtWaypoint":
-        response_dict = query_specific_weather_at_waypoint('weather', arg1)
-        if response_dict.get('status'):
-            response_str = f"The weather at {response_dict.get('waypoint_name')} is {response_dict.get('weather_value_format')}."
-        else:
-            response_str = f"This waypoint is not available."
-
-    
-    elif query_type == "weatherSpecificAtWaypoint":
         response_dict = query_specific_weather_at_waypoint(arg1, arg2)
         if response_dict.get('status'):
             response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('waypoint_name')} is {response_dict.get('weather_value_format')}."
         else:
             response_str = f"This waypoint is not available."
+
+    
+    elif query_type == "metarAtAirport":
+        response_dict = query_metar_at_airport(arg1)
+        if response_dict.get('status'):
+            response_str = response_dict.get('metar')
+        else:
+            response_str = response_dict.get('error')
 
 
 
@@ -740,6 +727,41 @@ def query_specific_weather_at_waypoint(weather_sigle, waypoint_ident):
         "waypoint_name" : waypoint_name,
         "weather_value_format" : weather_value_format
     }
+
+
+def query_metar_at_airport(icao):
+    r = requests.get(f'https://api.aviationapi.com/v1/weather/metar?apt={icao}')
+    response = r.json()
+
+    if response.get('status') == 'error':
+        return {
+            'status': False,
+            'error' : response.get('message')
+        }
+
+    else:
+        response = response.get(icao)
+        response_format = ""
+
+        time_metar = datetime.strptime(response.get('time_of_obs'), '%Y-%m-%dT%H:%M:%SZ')
+        time_metar = time_metar.strftime("%H:%M")
+
+        response_format += f"METAR at {icao} at {time_metar}; "
+        if response.get('temp') != "": response_format += f"Temperature {int(float(response.get('temp')))}; "
+        if response.get('dewpoint') != "": response_format += f"Dewpoint {int(float(response.get('dewpoint')))}; "
+        if response.get('wind') != "": response_format += f"Wind {response.get('wind')} {response.get('wind_vel')} kt; "
+        if response.get('visibility') != "": 
+            visibility = float(response.get('visibility')) * 1.625
+            response_format += f"Visibility {round(visibility)} km; "
+        if response.get('sky_conditions') != "":
+            for condition in response.get('sky_conditions'):
+                response_format += f"Clouds {condition['coverage']} at {condition['base_agl']} ft; "
+
+        return {
+            'status': True,
+            'metar': response_format
+        }
+
 
 
 # ============================== CHECKLIST ========================================

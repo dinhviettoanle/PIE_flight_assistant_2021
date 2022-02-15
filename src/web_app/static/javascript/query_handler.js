@@ -50,6 +50,20 @@ function process_response_str(response_str) {
     speechSynthesis.speak(msg);
 }
 
+const resumeInfinity = () => {
+    window.speechSynthesis.resume();
+    timeoutResumeInfinity = setTimeout(resumeInfinity, 1000);
+}
+
+msg.onstart = (event) => {
+    resumeInfinity();
+};
+
+msg.onend = (event) => {
+    clearTimeout(timeoutResumeInfinity);
+};
+
+
 
 const abbreviations = {
     " nm" : " nautical miles",
@@ -57,6 +71,8 @@ const abbreviations = {
     "N/A" : "not available",
     "TWR" : "tower",
     "APP" : "approach",
+    "BKN" : "broken",
+    "OVC" : "overcast",
     "&nbsp;" : ""
 }
 
