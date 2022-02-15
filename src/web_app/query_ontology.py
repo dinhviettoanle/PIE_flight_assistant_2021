@@ -466,7 +466,9 @@ def process_query(query_type, arg1, arg2, flight_data):
     elif query_type == "metarAtAirport":
         response_dict = query_metar_at_airport(arg1)
         if response_dict.get('status'):
-            response_str = response_dict.get('metar')
+            response_str = 'METAR'
+            args = response_dict.get('metar')
+            fprint(response_dict, args)
         else:
             response_str = response_dict.get('error')
 
@@ -755,7 +757,7 @@ def query_metar_at_airport(icao):
         response_format += f"METAR at {icao} at {time_metar}; "
         if response.get('temp') != "": response_format += f"Temperature {int(float(response.get('temp')))}; "
         if response.get('dewpoint') != "": response_format += f"Dewpoint {int(float(response.get('dewpoint')))}; "
-        if response.get('wind') != "": response_format += f"Wind {response.get('wind')} {response.get('wind_vel')} kt; "
+        if response.get('wind') != "": response_format += f"Wind {response.get('wind')}° {response.get('wind_vel')} kt; "
         if response.get('visibility') != "": 
             visibility = float(response.get('visibility')) * 1.625
             response_format += f"Visibility {round(visibility)} km; "

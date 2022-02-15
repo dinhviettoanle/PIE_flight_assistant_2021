@@ -14,6 +14,9 @@ $(".DOM-queryButton").click(function(e) {
             if (data.response.response_str == 'CHECKLIST') {
                 process_checklist(data.response.args);
             }
+            else if (data.response.response_str == 'METAR') {
+                process_metar(data.response.args);
+            }
             else {
                 process_response_str(data.response.response_str);
             }
@@ -50,20 +53,6 @@ function process_response_str(response_str) {
     speechSynthesis.speak(msg);
 }
 
-const resumeInfinity = () => {
-    window.speechSynthesis.resume();
-    timeoutResumeInfinity = setTimeout(resumeInfinity, 1000);
-}
-
-msg.onstart = (event) => {
-    resumeInfinity();
-};
-
-msg.onend = (event) => {
-    clearTimeout(timeoutResumeInfinity);
-};
-
-
 
 const abbreviations = {
     " nm" : " nautical miles",
@@ -96,6 +85,43 @@ function response_str_to_speak(response_str) {
     response_speak = response_speak.replace(pattern, "$1 left");
 
     return response_speak;
+}
+
+/* ******************************************************** */
+/* ********************** METAR *************************** */
+/* ******************************************************** */
+
+function speak_one_metar_item(phrases) {
+    // Create a new utterrance at each item
+    const utterance = new SpeechSynthesisUtterance();
+    utterance.voice = voices.find(voice => voice.name === "Google UK English Male");
+    
+    // If there is no item
+    if (phrases.length == 0) {
+        speechSynthesis.cancel();
+        return
+    }
+    
+    // Take the first item
+    phrase = phrases[0];
+    
+    utterance.text = phrase;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utterance);
+
+    // Pop the first item and reloop
+    utterance.onend = (event) => {
+        var remaining_phrases = phrases.slice(1);
+        speak_one_metar_item(remaining_phrases);
+    }
+}
+
+
+function process_metar(metar) {
+    $('#DOM-responseQuery').html(metar);
+    metar_clean = response_str_to_speak(metar);
+    var phrases = metar_clean.split(';');
+    speak_one_metar_item(phrases);
 }
 
 
