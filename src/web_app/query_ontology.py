@@ -371,7 +371,9 @@ def process_query(query_type, arg1, arg2, flight_data):
         response_dict = query_runways_at_airport(flight_data.get('destination_icao'))
         if response_dict.get('status'):
             list_runways_arrival = response_dict.get('list_runways')
-            response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
+            list_ident_runways = [runway_data[0] for runway_data in list_runways_arrival[:-1]]
+            response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) \
+                are {", ".join(list_ident_runways)} and {list_runways_arrival[-1][0]}."""
         else:
             response_str = f"Arrival airport is not available."
 
@@ -380,7 +382,9 @@ def process_query(query_type, arg1, arg2, flight_data):
         response_dict = query_runways_at_airport(arg1)
         if response_dict.get('status'):
             list_runways_arrival = response_dict.get('list_runways')
-            response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
+            list_ident_runways = [runway_data[0] for runway_data in list_runways_arrival[:-1]]
+            response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) \
+                are {", ".join(list_ident_runways)} and {list_runways_arrival[-1][0]}."""
         else:
             response_str = f"Runways for this airport are not available."
 
@@ -406,7 +410,8 @@ def process_query(query_type, arg1, arg2, flight_data):
     # -------------------------------- TRAFIC DYNAMIC ----------------------------------------
     elif query_type == "nearestAirport":
         response_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
-        response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm, heading {response_dict.get('heading'):.0f}°."
+        response_str = f"The nearest airport is {response_dict.get('name')} ({response_dict.get('ICAO')}) at {response_dict.get('distance'):.2f} nm, \
+            at heading {response_dict.get('heading'):.0f}°."
 
 
     elif query_type == "currentParam":
@@ -423,7 +428,9 @@ def process_query(query_type, arg1, arg2, flight_data):
         response_dict = query_runways_at_airport(icao_nearest_airport)
         if response_dict.get('status'):
             list_runways_arrival = response_dict.get('list_runways')
-            response_str = f"""Runways at {response_dict.get('name')} at {nearest_airport_dict.get('distance'):.2f} nm are {", ".join(list_runways_arrival[:-1])} and {list_runways_arrival[-1]}."""
+            list_ident_runways = [runway_data[0] for runway_data in list_runways_arrival[:-1]]
+            response_str = f"""Runways at {response_dict.get('name')} at {nearest_airport_dict.get('distance'):.2f} nm \
+                are {", ".join(list_ident_runways)} and {list_runways_arrival[-1][0]}."""
         else:
             response_str = f"Runways for {response_dict.get('name')} are not available."
 
@@ -431,10 +438,21 @@ def process_query(query_type, arg1, arg2, flight_data):
     elif query_type == "nearestTrafic":
         response_dict = query_nearest_flight(arg1, flight_data.get('latitude'), flight_data.get('longitude'), flight_data.get('callsign'))
         if response_dict.get('status'):
-            response_str = f"The nearest trafic is {response_dict.get('nearest_callsign')} at {response_dict.get('distance_nearest'):.2f} nm, heading {response_dict.get('heading_nearest'):.0f}°."
+            response_str = f"The nearest trafic is {response_dict.get('nearest_callsign')} at {response_dict.get('distance_nearest'):.2f} nm, \
+                at heading {response_dict.get('heading_nearest'):.0f}°."
         else:
             response_str = f"There is no trafic around you."
 
+
+    elif query_type == "lengthNearestRunway":
+        nearest_airport_dict = query_nearest_airport(flight_data.get('latitude'), flight_data.get('longitude'))
+        icao_nearest_airport = nearest_airport_dict.get('ICAO')
+        runway_data = query_runways_at_airport(icao_nearest_airport)
+        response_dict = query_longest_runway(runway_data)
+        if response_dict.get('status'):
+            response_str = f"""The longest runways at {response_dict.get('airport_name')} are {", ".join(response_dict.get('runways_idents')[:-1])} and {response_dict.get('runways_idents')[-1]} of length {response_dict.get('max_length')} ft."""
+        else:
+            response_str = f"Runways for {response_dict.get('airport_name')} are not available."
 
 
     # -------------------------------- WEATHER ----------------------------------------
@@ -468,7 +486,6 @@ def process_query(query_type, arg1, arg2, flight_data):
         if response_dict.get('status'):
             response_str = 'METAR'
             args = response_dict.get('metar')
-            fprint(response_dict, args)
         else:
             response_str = response_dict.get('error')
 
@@ -517,12 +534,13 @@ def query_runways_at_airport(icao):
     response = list(owl.default_world.sparql(
         f"""
             PREFIX pie:<http://www.semanticweb.org/clement/ontologies/2020/1/final-archi#>
-            SELECT ?rw_id ?name
+            SELECT ?name ?rw_id ?length
             WHERE {{
                 ?Airport pie:AirportICAOCode ?airport_icao .
                 ?Airport pie:AirportName ?name .
                 ?Airport pie:HasRunway ?Runway .
                 ?Runway pie:RunwayIdentifier ?rw_id .
+                ?Runway pie:RunwayLength ?length .
                 FILTER regex(?airport_icao, "{icao}", "i")
             }}
         """))
@@ -530,8 +548,8 @@ def query_runways_at_airport(icao):
     if len(response) == 0:
         return {"status": False}
 
-    list_runways = [i[0] for i in response]
-    name = response[0][1]
+    list_runways = [(i[1], i[2]) for i in response]
+    name = response[0][0]
     return {
         "status": True, 
         "icao": icao, 
@@ -604,7 +622,6 @@ def query_current_param(flight_data, param):
     }
 
 
-
 def compute_dist(dict_flight, latitude, longitude):
     return dict_flight['icao24'], {
         "distance": coord_to_dist(latitude, longitude, dict_flight['latitude'], dict_flight['longitude']),
@@ -633,6 +650,23 @@ def query_nearest_flight(list_flights, latitude, longitude, callsign):
         "nearest_callsign" : nearest_callsign,
         "distance_nearest" : distance_nearest,
         "heading_nearest" : heading_nearest
+    }
+
+
+def query_longest_runway(runways_data):
+    list_runways = runways_data.get('list_runways')
+
+    # Get the maximum length
+    max_length = max(list_runways, key=lambda x: x[1])[1]
+
+    # Get all the runways with that length and retrieve only the idents
+    runways_max = [r for r in list_runways if r[1] == max_length]
+    runways_idents = list(list(zip(*runways_max))[0])
+    return {
+        'status': True,
+        'airport_name' : runways_data['name'],
+        'max_length': int(max_length),
+        'runways_idents' : runways_idents
     }
 
 # ============================== WEATHER ========================================

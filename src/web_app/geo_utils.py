@@ -21,7 +21,6 @@ def heading_to_point(lat, lng, point_lat, point_lng):
     beta = atan2(X, Y) / math.pi * 180
     if beta < 0:
         beta += 360
-    print(beta)
     return beta
 
 
