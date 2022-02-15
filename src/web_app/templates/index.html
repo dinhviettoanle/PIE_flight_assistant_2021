@@ -79,7 +79,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-          Microphone currently used: <code><span id="micInfo"></span></code>
+          Microphone currently used :&nbsp;&nbsp; <code><span id="micInfo"></span></code>
           <hr>
           <b>Quick start:</b>
           <ul>
@@ -88,6 +88,18 @@
             <li>Ask your request</li>
             <li>Release the push-to-talk button</li>
           </ul>
+          <div id="DOM-dev_help">
+            <hr>
+            <b>Developer mode (sans SpeechRecognition ni NLP)</b><br>
+            Par exemple, si on veut "what is the wind at LFBO"
+            <ul>
+              <li>Selectionner un vol</li>
+              <li>Si besoin, remplir les champs arguments (dans l'exemple, <code>arg1 = wind</code> et <code>arg2 = LFBO</code>)</li>
+              <li>Cliquer sur le bouton voulu (dans l'exemple "<code>Weather {arg1} at location {arg2}</code>")</li>
+            </ul>
+            Rq : ICAO, ça demande un truc du type "LFBO", et Location peut tout prendre du type "Toulouse" <br>
+            Rq : Et pour "Frq {arg1}", ça demande un truc du type "TWR", "APP", "GROUND"...
+          </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

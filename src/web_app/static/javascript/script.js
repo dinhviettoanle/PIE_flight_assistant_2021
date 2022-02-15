@@ -125,12 +125,15 @@ function dev_mode_checked() {
     var checkBox = document.getElementById("checkbox_dev");
     var DOM_devbuttons = document.getElementById("DOM-dev_buttons");
     var DOM_devdata = document.getElementById("DOM-dev_data");
+    var DOW_devhelp = document.getElementById("DOM-dev_help");
   
     if (checkBox.checked == true){
         DOM_devbuttons.style.display = "block";
         DOM_devdata.style.display = "block";
+        DOW_devhelp.style.display = "block";
     } else {
         DOM_devbuttons.style.display = "none";
         DOM_devdata.style.display = "none";
+        DOW_devhelp.style.display = "none";
     }
   }
