@@ -12,9 +12,11 @@ $(".DOM-queryButton").click(function(e) {
         data: sent_object,
         success: function(data) {
             if (data.response.response_str == 'CHECKLIST') {
+                console.log("CHECKLIST");
                 process_checklist(data.response.args);
             }
             else if (data.response.response_str == 'METAR') {
+                console.log("METAR");
                 process_metar(data.response.args);
             }
             else {
@@ -59,6 +61,7 @@ const abbreviations = {
     " kt" : " knots",
     "N/A" : "not available",
     "TWR" : "tower",
+    "GND" : "ground",
     "APP" : "approach",
     "BKN" : "broken",
     "OVC" : "overcast",

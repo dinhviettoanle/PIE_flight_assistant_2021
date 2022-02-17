@@ -1,17 +1,139 @@
 
 # ======================== STATIC TRAFIC INTENTS ==================================
+# departureAirport Intent
+---
+type: intent
+name: departureAirport
+utterances:
+  - give me the departure airport
+  - can you give me the departure airfield
+  - what is the departure airport
+  - departure airport
 
+# arrivalAirport Intent
+---
+type: intent
+name: arrivalAirport
+utterances:
+  - give me the arrival airport
+  - can you give me the arrival airfield
+  - what is the arrival airport
+  - arrival airport
+
+
+
+
+# frequencyAtArrival Intent
+---
+type: intent
+name: frequencyAtArrival
+slots:
+  - name: frequency
+    entity: frequencyType
+utterances:
+  - give me the [frequency] frequency at arrival
+  - give me the [frequency] at arrival
+  - can you give me the [frequency] frequency at arrival
+  - can you give me the [frequency] at arrival
+  - what is the [frequency] frequency at arrival
+  - what is the [frequency] at arrival
+  - \[frequency] frequency at arrival
+  - \[frequency] at arrival
+
+
+
+# frequencyAtAirport Intent
+---
+type: intent
+name: frequencyAtAirport
+slots:
+  - name: frequency
+    entity: frequencyType
+  - name: place
+    entity: airport
+utterances:
+  - give me the [frequency] frequency at [place]
+  - give me the [frequency] at [place]
+  - can you give me the [frequency] frequency at [place]
+  - can you give me the [frequency] at [place]
+  - what is the [frequency] frequency at [place]
+  - what is the [frequency] at [place]
+  - \[frequency] frequency at [place]
+  - \[frequency] at [place]
 
 # ======================== DYNAMIC TRAFIC INTENTS ==================================
 
-# NearestAirport Intent
+# nearestEntity Intent
 ---
 type: intent
-name: nearestAirport
+name: nearestEntity
+slots:
+  - name: object
+    entity: aviationEntity
 utterances:
-  - give me the nearest airport
-  - can you give me the nearest airfield
-  - what is the nearest airport
+  - give me the nearest [object]
+  - can you give me the nearest [object]
+  - what is the nearest [object]
+
+
+# currentParam Intent
+---
+type: intent
+name: currentParam
+slots:
+  - name: param
+    entity: flightParam
+utterances:
+  - what is my [param]
+  - what is my current [param]
+  - current [param]
+
+
+# lengthNearestRunway Intent
+---
+type: intent
+name: lengthNearestRunway
+utterances:
+  - what is the length of the nearest runway
+  - how long is the nearest runway
+
+
+# eta Intent
+---
+type: intent
+name: eta
+utterances:
+  - when will i arrive
+  - estimated time of arrival
+  - what is the estimated time of arrival
+
+
+
+
+# ======================== WEATHER INTENTS ==================================
+# entityAtAirport Intent
+---
+type: intent
+name: entityAtAirport
+slots:
+  - name: info
+    entity: entityInfo
+  - name: place
+    entity: airport
+utterances:
+  - give me the [info] at [place]
+  - i need the [info] in [place]
+  - what is the [info] at [place]
+  - can i have the [info] at [place]
+  - \[info] at [place]
+  - is there [info] at [place]
+
+
+
+
+
+
+# ======================== CHECKLIST ==================================
 
 
 # Checklist Intent
@@ -25,62 +147,7 @@ utterances:
   - begin [phase] checklist
   - start the [phase] check please
   - can you give me the [phase] checklist
-
-
-
-# ======================== WEATHER INTENTS ==================================
-
-# weatherAtAirport Intent
----
-type: intent
-name: weatherAtAirport
-slots:
-  - name: place
-    entity: airport
-  - name: info
-    entity: weatherInfo
-utterances:
-  - give me the [info] at [place]
-  - i need the [info] in [place]
-  - what is the [info] at [place]
-  - can i have the [info] at [place]
-  - \[info] at [place]
-  - is there [info] at [place]
-
-
-
-# metarAtAirport Intent
----
-type: intent
-name: metarAtAirport
-slots:
-  - name: place
-    entity: airport
-utterances:
-  - give me the metar at [place]
-  - i need the metar in [place]
-  - what is the metar at [place]
-  - can i have the metar at [place]
-  - metar at [place]
-
-
-
-# weatherAtArrivaal Intent
----
-type: intent
-name: weatherAtArrival
-slots:
-  - name: info
-    entity: weatherInfo
-utterances:
-  - give me the [info] at arrival
-  - i need the [info] in arrival
-  - what is the [info] at arrival
-  - can i have the [info] at arrival
-  - \[info] at arrival
-  - is there [info] at arrival
-
-
+  - \[phase] checklist
 
 
 
@@ -91,6 +158,9 @@ utterances:
 type: entity
 name: airport
 values:
+  - [arrival, destination, rival]
+  - [departure, origin]
+  - [nearest airport, the nearest airport]
   - [LFBA, Agen La Garenne, Agen La Garenne Airport, AGF]
   - [LFMA, Aix-en-Provence, Aix-en-Provence Airport, QXB]
   - [LFKJ, Ajaccio Napoleon Bonaparte, Ajaccio Napoleon Bonaparte Airport, AJA]
@@ -291,10 +361,10 @@ values:
 
 
 
-# WeatherInfo Entity
+# entityInfo Entity
 ---
 type: entity
-name: weatherInfo
+name: entityInfo
 values:
   - wind 
   - visibility
@@ -304,15 +374,55 @@ values:
   - rain
   - gust
   - [weather, weather forecast]
+  - [metar, meta, metre, matter, metal]
+  - [runway, runways]
+
+
+
+# aviationEntity Entity
+---
+type: entity
+name: aviationEntity
+values:
+  - [airport, airfield, airports, airfields]
+  - [traffic, airplane, airplanes]
+  - [runway, railway, runways, railways, runaway, runaways]
+
+
+# frequencyType Entity
+---
+type: entity
+name: frequencyType
+values:
+  - [twr, tower]
+  - [atis]
+  - [app, approach]
+  - [gnd, ground, grand, instagram]
+  - [info, information]
+  - [afis]
+
+
+# flightParam Entity
+---
+type: entity
+name: flightParam
+values:
+  - [latitude]
+  - [longitude]
+  - [heading, cap]
+  - [speed]
+  - [altitude]
+  - [vertical_speed, vertical speed]
+  - [callsign]
+  - [registration]
+
+
 
 # flightPhase Entity
 ---
 type: entity
 name: flightPhase
 values:
-  - taxi
-  - [take-off, takeoff, take off]
-  - [cruise, en route, en-route]
   - approach
   - landing
 

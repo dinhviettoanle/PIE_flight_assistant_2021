@@ -5,6 +5,25 @@
       "data": [
         {
           "synonyms": [
+            "destination",
+            "rival"
+          ],
+          "value": "arrival"
+        },
+        {
+          "synonyms": [
+            "origin"
+          ],
+          "value": "departure"
+        },
+        {
+          "synonyms": [
+            "the nearest airport"
+          ],
+          "value": "nearest airport"
+        },
+        {
+          "synonyms": [
             "Agen La Garenne",
             "Agen La Garenne Airport",
             "AGF"
@@ -1575,40 +1594,39 @@
       "matching_strictness": 1.0,
       "use_synonyms": true
     },
-    "flightPhase": {
+    "aviationEntity": {
       "automatically_extensible": true,
       "data": [
         {
-          "synonyms": [],
-          "value": "taxi"
+          "synonyms": [
+            "airfield",
+            "airports",
+            "airfields"
+          ],
+          "value": "airport"
         },
         {
           "synonyms": [
-            "takeoff",
-            "take off"
+            "airplane",
+            "airplanes"
           ],
-          "value": "take-off"
+          "value": "traffic"
         },
         {
           "synonyms": [
-            "en route",
-            "en-route"
+            "railway",
+            "runways",
+            "railways",
+            "runaway",
+            "runaways"
           ],
-          "value": "cruise"
-        },
-        {
-          "synonyms": [],
-          "value": "approach"
-        },
-        {
-          "synonyms": [],
-          "value": "landing"
+          "value": "runway"
         }
       ],
       "matching_strictness": 1.0,
       "use_synonyms": true
     },
-    "weatherInfo": {
+    "entityInfo": {
       "automatically_extensible": true,
       "data": [
         {
@@ -1644,6 +1662,120 @@
             "weather forecast"
           ],
           "value": "weather"
+        },
+        {
+          "synonyms": [
+            "meta",
+            "metre",
+            "matter",
+            "metal"
+          ],
+          "value": "metar"
+        },
+        {
+          "synonyms": [
+            "runways"
+          ],
+          "value": "runway"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    },
+    "flightParam": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [],
+          "value": "latitude"
+        },
+        {
+          "synonyms": [],
+          "value": "longitude"
+        },
+        {
+          "synonyms": [
+            "cap"
+          ],
+          "value": "heading"
+        },
+        {
+          "synonyms": [],
+          "value": "speed"
+        },
+        {
+          "synonyms": [],
+          "value": "altitude"
+        },
+        {
+          "synonyms": [
+            "vertical speed"
+          ],
+          "value": "vertical_speed"
+        },
+        {
+          "synonyms": [],
+          "value": "callsign"
+        },
+        {
+          "synonyms": [],
+          "value": "registration"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    },
+    "flightPhase": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [],
+          "value": "approach"
+        },
+        {
+          "synonyms": [],
+          "value": "landing"
+        }
+      ],
+      "matching_strictness": 1.0,
+      "use_synonyms": true
+    },
+    "frequencyType": {
+      "automatically_extensible": true,
+      "data": [
+        {
+          "synonyms": [
+            "tower"
+          ],
+          "value": "twr"
+        },
+        {
+          "synonyms": [],
+          "value": "atis"
+        },
+        {
+          "synonyms": [
+            "approach"
+          ],
+          "value": "app"
+        },
+        {
+          "synonyms": [
+            "ground",
+            "grand",
+            "instagram"
+          ],
+          "value": "gnd"
+        },
+        {
+          "synonyms": [
+            "information"
+          ],
+          "value": "info"
+        },
+        {
+          "synonyms": [],
+          "value": "afis"
         }
       ],
       "matching_strictness": 1.0,
@@ -1651,6 +1783,38 @@
     }
   },
   "intents": {
+    "arrivalAirport": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the arrival airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the arrival airfield"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the arrival airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "arrival airport"
+            }
+          ]
+        }
+      ]
+    },
     "checklist": {
       "utterances": [
         {
@@ -1661,7 +1825,7 @@
             {
               "entity": "flightPhase",
               "slot_name": "phase",
-              "text": "taxi"
+              "text": "approach"
             },
             {
               "text": " checklist"
@@ -1676,7 +1840,7 @@
             {
               "entity": "flightPhase",
               "slot_name": "phase",
-              "text": "take-off"
+              "text": "landing"
             },
             {
               "text": " check please"
@@ -1691,7 +1855,22 @@
             {
               "entity": "flightPhase",
               "slot_name": "phase",
-              "text": "takeoff"
+              "text": "approach"
+            },
+            {
+              "text": " checklist"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
+            },
+            {
+              "entity": "flightPhase",
+              "slot_name": "phase",
+              "text": "landing"
             },
             {
               "text": " checklist"
@@ -1700,96 +1879,79 @@
         }
       ]
     },
-    "metarAtAirport": {
+    "currentParam": {
       "utterances": [
         {
           "data": [
             {
-              "text": "give me the metar at "
+              "text": "what is my "
             },
             {
-              "entity": "airport",
-              "slot_name": "place",
-              "text": "Aix-en-Provence Airport"
+              "entity": "flightParam",
+              "slot_name": "param",
+              "text": "latitude"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "i need the metar in "
+              "text": "what is my current "
             },
             {
-              "entity": "airport",
-              "slot_name": "place",
-              "text": "QXB"
+              "entity": "flightParam",
+              "slot_name": "param",
+              "text": "longitude"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "what is the metar at "
+              "text": "current "
             },
             {
-              "entity": "airport",
-              "slot_name": "place",
-              "text": "LFKJ"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "can i have the metar at "
-            },
-            {
-              "entity": "airport",
-              "slot_name": "place",
-              "text": "Ajaccio Napoleon Bonaparte"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "metar at "
-            },
-            {
-              "entity": "airport",
-              "slot_name": "place",
-              "text": "Ajaccio Napoleon Bonaparte Airport"
+              "entity": "flightParam",
+              "slot_name": "param",
+              "text": "heading"
             }
           ]
         }
       ]
     },
-    "nearestAirport": {
+    "departureAirport": {
       "utterances": [
         {
           "data": [
             {
-              "text": "give me the nearest airport"
+              "text": "give me the departure airport"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "can you give me the nearest airfield"
+              "text": "can you give me the departure airfield"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "what is the nearest airport"
+              "text": "what is the departure airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "departure airport"
             }
           ]
         }
       ]
     },
-    "weatherAtAirport": {
+    "entityAtAirport": {
       "utterances": [
         {
           "data": [
@@ -1797,32 +1959,12 @@
               "text": "give me the "
             },
             {
-              "entity": "weatherInfo",
+              "entity": "entityInfo",
               "slot_name": "info",
               "text": "wind"
             },
             {
               "text": " at "
-            },
-            {
-              "entity": "airport",
-              "slot_name": "place",
-              "text": "LFBA"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "i need the "
-            },
-            {
-              "entity": "weatherInfo",
-              "slot_name": "info",
-              "text": "visibility"
-            },
-            {
-              "text": " in "
             },
             {
               "entity": "airport",
@@ -1834,15 +1976,15 @@
         {
           "data": [
             {
-              "text": "what is the "
+              "text": "i need the "
             },
             {
-              "entity": "weatherInfo",
+              "entity": "entityInfo",
               "slot_name": "info",
-              "text": "temperature"
+              "text": "visibility"
             },
             {
-              "text": " at "
+              "text": " in "
             },
             {
               "entity": "airport",
@@ -1854,12 +1996,12 @@
         {
           "data": [
             {
-              "text": "can i have the "
+              "text": "what is the "
             },
             {
-              "entity": "weatherInfo",
+              "entity": "entityInfo",
               "slot_name": "info",
-              "text": "pressure"
+              "text": "temperature"
             },
             {
               "text": " at "
@@ -1874,12 +2016,12 @@
         {
           "data": [
             {
-              "text": "\\"
+              "text": "can i have the "
             },
             {
-              "entity": "weatherInfo",
+              "entity": "entityInfo",
               "slot_name": "info",
-              "text": "clouds"
+              "text": "pressure"
             },
             {
               "text": " at "
@@ -1894,12 +2036,12 @@
         {
           "data": [
             {
-              "text": "is there "
+              "text": "\\"
             },
             {
-              "entity": "weatherInfo",
+              "entity": "entityInfo",
               "slot_name": "info",
-              "text": "rain"
+              "text": "clouds"
             },
             {
               "text": " at "
@@ -1910,10 +2052,55 @@
               "text": "Aix-en-Provence"
             }
           ]
+        },
+        {
+          "data": [
+            {
+              "text": "is there "
+            },
+            {
+              "entity": "entityInfo",
+              "slot_name": "info",
+              "text": "rain"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Aix-en-Provence Airport"
+            }
+          ]
         }
       ]
     },
-    "weatherAtArrival": {
+    "eta": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "when will i arrive"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "estimated time of arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the estimated time of arrival"
+            }
+          ]
+        }
+      ]
+    },
+    "frequencyAtAirport": {
       "utterances": [
         {
           "data": [
@@ -1921,27 +2108,77 @@
               "text": "give me the "
             },
             {
-              "entity": "weatherInfo",
-              "slot_name": "info",
-              "text": "gust"
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "instagram"
             },
             {
-              "text": " at arrival"
+              "text": " frequency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "arrival"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "i need the "
+              "text": "give me the "
             },
             {
-              "entity": "weatherInfo",
-              "slot_name": "info",
-              "text": "weather"
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "info"
             },
             {
-              "text": " in arrival"
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "destination"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "information"
+            },
+            {
+              "text": " frequency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "rival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "afis"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "departure"
             }
           ]
         },
@@ -1951,9 +2188,108 @@
               "text": "what is the "
             },
             {
-              "entity": "weatherInfo",
-              "slot_name": "info",
-              "text": "weather forecast"
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "twr"
+            },
+            {
+              "text": " frequency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "origin"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "tower"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "nearest airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "atis"
+            },
+            {
+              "text": " frequency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "the nearest airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "app"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "LFBA"
+            }
+          ]
+        }
+      ]
+    },
+    "frequencyAtArrival": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "twr"
+            },
+            {
+              "text": " frequency at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "give me the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "tower"
             },
             {
               "text": " at arrival"
@@ -1963,12 +2299,57 @@
         {
           "data": [
             {
-              "text": "can i have the "
+              "text": "can you give me the "
             },
             {
-              "entity": "weatherInfo",
-              "slot_name": "info",
-              "text": "wind"
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "atis"
+            },
+            {
+              "text": " frequency at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "app"
+            },
+            {
+              "text": " at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "approach"
+            },
+            {
+              "text": " frequency at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "gnd"
             },
             {
               "text": " at arrival"
@@ -1981,27 +2362,85 @@
               "text": "\\"
             },
             {
-              "entity": "weatherInfo",
-              "slot_name": "info",
-              "text": "visibility"
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "ground"
             },
             {
-              "text": " at arrival"
+              "text": " frequency at arrival"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "is there "
+              "text": "\\"
             },
             {
-              "entity": "weatherInfo",
-              "slot_name": "info",
-              "text": "temperature"
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "grand"
             },
             {
               "text": " at arrival"
+            }
+          ]
+        }
+      ]
+    },
+    "lengthNearestRunway": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "what is the length of the nearest runway"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "how long is the nearest runway"
+            }
+          ]
+        }
+      ]
+    },
+    "nearestEntity": {
+      "utterances": [
+        {
+          "data": [
+            {
+              "text": "give me the nearest "
+            },
+            {
+              "entity": "aviationEntity",
+              "slot_name": "object",
+              "text": "airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the nearest "
+            },
+            {
+              "entity": "aviationEntity",
+              "slot_name": "object",
+              "text": "airfield"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the nearest "
+            },
+            {
+              "entity": "aviationEntity",
+              "slot_name": "object",
+              "text": "airports"
             }
           ]
         }
