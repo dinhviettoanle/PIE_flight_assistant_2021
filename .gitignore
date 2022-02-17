@@ -12,6 +12,38 @@ migrations/
 *.sh
 *.ps1
 
+# LaTex
+*.acn
+*.acr
+*.alg
+*.atfi
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+
 
 *playground*.ipynb
 TODO
