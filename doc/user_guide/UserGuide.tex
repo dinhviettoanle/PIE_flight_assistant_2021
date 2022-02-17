@@ -1,0 +1,154 @@
+\documentclass[12pt,oneside,a4]{article}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,width=160mm,top=25mm,bottom=25mm]{geometry}
+% \usepackage[lining,tabular]{fbb} % so math uses tabular lining figures
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{pdflscape}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{chngpage}
+\usepackage{scrextend}
+
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}} %Setting the graphicspath
+\renewcommand\abstractname{\large Introduction}
+
+\renewcommand{\familydefault}{\sfdefault}
+\let\tempone\itemize
+\let\temptwo\enditemize
+\renewenvironment{itemize}{\tempone\addtolength{\itemsep}{-0.5\baselineskip}}{\temptwo}
+
+\newcommand{\linkdeploy}{https://pie2021-testapp-v17.herokuapp.com/}
+
+
+\title{Flight Assistant -- Quick Start Guide\\ \small{v. 2022-02}}
+\author{Fiona \MakeUppercase{Benedito}, 
+		Dinh-Viet-Toan  \MakeUppercase{Le}, 
+		Claire \MakeUppercase{Raulin}, 
+		Maxime \MakeUppercase{Sabbah}}
+\date{}
+
+\begin{document}
+
+\maketitle
+\vfill
+\begin{center}
+    \fbox{\includegraphics[width=.98\linewidth]{app.png}}
+\end{center}
+\vfill
+\begin{abstract}
+Blabla
+Dire qu'on se met à la place d'un avion
+
+The app is available here:
+\begin{center}
+    \vspace{-.5em}
+    \url{\linkdeploy}
+    \vspace{-.5em}
+\end{center}
+\end{abstract}
+
+\clearpage
+\tableofcontents
+
+\clearpage
+
+% ------------------------------------------------------------------------------
+
+\section{Quick start}
+
+This section will guide you to select a flight, and give instructions on asking queries.
+
+\subsection{Required tools}
+\begin{itemize}
+    \item \textbf{Chrome} web browser is needed
+    \item Microphone
+\end{itemize}
+
+\subsection{App launch}
+\begin{itemize}
+    \item Go to the following webpage : 
+    \begin{center}
+        \vspace{-.4em}
+        \url{\linkdeploy}
+    \end{center}
+    \item Allow access to the microphone
+\end{itemize}
+
+\subsection{Flight following}
+
+\begin{itemize}
+    \item Select a flight to follow it. The easiest way is to click on one of the blue cursors representing the flights on the map (Figure~\ref{fig:select_flight}). 
+    Else, you can search a flight by its callsign in the ``Follow a flight'' field (Figure~\ref{fig:search_flight})
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=.98\linewidth]{search_flight.jpg}
+        \caption{Flight search by callsign}
+        \label{fig:search_flight}
+    \end{figure}
+    \item On the map you may see that the orange zone in the map is centered on the selected flight
+    \item The ``START'' button in the Speech Recognition section is also activated.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=.98\linewidth]{select_flight.jpg}
+    \caption{Map after selection of a flight}
+    \label{fig:select_flight}
+\end{figure}
+
+
+\subsection{Queries}
+Once a flight is selected, you can ask queries to the flight assistant using the push-to-talk button, set to the 'A' key of the keyboard. Queries can be asked either in natural language with plain sentences, or with sequence of specific words.
+
+\begin{itemize}
+    \item Push the push-to-talk button ('A' key) and maintain it.
+    \item Ask your question. A transcript is also displayed in real-time.
+    \item Release the push-to-talk button to send your query.
+\end{itemize}
+
+The exhaustive list of implemented queries with a list of possible questions are available at the \hyperref[sec:available-queries]{``Available queries''} section of this document.
+
+% ------------------------------------------------------------------------------
+\section{Overview of the user interface}
+\begin{figure}[h!]
+    \centering
+    \includegraphics{example-image-a}
+    \caption{User interface}
+    \label{fig:user_interface}
+\end{figure}
+
+
+% ------------------------------------------------------------------------------
+\section{Queries}
+\subsection{Static queries}
+Can be [arrival], [departure], [the nearest airport]
+
+\subsection{Dynamic queries}
+
+\subsection{Checklists}
+
+\textit{
+Checklists queries have not been implemented depending on the model of the airplane selected. 
+These queries are only for test purposes.
+}
+
+
+
+
+% ------------------------------------------------------------------------------
+\newpage
+\begin{landscape}
+\thispagestyle{empty}
+\section*{Available queries}
+\label{sec:available-queries}
+\addcontentsline{toc}{section}{Available queries}
+\input{queries}
+\end{landscape}
+
+
+
+
+\end{document}
