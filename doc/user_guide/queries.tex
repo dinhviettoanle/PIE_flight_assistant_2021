@@ -12,9 +12,9 @@
 \rowcolor{lightgray} \multicolumn{3}{|l|}{Static queries (that will not change during the flight)} \\ \hline 
 Departure / Arrival airport  & Returns the name and the ICAO of the departure / arrival airport & ``What is the arrival airport ?''  \\ 
 \hline 
-Runways at an airport  & Returns the list of runways at the an airport & ``What are the runways at [Toulouse Blagnac] ?''  \\ 
+Runways at an airport  & Returns the list of runways at the an airport & ``What are the runways at [Toulouse Blagnac]* ?''  \\ 
 \hline
-Frequency at an airport  & Returns the frequency value of a frequency channel at an airport & ``[TWR] frequency at [Toulouse Blagnac]''  \\ 
+Frequency at an airport  & Returns the frequency value of a frequency channel at an airport & ``[TWR] frequency at [Toulouse Blagnac]*''  \\ 
 \hline
 
 \rowcolor{lightgray} \multicolumn{3}{|l|}{Dynamic queries (that may change during the flight)} \\ \hline
@@ -28,7 +28,7 @@ Nearest runways       & Returns the list of runways at the nearest airport &    
 \hline
 
 \rowcolor{lightgray} \multicolumn{3}{|l|}{Weather queries} \\ \hline
-Weather at airport       & Returns a global status of the weather or a specific parameter at an airport &         ``What is the weather at [Toulouse Blagnac] ? \newline ``What is the [visibility] at [Toulouse Blagnac] ?''  \\ 
+Weather at airport       & Returns a global status of the weather or a specific parameter at an airport &         ``What is the weather at [Toulouse Blagnac]* ? \newline ``What is the [visibility] at [Toulouse Blagnac]* ?''  \\ 
 \hline
 Weather at location       & Returns a global status of the weather or a specific parameter at a location &         ``Give me the weather at [Toulouse] ?'' \newline ``[Temperature] at [Paris]''  \\ 
 \hline
@@ -43,3 +43,6 @@ Landing checklist  & Returns the landing checklist & ``Landing checklist''  \\
 \end{tabular}
 
 \end{table}
+
+\noindent\rule{8cm}{0.4pt} \\
+{\footnotesize * The airport can also be [arrival] or [departure]}

@@ -11,6 +11,11 @@
 \usepackage{chngpage}
 \usepackage{scrextend}
 
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{array}
+
+
 \usepackage[hidelinks]{hyperref}
 \graphicspath{{figures/}} %Setting the graphicspath
 \renewcommand\abstractname{\large Introduction}
@@ -20,14 +25,12 @@
 \let\temptwo\enditemize
 \renewenvironment{itemize}{\tempone\addtolength{\itemsep}{-0.5\baselineskip}}{\temptwo}
 
-\newcommand{\linkdeploy}{https://pie2021-testapp-v17.herokuapp.com/}
+\newcommand{\linkdeploy}{https://pie2021-flightassistant-v19.herokuapp.com/}
 
 
-\title{Flight Assistant -- Quick Start Guide\\ \small{v. 2022-02}}
-\author{Fiona \MakeUppercase{Benedito}, 
-		Dinh-Viet-Toan  \MakeUppercase{Le}, 
-		Claire \MakeUppercase{Raulin}, 
-		Maxime \MakeUppercase{Sabbah}}
+\title{PIE Flight Assistant -- Quick Start Guide\\ \vspace{.2em} \large{ISAE-SUPAERO} \\ \small{v. 2022-02}\\ \vspace{-4em}}
+\author{
+    }
 \date{}
 
 \begin{document}
@@ -35,13 +38,18 @@
 \maketitle
 \vfill
 \begin{center}
-    \fbox{\includegraphics[width=.98\linewidth]{app.png}}
+    \fbox{\includegraphics[width=.9\linewidth]{app.png}}
 \end{center}
 \vfill
-\begin{abstract}
-Blabla
-Dire qu'on se met à la place d'un avion
 
+\begin{abstract}
+This project is an implementation of a flight assistant prototype towards mono-pilot cockpits.
+The flight assistant aims at answering requests, eventually said in natural language by the pilot,
+about its current status, or about information on diverse locations.
+Data provided in this app are real-time data.
+
+In the context of this prototype, you will be asked to select a flight and ask requests
+as if you were the pilot of this flight.
 The app is available here:
 \begin{center}
     \vspace{-.5em}
@@ -59,8 +67,6 @@ The app is available here:
 
 \section{Quick start}
 
-This section will guide you to select a flight, and give instructions on asking queries.
-
 \subsection{Required tools}
 \begin{itemize}
     \item \textbf{Chrome} web browser is needed
@@ -74,6 +80,7 @@ This section will guide you to select a flight, and give instructions on asking 
         \vspace{-.4em}
         \url{\linkdeploy}
     \end{center}
+    \textit{You might wait for about 1 minute when you launch the app for the first time}
     \item Allow access to the microphone
 \end{itemize}
 
@@ -94,46 +101,84 @@ This section will guide you to select a flight, and give instructions on asking 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=.98\linewidth]{select_flight.jpg}
-    \caption{Map after selection of a flight}
+    \includegraphics[width=.9\linewidth]{select_flight.jpg}
+    \caption{Map after flight selection}
     \label{fig:select_flight}
 \end{figure}
 
 
 \subsection{Queries}
-Once a flight is selected, you can ask queries to the flight assistant using the push-to-talk button, set to the 'A' key of the keyboard. Queries can be asked either in natural language with plain sentences, or with sequence of specific words.
+Once a flight is selected, you can ask queries to the flight assistant using the push-to-talk button, set to the '1' key of the character keys on your keyboard ('\&' key on an AZERTY keyboard). Queries can be asked either in natural language with plain sentences, or with sequence of specific words.
 
 \begin{itemize}
-    \item Push the push-to-talk button ('A' key) and maintain it.
+    \item Push the push-to-talk button ('1' key) and maintain it.
     \item Ask your question. A transcript is also displayed in real-time.
     \item Release the push-to-talk button to send your query.
 \end{itemize}
 
-The exhaustive list of implemented queries with a list of possible questions are available at the \hyperref[sec:available-queries]{``Available queries''} section of this document.
-
-% ------------------------------------------------------------------------------
-\section{Overview of the user interface}
-\begin{figure}[h!]
-    \centering
-    \includegraphics{example-image-a}
-    \caption{User interface}
-    \label{fig:user_interface}
-\end{figure}
+An exhaustive list of implemented queries with a list of possible questions are available at the \hyperref[sec:available-queries]{``Available queries''} section of this document
+and indications on queries are provided in the following section.
 
 
 % ------------------------------------------------------------------------------
 \section{Queries}
-\subsection{Static queries}
-Can be [arrival], [departure], [the nearest airport]
+\subsection{Static and dynamic queries}
 
-\subsection{Dynamic queries}
+\paragraph{Static queries}
+For a selected flight, some data will not change.
+By asking for your departure or arrival airport, the answer will remain the same for the duration of the flight.
+In the same way, asking for information about an airport will return you the same answer.
+
+\paragraph{Dynamic queries}
+For this type of query, depending on your position, the evolution of the air traffic
+and the weather, you will receive different answers during the flight.
+
+\vspace{1em}
+
+For these two types of queries, you only need to press the push-to-talk button, ask orally your request and
+the flight assistant will answer you on the interface and orally.
 
 \subsection{Checklists}
 
 \textit{
-Checklists queries have not been implemented depending on the model of the airplane selected. 
-These queries are only for test purposes.
+Checklists queries have been partially implemented. These queries are only for test purposes.
 }
+
+\begin{itemize}
+    \item Request one of the available checklists orally using the push-to-talk button. 
+    \item A pop-up (Figure \ref{fig:checklist}) must appear, and an item is announced.
+    \item \textbf{Without using again the push-to-talk button}, say the corresponding answer.
+    \item If it is correct, the answer will be colored in green and the next item will be asked.
+\end{itemize}
+
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=.5\linewidth]{checklist.jpg}
+    \caption{Checklist pop-up}
+    \label{fig:checklist}
+\end{figure}
+% ------------------------------------------------------------------------------
+
+\newpage
+\begin{landscape}
+\thispagestyle{empty}
+\section*{Overview of the user interface}
+\addcontentsline{toc}{section}{Overview of the user interface}
+
+\begin{figure}[h!]
+    \centering
+    \resizebox{\linewidth}{!}{
+        \input{figures/tikz_interface}
+    }
+    \caption{User interface}
+    \label{fig:user_interface}
+\end{figure}
+\end{landscape}
+
+
+
 
 
 
@@ -145,7 +190,27 @@ These queries are only for test purposes.
 \section*{Available queries}
 \label{sec:available-queries}
 \addcontentsline{toc}{section}{Available queries}
+
+Words between brackets can be changed. 
+Available parameters (flight, weather, frequencies) are described in the next page.
+
 \input{queries}
+
+% ------------------------------------------------------------------------------
+
+\newpage
+\thispagestyle{empty}
+
+\subsection*{Available frequencies} 
+(Depending on the airport) TWR (Tower), APP (Approach), GND (Ground), INFO, AFIS, ATIS
+
+\subsection*{Available flight parameters} 
+Heading, Speed, Altitude, Vertical speed, Latitude, Longitude, Callsign, Registration
+
+\subsection*{Available weather parameters}
+Temperature, Pressure, Wind, Gust, Clouds, Visibility, Rain, METAR
+
+
 \end{landscape}
 
 
