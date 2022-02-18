@@ -367,15 +367,15 @@ def process_query(query_type, arg1, arg2, flight_data):
         response_str = f"The arrival airport is {flight_data.get('destination')}."
 
     # TO REMOVE
-    elif query_type == "runwaysAtArrival":
-        response_dict = query_runways_at_airport(flight_data.get('destination_icao'))
-        if response_dict.get('status'):
-            list_runways_arrival = response_dict.get('list_runways')
-            list_ident_runways = [runway_data[0] for runway_data in list_runways_arrival[:-1]]
-            response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) \
-                are {", ".join(list_ident_runways)} and {list_runways_arrival[-1][0]}."""
-        else:
-            response_str = f"Arrival airport is not available."
+    # elif query_type == "runwaysAtArrival":
+    #     response_dict = query_runways_at_airport(flight_data.get('destination_icao'))
+    #     if response_dict.get('status'):
+    #         list_runways_arrival = response_dict.get('list_runways')
+    #         list_ident_runways = [runway_data[0] for runway_data in list_runways_arrival[:-1]]
+    #         response_str = f"""Runways at {response_dict.get('name')} ({response_dict.get('icao')}) \
+    #             are {", ".join(list_ident_runways)} and {list_runways_arrival[-1][0]}."""
+    #     else:
+    #         response_str = f"Arrival airport is not available."
 
 
     elif query_type == "runwaysAtAirport":
@@ -486,10 +486,13 @@ def process_query(query_type, arg1, arg2, flight_data):
             response_dict = query_specific_weather_at_airport(arg1, flight_data.get('origin_icao'))
         else:
             response_dict = query_specific_weather_at_airport(arg1, arg2)
+        
+
         if response_dict.get('status'):
             response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
         else:
-            response_str = f"N/A"
+            # If it did not manage to find the airport
+            return process_query("weatherAtLocation", arg1, arg2, flight_data)
 
 
     elif query_type == "metarAtAirport":
@@ -524,12 +527,12 @@ def process_query(query_type, arg1, arg2, flight_data):
 
     # TO REMOVE
 
-    elif query_type == "weatherAtArrival":
-        response_dict = query_specific_weather_at_airport(arg1, flight_data.get('destination_icao'))
-        if response_dict.get('status'):
-            response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
-        else:
-            response_str = f"Arrival airport is not available."
+    # elif query_type == "weatherAtArrival":
+    #     response_dict = query_specific_weather_at_airport(arg1, flight_data.get('destination_icao'))
+    #     if response_dict.get('status'):
+    #         response_str = f"The {response_dict.get('weather_name')} at {response_dict.get('airport_name')} is {response_dict.get('weather_value_format')}."
+    #     else:
+    #         response_str = f"Arrival airport is not available."
 
 
     # -------------------------------- CHECKLIST ----------------------------------------

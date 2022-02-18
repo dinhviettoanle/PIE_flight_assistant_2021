@@ -367,7 +367,7 @@ type: entity
 name: entityInfo
 values:
   - [wind, winds]
-  - visibility
+  - [visibility, intervisibility]
   - temperature
   - pressure
   - clouds
@@ -385,7 +385,7 @@ type: entity
 name: aviationEntity
 values:
   - [airport, airfield, airports, airfields]
-  - [traffic, airplane, airplanes]
+  - [traffic, airplane, airplanes, aeroplane, aeroplanes]
   - [runway, railway, runways, railways, runaway, runaways]
 
 
@@ -395,7 +395,7 @@ type: entity
 name: frequencyType
 values:
   - [twr, tower]
-  - [atis]
+  - [atis, artist]
   - [app, approach]
   - [gnd, ground, grand, instagram]
   - [info, information]
@@ -424,7 +424,7 @@ type: entity
 name: flightPhase
 values:
   - approach
-  - landing
+  - [landing, blending, lenzing]
 
 
 

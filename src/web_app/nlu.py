@@ -73,7 +73,7 @@ def process_transcript(transcript):
                 query += f"?{arg['value']['value']}"
     
     print_event(parsing)
-    print_event("NLU", intent_name, proba, slots, query)
+    print_event("NLU", intent_name, proba, query)
 
     return query
 

@@ -1608,7 +1608,9 @@
         {
           "synonyms": [
             "airplane",
-            "airplanes"
+            "airplanes",
+            "aeroplane",
+            "aeroplanes"
           ],
           "value": "traffic"
         },
@@ -1630,11 +1632,15 @@
       "automatically_extensible": true,
       "data": [
         {
-          "synonyms": [],
+          "synonyms": [
+            "winds"
+          ],
           "value": "wind"
         },
         {
-          "synonyms": [],
+          "synonyms": [
+            "intervisibility"
+          ],
           "value": "visibility"
         },
         {
@@ -1733,7 +1739,10 @@
           "value": "approach"
         },
         {
-          "synonyms": [],
+          "synonyms": [
+            "blending",
+            "lenzing"
+          ],
           "value": "landing"
         }
       ],
@@ -1750,7 +1759,9 @@
           "value": "twr"
         },
         {
-          "synonyms": [],
+          "synonyms": [
+            "artist"
+          ],
           "value": "atis"
         },
         {
@@ -1855,7 +1866,7 @@
             {
               "entity": "flightPhase",
               "slot_name": "phase",
-              "text": "approach"
+              "text": "blending"
             },
             {
               "text": " checklist"
@@ -1870,7 +1881,7 @@
             {
               "entity": "flightPhase",
               "slot_name": "phase",
-              "text": "landing"
+              "text": "lenzing"
             },
             {
               "text": " checklist"
@@ -1981,7 +1992,7 @@
             {
               "entity": "entityInfo",
               "slot_name": "info",
-              "text": "visibility"
+              "text": "winds"
             },
             {
               "text": " in "
@@ -2001,7 +2012,7 @@
             {
               "entity": "entityInfo",
               "slot_name": "info",
-              "text": "temperature"
+              "text": "visibility"
             },
             {
               "text": " at "
@@ -2021,7 +2032,7 @@
             {
               "entity": "entityInfo",
               "slot_name": "info",
-              "text": "pressure"
+              "text": "intervisibility"
             },
             {
               "text": " at "
@@ -2041,7 +2052,7 @@
             {
               "entity": "entityInfo",
               "slot_name": "info",
-              "text": "clouds"
+              "text": "temperature"
             },
             {
               "text": " at "
@@ -2061,7 +2072,7 @@
             {
               "entity": "entityInfo",
               "slot_name": "info",
-              "text": "rain"
+              "text": "pressure"
             },
             {
               "text": " at "
@@ -2110,7 +2121,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "instagram"
+              "text": "grand"
             },
             {
               "text": " frequency at "
@@ -2130,7 +2141,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "info"
+              "text": "instagram"
             },
             {
               "text": " at "
@@ -2150,7 +2161,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "information"
+              "text": "info"
             },
             {
               "text": " frequency at "
@@ -2170,7 +2181,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "afis"
+              "text": "information"
             },
             {
               "text": " at "
@@ -2190,7 +2201,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "twr"
+              "text": "afis"
             },
             {
               "text": " frequency at "
@@ -2210,7 +2221,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "tower"
+              "text": "twr"
             },
             {
               "text": " at "
@@ -2230,7 +2241,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "atis"
+              "text": "tower"
             },
             {
               "text": " frequency at "
@@ -2250,7 +2261,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "app"
+              "text": "atis"
             },
             {
               "text": " at "
@@ -2319,10 +2330,25 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "app"
+              "text": "artist"
             },
             {
               "text": " at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "app"
+            },
+            {
+              "text": " frequency at arrival"
             }
           ]
         },
@@ -2337,21 +2363,6 @@
               "text": "approach"
             },
             {
-              "text": " frequency at arrival"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "what is the "
-            },
-            {
-              "entity": "frequencyType",
-              "slot_name": "frequency",
-              "text": "gnd"
-            },
-            {
               "text": " at arrival"
             }
           ]
@@ -2364,7 +2375,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "ground"
+              "text": "gnd"
             },
             {
               "text": " frequency at arrival"
@@ -2379,7 +2390,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "grand"
+              "text": "ground"
             },
             {
               "text": " at arrival"
