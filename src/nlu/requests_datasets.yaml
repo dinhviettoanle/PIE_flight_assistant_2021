@@ -366,7 +366,7 @@ values:
 type: entity
 name: entityInfo
 values:
-  - wind 
+  - [wind, winds]
   - visibility
   - temperature
   - pressure
