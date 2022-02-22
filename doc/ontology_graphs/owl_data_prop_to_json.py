@@ -1,7 +1,7 @@
 import re, json
 import owlready2 as owl
 
-onto_filename = "../src/ontology/final-archi.owl"
+onto_filename = "../../src/ontology/final-archi.owl"
 json_filename = "./ontology_properties.json"
 onto = owl.get_ontology(onto_filename).load()
 
