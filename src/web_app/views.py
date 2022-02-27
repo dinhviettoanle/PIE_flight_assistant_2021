@@ -30,12 +30,13 @@ log.disabled = True
 sio = SocketIO(app, async_mode=None, logger=False, engineio_logger=False, cors_allowed_origins="*")
 # ====================================
 
+USE_FR24 = True # !!! IMPORTANT !!! Are you using FR24 or OSN ? Modify also in script.js
 airspace_worker = None
 flight_follower_worker = None
 thread = Thread()
 USE_RADAR = True
-SLEEP_TIME = .5
 ontology_is_init = False
+SLEEP_TIME = .5 if USE_FR24 else 2
 
 autocomplete_handler = AutocompleteHandler()
 
@@ -58,7 +59,8 @@ class AirspaceBackgroundWorker:
         self.box = box
         self.center = center
         self.surrounding_data = {}
-        self.flight_data_process = FlightRadar24Handler()
+        self.flight_data_process = FlightRadar24Handler() if USE_FR24 else OpenSkyNetworkHandler()
+        self.previous_error = ""
         self.update_static_data()
 
         print_info("----- Background airspace worker initialized -----")
@@ -87,7 +89,11 @@ class AirspaceBackgroundWorker:
                 self.sio.sleep(SLEEP_TIME)
 
             except Exception as e:
-                print_error(f"Error : {str(e)}")
+                if str(e) != self.previous_error:
+                    print_error(f"Error airpsace : {type(e).__name__} {str(e)}")
+                    print_error(traceback.format_exc())
+                    print_error("------------------------------------------------------------")
+                    self.previous_error = str(e)
     
 
     def update_static_data(self):
@@ -160,7 +166,7 @@ class FlightFollowerWorker:
         self.flight_id = ""
         self.switch = True
         self.is_following = False
-        self.flight_follower_query = FlightSpecificQueryHandler()
+        self.flight_follower_query = FlightSpecificQueryHandlerFR24() if USE_FR24 else FlightSpecificQueryHandlerOSN()
 
         # To search near this position
         self.latitude = 0
@@ -187,10 +193,20 @@ class FlightFollowerWorker:
     def do_work(self):
         """ Main loop of the follow-up worker
         """
+        dynamic_data = {'latitude' : 0, 'longitude' : 0, 'heading' : 0, 'altitude' : 0, 'speed' : 0, 'vertical_speed' : 0, 'last_contact' : 0}
+
         while self.switch:
             try:
                 if self.is_following:
-                    dynamic_data =  self.flight_follower_query.query_dynamic_data(self.latitude, self.longitude, self.flight_id)
+                    
+                    if USE_FR24:
+                        dynamic_data =  self.flight_follower_query.query_dynamic_data(self.latitude, self.longitude, self.flight_id)
+                    else:
+                        dynamic_data =  self.flight_follower_query.query_dynamic_data(self.latitude, self.longitude, self.flight_id, dynamic_data)
+                        if dynamic_data is None:
+                            self.sio.sleep(SLEEP_TIME)
+                            continue
+  
                     # Move box around the current followed flight
                     self.latitude = dynamic_data['latitude']
                     self.longitude = dynamic_data['longitude']

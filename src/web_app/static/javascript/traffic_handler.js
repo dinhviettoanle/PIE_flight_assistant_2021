@@ -30,22 +30,34 @@ class Airplane extends Location {
 
         // On click, select flight
         this.marker.on('click', params => {
-            var sent_object = {'q': this.icao24};
+            
+            if (USE_FR24) {
+                // If use FR24, juste launch a request as if you were searching a callsign (not optimized, but ok)
+                var sent_object = {'q': this.icao24};
+                $.ajax({
+                    type: "GET",
+                    url: "/_autocomplete",
+                    dataType: 'json',
+                    data: sent_object,
+                    success: function(data) {
+                        var this_flight = data['matching_results'][0];
+                        select_flight({
+                            label: this_flight.str,
+                            value: this_flight.str,
+                            flight_id: this_flight.id
+                        });
+                    }
+                });
+            }
 
-            $.ajax({
-                type: "GET",
-                url: "/_autocomplete",
-                dataType: 'json',
-                data: sent_object,
-                success: function(data) {
-                    var this_flight = data['matching_results'][0];
-                    select_flight({
-                        label: this_flight.str,
-                        value: this_flight.str,
-                        flight_id: this_flight.id
-                    });
-                }
-            });
+            else {
+                // Else, all is internal to the app
+                select_flight({
+                    label: this.icao24,
+                    value: this.icao24,
+                    flight_id: this.icao24
+                });
+            }
         });
     }
 

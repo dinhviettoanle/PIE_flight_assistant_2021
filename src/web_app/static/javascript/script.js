@@ -4,6 +4,7 @@ var mymap = null;
 var isInitialized = false;
 var isFollowing = false;
 var currentFollowing = "";
+const USE_FR24 = true; // !!! IMPORTANT !!! Are you using FR24 or OSN ?
 
 $(document).ready(function(){
     //connect to the socket server.

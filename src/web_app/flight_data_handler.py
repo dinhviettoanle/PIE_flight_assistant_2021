@@ -5,18 +5,23 @@ Real-time traffic data handler
 import time
 import requests
 import json
+import os
 import pandas as pd
 from datetime import datetime
 from .flightradar.api import API
 from .flightradar.coordinates import *
 from .geo_utils import *
+from .log_utils import *
+from .opensky_api import OpenSkyApi, StateVector
 
 
 
 def fprint(*args, **kwargs):
     print(args, flush=True)
 
-
+# ===========================================================================
+# ==================== FLIGHT RADAR 24 ======================================
+# ===========================================================================
 
 class FlightRadar24Handler:
     """
@@ -24,6 +29,7 @@ class FlightRadar24Handler:
     """
     
     def __init__(self):
+        print_event(">>>>>> USING FlightRadar24 <<<<<<<")
         self.api = API()
 
 
@@ -147,7 +153,7 @@ class AutocompleteHandler():
 
 
 
-class FlightSpecificQueryHandler():
+class FlightSpecificQueryHandlerFR24():
     def __init__(self):
         self.api = API()
 
@@ -260,6 +266,180 @@ class FlightSpecificQueryHandler():
         }
 
 
+# =======================================================================================
+# ========================= OPEN SKY NETWORK ============================================
+# =======================================================================================
 
     
+class OpenSkyNetworkHandler:
+    
+    def __init__(self):
+        print_event(">>>>>> USING OpenSkyNetwork <<<<<<<")
+        username = "le_dvt" # TO FILL
+        password = os.environ.get('OPEN_SKY_NETWORK_PASS')
+        self.api = OpenSkyApi(username=username, password=password)
 
+
+    def get_current_airspace(self, dict_message, center=None, box=None, RADIUS=100, VERBOSE=False):
+        
+        if center and not(box):
+            lat, lng = center
+            box = get_box_from_center(center, RADIUS)
+        else:
+            raise AttributeError("Specify a center or a box")
+            
+        if VERBOSE:
+            fprint(f"Box : {n, s, e, w} ; Center : {center}")     
+            
+        states_box = self.api.get_states(bbox=box)
+
+        if states_box is None:
+            return
+        
+        list_flights = []
+        list_update_times = []
+
+        for i, s in enumerate(states_box.states):
+            add_flight = True
+            
+            if center:
+                dist = dist_flight_center(lat, lng, s.latitude, s.longitude)
+                add_flight = dist < RADIUS
+            
+            if add_flight:
+                this_flight = {
+                    'icao24' : s.callsign.strip(),
+                    'callsign' : s.icao24,
+                    'latitude' : s.latitude,
+                    'longitude' : s.longitude,
+                    'heading' : s.heading if s.heading is not None else 0,
+                    'altitude' : round(s.geo_altitude * 3.28084) if s.geo_altitude is not None else 0,
+                    'speed' : round(s.velocity * 1.9438) if s.velocity is not None else 0,
+                    'vertical_speed' : round(s.vertical_rate * 196.85) if s.vertical_rate is not None else 0,
+                    'origin' : 'N/A',
+                    'destination' : 'N/A'
+                }
+                list_flights.append(this_flight)
+                list_update_times.append(s.last_contact)
+        
+        number_flights = len(list_flights)
+
+        if number_flights > 0:
+            ancien_update_time = datetime.utcfromtimestamp(min(list_update_times)).strftime('%H:%M:%S')
+            recent_update_time = datetime.utcfromtimestamp(max(list_update_times)).strftime('%H:%M:%S')
+            date_update_time = datetime.utcfromtimestamp(min(list_update_times)).strftime('%Y-%m-%d')
+            time_update_str = f"{date_update_time} [{ancien_update_time} >> {recent_update_time}]"
+        else:
+            time_update_str = "No flight"
+        
+        
+        dict_message['radius'] = RADIUS
+        dict_message['time_update_str'] = time_update_str
+        dict_message['number_flights'] = number_flights
+        dict_message['list_flights'] = list_flights
+
+
+
+
+class FlightSpecificQueryHandlerOSN:
+    
+    def __init__(self):
+        self.username = "le_dvt" # TO FILL
+        self.password = os.environ.get('OPEN_SKY_NETWORK_PASS')
+        self.api = OpenSkyApi(username=self.username, password=self.password)
+    
+    def get_last_position(self, flight, flight_id):
+        # Nothing to do
+        pass
+    
+    def query_complete_flight(self, callsign):
+        current_time = int(time.time())
+        session = requests.Session()
+        
+        # ------- Get dynamic info and callsign -------
+        ## Very compute demanding. Other endpoint ??
+        c = requests.get(f'https://{self.username}:{self.password}@opensky-network.org/api/states/all?extended=true')
+        df_all_flights = pd.DataFrame(c.json()['states'])
+        flight = df_all_flights.loc[df_all_flights[1].str.strip() == callsign].values.tolist()[0]
+        state = StateVector(flight)
+        
+        flight_id = state.icao24
+        
+        # ------- Get route -------
+        c = session.get(
+            f"https://{self.username}:{self.password}@opensky-network.org/api/routes?callsign={callsign}"
+        )
+    
+        try:
+            json_response = c.json()
+            origin_icao, destination_icao = json_response['route']
+            
+            # Get route name airports
+            c = session.get(f"https://{self.username}:{self.password}@opensky-network.org/api/airports/?icao={origin_icao}")
+            origin = c.json().get('name', 'N/A')
+            c = session.get(f"https://{self.username}:{self.password}@opensky-network.org/api/airports/?icao={destination_icao}")
+            destination = c.json().get('name', 'N/A')
+        except:
+            origin_icao, destination_icao = 'N/A', 'N/A'
+            origin, destination = 'N/A', 'N/A'
+            
+        
+        # ------- Get model -------
+        c = session.get(
+            f"https://{self.username}:{self.password}@opensky-network.org/api/metadata/aircraft/icao/{flight_id}"
+        )
+        
+        try:
+            json_response = c.json()
+            registration = json_response['registration']
+            model = json_response['model']
+        except:
+            model, registration = "N/A", "N/A"
+    
+        
+
+        return {
+            'id': flight_id, 
+            'callsign' : callsign, 
+            'registration' : registration,
+            'model' : model,
+            'model_text' : model,
+            'latitude': state.latitude, 
+            'longitude': state.longitude,
+            'heading': state.heading if state.heading is not None else 0, 
+            'speed' : round(state.velocity * 1.9438) if state.velocity is not None else 0,
+            'vertical_speed' : round(state.vertical_rate * 196.85) if state.vertical_rate is not None else 0,
+            'altitude' : round(state.geo_altitude * 3.28084) if state.geo_altitude is not None else 0,        
+            'last_contact' : state.last_contact,
+            'origin' : origin, 
+            'origin_icao' : origin_icao, 
+            'destination' : destination,
+            'destination_icao' : destination_icao,
+            'time_scheduled' : 'N/A',
+            'time_estimated' : 'N/A',
+        }
+    
+    def query_dynamic_data(self, lat, lng, callsign, previous_data, RADIUS=20):
+        # private
+        center = (lat, lng)
+        box = get_box_from_center(center, RADIUS) # Watch 20km around the center
+
+        states_box = self.api.get_states(bbox=box)
+
+        if states_box is None:
+            return None
+        
+        for i, s in enumerate(states_box.states):
+            if s.callsign.strip() == callsign:
+                return {
+                    'latitude' : s.latitude,
+                    'longitude' : s.longitude,
+                    'heading' : s.heading if s.heading is not None else 0,
+                    'altitude' : s.geo_altitude if s.geo_altitude is not None else 0,
+                    'speed' : round(s.velocity * 1.9438) if s.velocity is not None else 0,
+                    'vertical_speed' : round(s.vertical_rate * 196.85) if s.vertical_rate is not None else 0,
+                    'last_contact' : s.last_contact,
+                }
+
+        print_error("[FlightFollowerOSN] Not found in near trafic")
+        

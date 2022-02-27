@@ -1,5 +1,6 @@
 import owlready2 as owl
 import pyowm
+import os
 import numpy as np
 import pandas as pd
 from csv import reader
@@ -12,7 +13,7 @@ from datetime import datetime
 
 filename_onto_individuals = "./ontology/final-archi-individuals.owl"
 
-OWM_APIKEY = 'a39692b70ec17cf580fbd700f2e4416e'
+OWM_APIKEY = os.environ.get('OWM_APIKEY')
 owm = pyowm.OWM(OWM_APIKEY)
 mgr = owm.weather_manager()
 

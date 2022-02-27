@@ -65,6 +65,7 @@ const abbreviations = {
     "APP" : "approach",
     "BKN" : "broken",
     "OVC" : "overcast",
+    "CLR" : "clear",
     "&nbsp;" : ""
 }
 
