@@ -154,10 +154,27 @@ class AutocompleteHandler():
 
 
 class FlightSpecificQueryHandlerFR24():
+    """ 
+    Module to handle the followed flight using FlightRadar24 data
+    """
     def __init__(self):
         self.api = API()
 
     def get_last_position(self, flight, flight_id):
+        """Get the last position if the trail is empty
+
+        Parameters
+        ----------
+        flight : str
+            Flight callsign
+        flight_id : str
+            FlightID
+
+        Returns
+        -------
+        Waypoint
+            Last position of the flight
+        """
         detail = self.api.get_search_results(query=flight.flight, limit=1)[0]['detail']
         print(detail['lat'], detail['lon'], flight_id)
         dynamic_data = self.query_dynamic_data(detail['lat'], detail['lon'], flight_id, RADIUS=300)
@@ -253,7 +270,14 @@ class FlightSpecificQueryHandlerFR24():
         data_raw = self.api.get_area(area, VERBOSE=False)
         data = json.loads(data_raw)[flight_id]
 
-        # TODO : Y a un truc pas très fin ici. Si le vol n'existe plus, alors ça crashe
+        # BUG : Y a un truc pas très fin ici. Si le vol n'existe plus, alors ça crashe.
+        # Vu qu'on recherche le vol autour de sa dernière position, il y aura toujours a priori 
+        # l'index [flight_id] dans le dictionnaire "data".
+        # En revanche, une fois que FR24 n'a plus de données concernant ce vol, data ne contiendra
+        # plus l'index [flight_id]. Mais vu qu'on continue à chercher le vol autour de sa
+        # dernière position, on obtient systématiquement un IndexError.
+        # Possible solution -> faire un truc de patience : si on obtient 10 tours de boucles 
+        # qui finissent en IndexError, arrêter de suivre l'avion
 
         return {
             'latitude' : data['lat'],
@@ -272,7 +296,10 @@ class FlightSpecificQueryHandlerFR24():
 
     
 class OpenSkyNetworkHandler:
-    
+    """
+    Traffic handler from OpenSkyNetwork data
+    (for degraded version)
+    """
     def __init__(self):
         print_event(">>>>>> USING OpenSkyNetwork <<<<<<<")
         username = "le_dvt" # TO FILL
@@ -281,6 +308,21 @@ class OpenSkyNetworkHandler:
 
 
     def get_current_airspace(self, dict_message, center=None, box=None, RADIUS=100, VERBOSE=False):
+         """ Updates a dictionnary with traffic data within a zone
+
+        Parameters
+        ----------
+        dict_message : dict
+            Dictionnary to update
+        center : tuple, optional
+            Geo point (lat, lon), by default None
+        box : tuple, optional
+            Geo box (south, north, west, east), by default None
+        RADIUS : int, optional
+            Radius of the circle if center is used, by default 100
+        VERBOSE : bool, optional
+            Displays the url, by default False
+        """
         
         if center and not(box):
             lat, lng = center
@@ -342,7 +384,9 @@ class OpenSkyNetworkHandler:
 
 
 class FlightSpecificQueryHandlerOSN:
-    
+    """
+    Module to handle the followed flight using OpenSkyNetwork data
+    """
     def __init__(self):
         self.username = "le_dvt" # TO FILL
         self.password = os.environ.get('OPEN_SKY_NETWORK_PASS')
@@ -353,6 +397,18 @@ class FlightSpecificQueryHandlerOSN:
         pass
     
     def query_complete_flight(self, callsign):
+        """ Gets the precise flight static data from its ID
+
+        Parameters
+        ----------
+        callsign : str
+            Callsign of the flight
+
+        Returns
+        -------
+        dict
+            Dictionary containing multiple static stuff
+        """
         current_time = int(time.time())
         session = requests.Session()
         
@@ -420,7 +476,26 @@ class FlightSpecificQueryHandlerOSN:
         }
     
     def query_dynamic_data(self, lat, lng, callsign, previous_data, RADIUS=20):
-        # private
+        """ Updates the dynamic data regarding a flight
+
+        Parameters
+        ----------
+        lat : float
+            Current latitude of the flight
+        lng : float
+            Current longitude of the flight
+        callsign : str
+            Callsign of the flight
+        previous_data : dict
+            Last position data
+        RADIUS : int, optional
+            Radius of the circle within we search, by default 20
+
+        Returns
+        -------
+        dict
+            Dictionary contianing updated dynamic data regarding a flight
+        """""
         center = (lat, lng)
         box = get_box_from_center(center, RADIUS) # Watch 20km around the center
 

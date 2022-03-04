@@ -231,7 +231,9 @@ class FrequencyLoader:
 # =========================================================================================
 
 class WaypointLoader:
-    
+    """
+    Waypoint data downloader by webscraping OpenNav and FAA websites
+    """
     def __init__(self, PATH=None):
         if PATH is None:
             self.data = self.download_waypoints()
@@ -263,6 +265,8 @@ class WaypointLoader:
 
 
     def download_opennav(self):
+        """ Download Waypoints of all countries, except US (too many...)
+        """
         df_countries = pd.read_csv("../data/countries.csv")[['code', 'name']]
 
         list_waypoints = []
@@ -280,6 +284,8 @@ class WaypointLoader:
     
 
     def download_faa(self):
+        """ Download Waypoints of US
+        """
         list_us_wp = []
         tot_us_waypoints = 65875
         pbar = tqdm(total=tot_us_waypoints, desc="Requesting waypoint@faa")
@@ -433,7 +439,9 @@ def test_convert_latlng():
 # =========================================================================================
 
 class ChecklistLoader:
-    
+    """
+    Checklist data initialization from .csv files in checklist folder
+    """
     def __init__(self):
         self.data = self.set_checklist_df()
 

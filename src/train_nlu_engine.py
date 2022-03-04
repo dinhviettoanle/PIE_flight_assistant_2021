@@ -1,3 +1,7 @@
+"""
+Training of the Snips-NLU Engine
+You only need to modify the .yaml file. The .json and the .snips files are automatically generated.
+"""
 from snips_nlu import SnipsNLUEngine
 from snips_nlu.default_configs import CONFIG_EN
 import io

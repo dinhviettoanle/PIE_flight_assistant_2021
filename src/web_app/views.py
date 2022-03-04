@@ -334,19 +334,27 @@ def start_work(sid):
 # =============== ROUTE ==========================
 @app.route('/')
 def index():
+    """ Sends the webview
+    """
     print_event(request)
     return render_template('index.html')
 
+
+
 @app.route('/_autocomplete', methods=['GET'])
 def autocomplete():
+    """ Auto-complete the flight when selecting a flight by searching its callsign
+    """
     search = request.args.get('q')
     results = autocomplete_handler.query_partial_flight(query=search)
     return jsonify(matching_results=results)
 
 
-# Query by button
+
 @app.route('/_query', methods=['GET'])
 def receive_query():
+    """ Handles a query from the user with a button (DEVELOPER Mode)
+    """
     query_type = request.args.get('q').split('-')[1]
     
     if request.args.get('arg1'):
@@ -357,13 +365,18 @@ def receive_query():
     response_str = flight_follower_worker.handle_query(query_type)
     return jsonify(response=response_str)
 
-# Query by speech recognition
+
+
 @app.route('/_transcript', methods=['GET'])
 def get_speech_transcript():
+    """ Handles a query from the user with SpeechRecognition
+    """
     transcript = request.args.get('transcript')
     query_type = process_transcript(transcript)
     response_str = flight_follower_worker.handle_query(query_type)
     return jsonify({"success" : True, "response" : response_str})
+
+
 
 
 # =============== SOCKET =======================
@@ -376,8 +389,12 @@ def init_worker():
     start_work("start")
 
 
+
 @sio.on('change_focus')
 def get_change_focus(data):
+    """ Updates the view of the airspace worker when the followed flight moves, or
+    the uses changes focus
+    """ 
     print_event(f"Change focus : {data}")
     if USE_RADAR:
         center = (data['latitude'], data['longitude'])
@@ -392,14 +409,15 @@ def get_change_focus(data):
         flight_follower_worker.stop_following()
 
 
+
 @sio.on('new_follow')
 def new_follow_flight(data):
+    """ Updates the flight follower when the user selects another flight
+    """
     flight_id = data['flight_id']
     print_event(f"New follow flight : {data['label']}")
     # Update a thread that moves center
     flight_follower_worker.update_flight_static_info(flight_id)
-
-
 
 
 

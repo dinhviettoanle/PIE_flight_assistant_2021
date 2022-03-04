@@ -1,3 +1,7 @@
+"""
+Functions for Natural Language Understanding with Snips NLU
+"""
+
 from .query_ontology import *
 from .log_utils import *
 
@@ -12,6 +16,8 @@ nlu_engine = None
 
 
 def load_nlu_engine():
+    """ Loads a persisted NLU Engine (trained with train_nlu_engine.py)
+    """
     global nlu_engine
     fprint("Loading NLU engine...", end=" ")
     with open(nlu_engine_filename,'rb') as f:
@@ -23,6 +29,18 @@ def load_nlu_engine():
 
 
 def process_transcript(transcript):
+    """ Process the transcript from the client SpeechRecogntion
+
+    Parameters
+    ----------
+    transcript : str
+        Natural langugage utterance transcripted by Speech Recognition
+
+    Returns
+    -------
+    str
+        Intent
+    """
     global nlu_engine
     query = ""
     print_event("SPEECH RECOGNITION", transcript)
@@ -76,8 +94,3 @@ def process_transcript(transcript):
     print_event("NLU", intent_name, proba, query)
 
     return query
-
-
-if __name__ == '__main__':
-    os.system(f'snips-nlu generate-dataset en {yaml_filename} > {json_filename}')
-    fit_engine()

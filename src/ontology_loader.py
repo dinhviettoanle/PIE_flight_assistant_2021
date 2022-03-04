@@ -178,6 +178,8 @@ def create_navaid_individuals():
 # ===================================================================================
 
 def create_waypoint_individuals():
+    """ Creates Waypoint individuals in the ontology
+    """ 
     # PATH = "../data/waypoints.csv"
     PATH = "../data/waypoints_crop.csv"
     waypoint_data = WaypointLoader(PATH=PATH).get_waypoint_data()
@@ -200,6 +202,8 @@ def create_waypoint_individuals():
 # ===================================================================================
 
 def create_checklist_individuals():
+    """ Creates Checklist individuals in the ontology
+    """
     checklist_data = ChecklistLoader().get_checklist_data()
     pbar = tqdm(total=len(checklist_data), desc="Checklists")
     for i, row in checklist_data.iterrows():

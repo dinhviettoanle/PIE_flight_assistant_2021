@@ -304,6 +304,7 @@ def get_near_waypoints(surrounding_data, center, RADIUS=100):
 
 
 def query_map_near_airports(s, n, w, e):
+    # Returns the airports within a box
     df_near_airports = df_all_airports.loc[
         df_all_airports['longitude'].between(w, e) & \
         df_all_airports['latitude'].between(s, n)
@@ -312,6 +313,7 @@ def query_map_near_airports(s, n, w, e):
 
 
 def query_map_near_runways(s, n, w, e):
+    # Returns the runways within a box
     df_near_runways = df_all_runways.loc[
         df_all_runways['beg_longitude'].between(w, e) & \
         df_all_runways['beg_latitude'].between(s, n)
@@ -320,6 +322,7 @@ def query_map_near_runways(s, n, w, e):
 
 
 def query_map_near_frequencies(current_icao):
+    # Returns the frequencies within a box
     df_associated_frequencies = df_all_frequencies.loc[
         df_all_frequencies['icao'] == current_icao
     ]
@@ -327,6 +330,7 @@ def query_map_near_frequencies(current_icao):
 
 
 def query_map_near_navaids(s, n, w, e):
+    # Returns the navaids within a box
     df_near_navaids = df_all_navaids.loc[
         df_all_navaids['longitude'].between(w, e) & \
         df_all_navaids['latitude'].between(s, n)
@@ -335,6 +339,7 @@ def query_map_near_navaids(s, n, w, e):
 
 
 def query_map_near_waypoints(s, n, w, e):
+    # Returns the waypoints within a box
     df_near_waypoints = df_all_waypoints.loc[
         df_all_waypoints['longitude'].between(w, e) & \
         df_all_waypoints['latitude'].between(s, n)
@@ -625,6 +630,8 @@ units = {
 
 
 def query_nearest_airport(lat, lng):
+    """ Example : what is the nearest airport """
+
     df = pd.DataFrame({
         'name': df_all_airports['name'],
         'ICAO': df_all_airports['icao'],
@@ -640,6 +647,8 @@ def query_nearest_airport(lat, lng):
 
 
 def query_current_param(flight_data, param):
+    """ Example : what is my current speed """
+
     param_value = flight_data.get(param)
     if param_value is None:
         return {"status": False}
@@ -652,6 +661,8 @@ def query_current_param(flight_data, param):
 
 
 def compute_dist(dict_flight, latitude, longitude):
+    """ Returns the distance between to flights """
+
     return dict_flight['icao24'], {
         "distance": coord_to_dist(latitude, longitude, dict_flight['latitude'], dict_flight['longitude']),
         "latitude": dict_flight['latitude'],
@@ -660,6 +671,8 @@ def compute_dist(dict_flight, latitude, longitude):
     }
 
 def query_nearest_flight(list_flights, latitude, longitude, callsign):
+    """ Example : what is the nearest traffic """
+
     if len(list_flights) == 1:
         return {"status": False}
 
@@ -683,6 +696,8 @@ def query_nearest_flight(list_flights, latitude, longitude, callsign):
 
 
 def query_longest_runway(runways_data):
+    """ Example : what is the length of the nearest runway """
+
     list_runways = runways_data.get('list_runways')
 
     # Get the maximum length
@@ -701,6 +716,8 @@ def query_longest_runway(runways_data):
 # ============================== WEATHER ========================================
 
 def get_weather_at_place(weather_sigle, current_weather):
+    """ Process an OWM weather object and returns the useful weather parameter """
+
     weather_value_format = ""
 
     if weather_sigle == 'weather':
@@ -743,6 +760,8 @@ def get_weather_at_place(weather_sigle, current_weather):
 
 
 def query_specific_weather_at_airport(weather_sigle, icao):
+    """ Example : what is the weather at Toulouse Blagnac """
+
     row = df_all_airports.loc[df_all_airports['icao'] == icao]
     if len(row) == 0:
         return {"status": False}
@@ -765,6 +784,8 @@ def query_specific_weather_at_airport(weather_sigle, icao):
 
 
 def query_specific_weather_at_location(weather_sigle, location):
+    """ Example : what is the weather at Toulouse """
+
     try: # if it PYOWM finds the location by itself
         current_weather = mgr.weather_at_place(location).weather
     except pyowm.commons.exceptions.NotFoundError: # Else, ask openstreetmap
@@ -785,6 +806,8 @@ def query_specific_weather_at_location(weather_sigle, location):
 
 
 def query_specific_weather_at_waypoint(weather_sigle, waypoint_ident):
+    """ Example : what is the weather at MAKOX """
+
     row = df_all_waypoints.loc[df_all_waypoints['ident'] == waypoint_ident.upper()]
     if len(row) == 0:
         return {"status": False}
@@ -804,6 +827,8 @@ def query_specific_weather_at_waypoint(weather_sigle, waypoint_ident):
 
 
 def query_metar_at_airport(icao):
+    """ Example : what is the metar at Toulouse Blagnac """
+
     r = requests.get(f'https://api.aviationapi.com/v1/weather/metar?apt={icao}')
     response = r.json()
 
@@ -842,6 +867,8 @@ def query_metar_at_airport(icao):
 
 # (Item, Response, ID) -- ID used for DOM, for example if there are many "ON" responses
 def get_checklist(type_checklist, model):
+    """ Example : landing checklist """
+    
     model = 'a320' #### TO DELETE in the future
 
     row = df_all_checklists.loc[(df_all_checklists['type'] == type_checklist) & (df_all_checklists['model'] == model)]

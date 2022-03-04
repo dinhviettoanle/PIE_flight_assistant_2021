@@ -1,3 +1,6 @@
+"""
+Utils for geographic coordinates
+"""
 import numpy as np
 from math import sin, cos, sqrt, atan2, radians, asin
 import math

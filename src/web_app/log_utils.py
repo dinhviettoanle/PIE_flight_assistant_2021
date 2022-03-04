@@ -1,3 +1,7 @@
+"""
+Utils for logs
+"""
+
 import time
 import functools
 from datetime import datetime
