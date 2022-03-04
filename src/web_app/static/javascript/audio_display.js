@@ -1,4 +1,7 @@
-/* Adapted from https://github.com/mdn/voice-change-o-matic/tree/gh-pages */
+/* 
+Makes the audio dispaly when the button push-to-talk is triggered
+Adapted from https://github.com/mdn/voice-change-o-matic/tree/gh-pages 
+*/
 
 // Canvas
 var canvas = document.querySelector('.visualizer');

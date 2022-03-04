@@ -1,3 +1,7 @@
+/*
+Handles the Leaflet map
+*/
+
 const USE_RADAR = true;
 
 var box = null;

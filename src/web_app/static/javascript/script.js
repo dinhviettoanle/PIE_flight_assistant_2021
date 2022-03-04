@@ -1,3 +1,9 @@
+/*
+Main javascript script. Functions to handle :
+- Data display in Developer Mode
+- Receiving message from the server about followed flight
+- Developer Mode trigger button
+*/
 
 var socket = null;
 var mymap = null;

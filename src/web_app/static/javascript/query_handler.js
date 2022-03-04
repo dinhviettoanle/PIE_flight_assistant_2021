@@ -1,3 +1,11 @@
+/*
+Functions to handle :
+- Sedning queries with buttons (DEVELOPER Mode)
+- Speech Synthesis
+- METAR Speech Synthesis (the full METAR is divided into chunks and said one by one, else, it crashes)
+- Checklist process
+*/
+
 $(".DOM-queryButton").click(function(e) {
     sent_object = {
         q: e.currentTarget.id,
