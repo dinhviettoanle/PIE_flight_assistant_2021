@@ -308,22 +308,26 @@ class OpenSkyNetworkHandler:
 
 
     def get_current_airspace(self, dict_message, center=None, box=None, RADIUS=100, VERBOSE=False):
-         """ Updates a dictionnary with traffic data within a zone
+        """_summary_
 
         Parameters
         ----------
-        dict_message : dict
-            Dictionnary to update
-        center : tuple, optional
-            Geo point (lat, lon), by default None
-        box : tuple, optional
-            Geo box (south, north, west, east), by default None
+        dict_message : _type_
+            _description_
+        center : _type_, optional
+            _description_, by default None
+        box : _type_, optional
+            _description_, by default None
         RADIUS : int, optional
-            Radius of the circle if center is used, by default 100
+            _description_, by default 100
         VERBOSE : bool, optional
-            Displays the url, by default False
+            _description_, by default False
+
+        Raises
+        ------
+        AttributeError
+            _description_
         """
-        
         if center and not(box):
             lat, lng = center
             box = get_box_from_center(center, RADIUS)
