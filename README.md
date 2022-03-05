@@ -56,3 +56,4 @@ In the root folder (where the `Dockerfile` and `gunicorn_starter.sh` are located
 - [ ] Speech Recognition : it doesn't know when the user is spelling or not. Ex : for an ICAO airport containing "..RU", it understands ".. are you"
 - [ ] Query WeatherAtWaypoint is impossible to detect using SpeechRecognition
 - [ ] The app often (always) crashes when it runs for a long time. See `FlightSpecificQueryHandlerFR24.query_dynamic_data()`
+- [ ] The app does not work on Firefox (and not well on Edge) : SpeechRecognition is not [supported](https://developer.mozilla.org/fr/docs/Web/API/SpeechRecognition#compatibilit%C3%A9_des_navigateurs)
