@@ -53,12 +53,16 @@ slots:
     entity: airport
 utterances:
   - give me the [frequency] frequency at [place]
+  - give me the [frequency] for currency at [place]
   - give me the [frequency] at [place]
   - can you give me the [frequency] frequency at [place]
+  - can you give me the [frequency] for currency at [place]
   - can you give me the [frequency] at [place]
   - what is the [frequency] frequency at [place]
+  - what is the [frequency] for currency at [place]
   - what is the [frequency] at [place]
   - \[frequency] frequency at [place]
+  - \[frequency] for currency at [place]
   - \[frequency] at [place]
 
 # ======================== DYNAMIC TRAFIC INTENTS ==================================
@@ -86,6 +90,7 @@ slots:
 utterances:
   - what is my [param]
   - what is my current [param]
+  - what is the [param]
   - current [param]
 
 
@@ -158,7 +163,7 @@ utterances:
 type: entity
 name: airport
 values:
-  - [arrival, destination, rival]
+  - [arrival, destination, rival, are evil]
   - [departure, origin]
   - [nearest airport, the nearest airport]
   - [LFBA, Agen La Garenne, Agen La Garenne Airport, AGF]
@@ -366,7 +371,7 @@ values:
 type: entity
 name: entityInfo
 values:
-  - [wind, winds]
+  - [wind, winds, winder]
   - [visibility, intervisibility]
   - temperature
   - pressure
@@ -384,7 +389,7 @@ values:
 type: entity
 name: aviationEntity
 values:
-  - [airport, airfield, airports, airfields]
+  - [airport, airfield, airports, airfields, port]
   - [traffic, airplane, airplanes, aeroplane, aeroplanes]
   - [runway, railway, runways, railways, runaway, runaways]
 
@@ -394,10 +399,10 @@ values:
 type: entity
 name: frequencyType
 values:
-  - [twr, tower]
-  - [atis, artist]
+  - [twr, tower, power]
+  - [atis, artist, 80s, eighties]
   - [app, approach]
-  - [gnd, ground, grand, instagram]
+  - [gnd, ground, grand, instagram, fairground]
   - [info, information]
   - [afis]
 
@@ -410,10 +415,10 @@ values:
   - [latitude]
   - [longitude]
   - [heading, cap]
-  - [speed]
+  - [speed, groundspeed, ground speed]
   - [altitude]
   - [vertical_speed, vertical speed]
-  - [callsign]
+  - [callsign, cosine, call sign, co-sign, gold sign]
   - [registration]
 
 

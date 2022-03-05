@@ -6,7 +6,8 @@
         {
           "synonyms": [
             "destination",
-            "rival"
+            "rival",
+            "are evil"
           ],
           "value": "arrival"
         },
@@ -1601,7 +1602,8 @@
           "synonyms": [
             "airfield",
             "airports",
-            "airfields"
+            "airfields",
+            "port"
           ],
           "value": "airport"
         },
@@ -1633,7 +1635,8 @@
       "data": [
         {
           "synonyms": [
-            "winds"
+            "winds",
+            "winder"
           ],
           "value": "wind"
         },
@@ -1706,7 +1709,10 @@
           "value": "heading"
         },
         {
-          "synonyms": [],
+          "synonyms": [
+            "groundspeed",
+            "ground speed"
+          ],
           "value": "speed"
         },
         {
@@ -1720,7 +1726,12 @@
           "value": "vertical_speed"
         },
         {
-          "synonyms": [],
+          "synonyms": [
+            "cosine",
+            "call sign",
+            "co-sign",
+            "gold sign"
+          ],
           "value": "callsign"
         },
         {
@@ -1754,13 +1765,16 @@
       "data": [
         {
           "synonyms": [
-            "tower"
+            "tower",
+            "power"
           ],
           "value": "twr"
         },
         {
           "synonyms": [
-            "artist"
+            "artist",
+            "80s",
+            "eighties"
           ],
           "value": "atis"
         },
@@ -1774,7 +1788,8 @@
           "synonyms": [
             "ground",
             "grand",
-            "instagram"
+            "instagram",
+            "fairground"
           ],
           "value": "gnd"
         },
@@ -1919,12 +1934,24 @@
         {
           "data": [
             {
-              "text": "current "
+              "text": "what is the "
             },
             {
               "entity": "flightParam",
               "slot_name": "param",
               "text": "heading"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "current "
+            },
+            {
+              "entity": "flightParam",
+              "slot_name": "param",
+              "text": "cap"
             }
           ]
         }
@@ -1980,7 +2007,7 @@
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "Agen La Garenne"
+              "text": "LFMA"
             }
           ]
         },
@@ -2000,7 +2027,7 @@
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "Agen La Garenne Airport"
+              "text": "Aix-en-Provence"
             }
           ]
         },
@@ -2008,6 +2035,26 @@
           "data": [
             {
               "text": "what is the "
+            },
+            {
+              "entity": "entityInfo",
+              "slot_name": "info",
+              "text": "winder"
+            },
+            {
+              "text": " at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Aix-en-Provence Airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can i have the "
             },
             {
               "entity": "entityInfo",
@@ -2020,14 +2067,14 @@
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "AGF"
+              "text": "QXB"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "can i have the "
+              "text": "\\"
             },
             {
               "entity": "entityInfo",
@@ -2040,14 +2087,14 @@
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "LFMA"
+              "text": "LFKJ"
             }
           ]
         },
         {
           "data": [
             {
-              "text": "\\"
+              "text": "is there "
             },
             {
               "entity": "entityInfo",
@@ -2060,27 +2107,7 @@
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "Aix-en-Provence"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "is there "
-            },
-            {
-              "entity": "entityInfo",
-              "slot_name": "info",
-              "text": "pressure"
-            },
-            {
-              "text": " at "
-            },
-            {
-              "entity": "airport",
-              "slot_name": "place",
-              "text": "Aix-en-Provence Airport"
+              "text": "Ajaccio Napoleon Bonaparte"
             }
           ]
         }
@@ -2121,7 +2148,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "grand"
+              "text": "approach"
             },
             {
               "text": " frequency at "
@@ -2141,10 +2168,10 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "instagram"
+              "text": "gnd"
             },
             {
-              "text": " at "
+              "text": " for currency at "
             },
             {
               "entity": "airport",
@@ -2156,15 +2183,15 @@
         {
           "data": [
             {
-              "text": "can you give me the "
+              "text": "give me the "
             },
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "info"
+              "text": "ground"
             },
             {
-              "text": " frequency at "
+              "text": " at "
             },
             {
               "entity": "airport",
@@ -2181,10 +2208,30 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "information"
+              "text": "grand"
             },
             {
-              "text": " at "
+              "text": " frequency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "are evil"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "can you give me the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "instagram"
+            },
+            {
+              "text": " for currency at "
             },
             {
               "entity": "airport",
@@ -2196,15 +2243,15 @@
         {
           "data": [
             {
-              "text": "what is the "
+              "text": "can you give me the "
             },
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "afis"
+              "text": "fairground"
             },
             {
-              "text": " frequency at "
+              "text": " at "
             },
             {
               "entity": "airport",
@@ -2221,7 +2268,47 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "twr"
+              "text": "info"
+            },
+            {
+              "text": " frequency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "nearest airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "information"
+            },
+            {
+              "text": " for currency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "the nearest airport"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "afis"
             },
             {
               "text": " at "
@@ -2229,7 +2316,27 @@
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "nearest airport"
+              "text": "LFBA"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "twr"
+            },
+            {
+              "text": " frequency at "
+            },
+            {
+              "entity": "airport",
+              "slot_name": "place",
+              "text": "Agen La Garenne"
             }
           ]
         },
@@ -2244,12 +2351,12 @@
               "text": "tower"
             },
             {
-              "text": " frequency at "
+              "text": " for currency at "
             },
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "the nearest airport"
+              "text": "Agen La Garenne Airport"
             }
           ]
         },
@@ -2261,7 +2368,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "atis"
+              "text": "power"
             },
             {
               "text": " at "
@@ -2269,7 +2376,7 @@
             {
               "entity": "airport",
               "slot_name": "place",
-              "text": "LFBA"
+              "text": "AGF"
             }
           ]
         }
@@ -2315,7 +2422,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "atis"
+              "text": "power"
             },
             {
               "text": " frequency at arrival"
@@ -2330,7 +2437,7 @@
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
-              "text": "artist"
+              "text": "atis"
             },
             {
               "text": " at arrival"
@@ -2341,56 +2448,56 @@
           "data": [
             {
               "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "artist"
+            },
+            {
+              "text": " frequency at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "what is the "
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "80s"
+            },
+            {
+              "text": " at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
+            },
+            {
+              "entity": "frequencyType",
+              "slot_name": "frequency",
+              "text": "eighties"
+            },
+            {
+              "text": " frequency at arrival"
+            }
+          ]
+        },
+        {
+          "data": [
+            {
+              "text": "\\"
             },
             {
               "entity": "frequencyType",
               "slot_name": "frequency",
               "text": "app"
-            },
-            {
-              "text": " frequency at arrival"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "what is the "
-            },
-            {
-              "entity": "frequencyType",
-              "slot_name": "frequency",
-              "text": "approach"
-            },
-            {
-              "text": " at arrival"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "\\"
-            },
-            {
-              "entity": "frequencyType",
-              "slot_name": "frequency",
-              "text": "gnd"
-            },
-            {
-              "text": " frequency at arrival"
-            }
-          ]
-        },
-        {
-          "data": [
-            {
-              "text": "\\"
-            },
-            {
-              "entity": "frequencyType",
-              "slot_name": "frequency",
-              "text": "ground"
             },
             {
               "text": " at arrival"
