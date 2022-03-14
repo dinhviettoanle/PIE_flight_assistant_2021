@@ -23,7 +23,14 @@ Works under Python 3.8
 
 ### Full setup
 
-- If you are under native Windows (not WSL), follow [this](https://snips-nlu.readthedocs.io/en/latest/installation.html) to install Snips-NLU beforehand.
+**Important**
+
+You must **clone** the repository, and not only download the .zip file. Else, the ontology (tracked with git-lfs) will not load correctly. 
+Run ``git clone https://github.com/dinhviettoanle/PIE_flight_assistant_2021.git``
+
+**Install and run**
+
+If you are under native Windows (not WSL), follow [this](https://snips-nlu.readthedocs.io/en/latest/installation.html) to install Snips-NLU beforehand.
 
 In the folder `src/`:
 1. (Create an venv or conda environment) 
