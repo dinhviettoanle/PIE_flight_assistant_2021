@@ -6,7 +6,7 @@
     - (If needed, create individuals for the ontology with `python ontology_loader.py`) 
     - (If needed, train the Snips NLU engine with `python train_nlu_engine.py`)
 3. Run `python app.py`
-4. Open `localhost:5000`
+4. Open `localhost:5000` **on Chrome**
 
 ## Files and folders
 - `checklist/` : .csv files containing checklists.
