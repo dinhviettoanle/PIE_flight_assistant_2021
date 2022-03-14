@@ -9,7 +9,6 @@ You will need Git Large File Storage (git-lfs) to clone the repository. Follow t
 ### Content description
 - `data/` : RAW .csv containing static data (airport, runways, waypoints, navaids, frequencies)
 - `doc/` : Ontology graphs and user guide
-- `report/` : PIE written report and slides
 - `src/` : Source code
 - `tests/` : Playgrounds for module development. In particular, benchmarks for performance comparisons between SPARQL/Ontology ; PostreSQL and Pandas.
 
