@@ -17,7 +17,7 @@ Works under Python 3.8
 
 **Prerequisites**
 - You need to have an OpenWeatherMap account with an active [API key](https://openweathermap.org/faq#how-to-get-an-API-key). Set the environment variable `OWM_APIKEY=<your-owm-api-key>`.
-- (If you want to use the degraded version with OpenSkyNetwork - bad idea - you will also need an OpenSkyNetwork API account)
+- (Optional) If you want to use the degraded version with OpenSkyNetwork - bad idea - you will also need an OpenSkyNetwork API account.
 - (Optional) Set the environment variable `PORT=5000`.
 
 
